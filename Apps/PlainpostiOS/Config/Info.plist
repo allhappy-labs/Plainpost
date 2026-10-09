@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key><string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleDisplayName</key><string>Plainpost</string>
+    <key>CFBundleExecutable</key><string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key><string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+    <key>CFBundleName</key><string>$(PRODUCT_NAME)</string>
+    <key>CFBundlePackageType</key><string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
+    <key>CFBundleShortVersionString</key><string>0.1.0</string>
+    <key>CFBundleVersion</key><string>$(CURRENT_PROJECT_VERSION)</string>
+    <key>PLAINPOST_GOOGLE_CLIENT_ID</key><string>$(PLAINPOST_GOOGLE_CLIENT_ID)</string>
+    <key>PLAINPOST_GOOGLE_REDIRECT_URI</key><string>$(PLAINPOST_GOOGLE_REDIRECT_URI)</string>
+    <key>PlainpostGoogleIOSOAuthClientID</key><string>$(PLAINPOST_GOOGLE_IOS_OAUTH_CLIENT_ID)</string>
+    <key>PlainpostMicrosoftIOSOAuthClientID</key><string>$(PLAINPOST_MICROSOFT_IOS_OAUTH_CLIENT_ID)</string>
+    <key>PlainpostMicrosoftIOSOAuthRedirectURI</key><string>$(PLAINPOST_MICROSOFT_IOS_OAUTH_REDIRECT_URI)</string>
+    <key>PlainpostMicrosoftIOSOAuthPersonalAudience</key><string>$(PLAINPOST_MICROSOFT_IOS_OAUTH_PERSONAL_AUDIENCE)</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleURLName</key><string>Google Mail authorization</string>
+            <key>CFBundleURLSchemes</key>
+            <array><string>$(PLAINPOST_GOOGLE_IOS_OAUTH_CALLBACK_SCHEME)</string></array>
+        </dict>
+        <dict>
+            <key>CFBundleURLName</key><string>Microsoft Mail authorization</string>
+            <key>CFBundleURLSchemes</key>
+            <array><string>$(PLAINPOST_MICROSOFT_IOS_OAUTH_CALLBACK_SCHEME)</string></array>
+        </dict>
+    </array>
+    <key>PLAINPOST_NOTIFICATION_KEYCHAIN_GROUP</key><string>$(AppIdentifierPrefix)com.marynavdovenko.Plainpost.notifications</string>
+    <key>LSRequiresIPhoneOS</key><true/>
+    <key>NSContactsUsageDescription</key><string>Plainpost uses your contacts locally to suggest email recipients and show sender photos.</string>
+    <key>NSFaceIDUsageDescription</key><string>Plainpost uses Face ID to approve trusted devices and confirm sending reviewed mail.</string>
+    <key>NSCalendarsWriteOnlyAccessUsageDescription</key><string>Plainpost adds events you choose from Ask Mail, such as a flight or a viewing, to your calendar.</string>
+    <key>NSRemindersFullAccessUsageDescription</key><string>Plainpost adds reminders you choose from Ask Mail, such as paying an invoice.</string>
+    <key>UIApplicationSceneManifest</key><dict><key>UIApplicationSupportsMultipleScenes</key><false/></dict>
+    <key>BGTaskSchedulerPermittedIdentifiers</key><array><string>$(PRODUCT_BUNDLE_IDENTIFIER).mail-refresh</string></array>
+    <key>UIBackgroundModes</key><array><string>fetch</string><string>remote-notification</string></array>
+    <key>UILaunchScreen</key><dict/>
+    <key>UISupportedInterfaceOrientations</key><array><string>UIInterfaceOrientationPortrait</string><string>UIInterfaceOrientationLandscapeLeft</string><string>UIInterfaceOrientationLandscapeRight</string></array>
+    <key>UISupportedInterfaceOrientations~ipad</key><array><string>UIInterfaceOrientationPortrait</string><string>UIInterfaceOrientationPortraitUpsideDown</string><string>UIInterfaceOrientationLandscapeLeft</string><string>UIInterfaceOrientationLandscapeRight</string></array>
+    <key>UTExportedTypeDeclarations</key>
+    <array>
+        <dict>
+            <key>UTTypeIdentifier</key><string>com.marynavdovenko.plainpost.server-setup</string>
+            <key>UTTypeDescription</key><string>Plainpost Server Setup</string>
+            <key>UTTypeConformsTo</key><array><string>public.json</string></array>
+            <key>UTTypeTagSpecification</key>
+            <dict><key>public.filename-extension</key><array><string>plainpostserver</string></array></dict>
+        </dict>
+    </array>
+</dict>
+</plist>

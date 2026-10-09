@@ -1,0 +1,28 @@
+{
+  "name": "plainpost-browser-extension",
+  "private": true,
+  "version": "0.1.0",
+  "packageManager": "pnpm@10.32.1",
+  "scripts": {
+    "prepare": "wxt prepare",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "build": "wxt build -b chrome",
+    "build:firefox": "wxt build -b firefox",
+    "inspect:manifests": "node scripts/inspect-manifest.mjs"
+  },
+  "dependencies": {
+    "preact": "10.29.7"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "2.10.5",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/preact": "3.2.4",
+    "@testing-library/user-event": "14.6.1",
+    "@types/node": "26.1.1",
+    "jsdom": "29.1.1",
+    "typescript": "7.0.2",
+    "vitest": "4.1.10",
+    "wxt": "0.20.27"
+  }
+}

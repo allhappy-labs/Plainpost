@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask Mail · A · Result blocks v3</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .ask-root { display: flex; flex-direction: column; height: 100%; min-height: 0; position: relative; container-type: inline-size; }
+
+  /* ---------- header (unchanged from v2) ---------- */
+  .a-head { display: flex; align-items: center; gap: 4px; flex: none; position: relative; }
+  [data-platform="mac"] .a-head { height: 52px; padding: 0 10px 0 16px; border-bottom: 1px solid var(--sep); }
+  [data-platform="ios"] .a-head { padding: 18px 14px 8px 18px; }
+  .a-grab { width: 36px; height: 5px; border-radius: 3px; background: var(--fill); position: absolute; top: 6px; left: 50%; transform: translateX(-50%); }
+  [data-platform="mac"] .a-grab { display: none; }
+  .a-title { font-weight: 650; font-size: 15px; }
+  [data-platform="ios"] .a-title { font-size: 17px; }
+  .a-priv { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; color: var(--label-3); margin-left: 2px; }
+  .a-priv:hover, .a-priv[aria-expanded="true"] { color: var(--label-2); background: var(--fill-2); }
+  .a-priv svg { width: 13px; height: 13px; }
+  .a-head .sp { flex: 1; }
+  .a-iconbtn { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: var(--label-2); }
+  .a-iconbtn:hover { background: var(--fill-2); color: var(--label); }
+  [data-platform="ios"] .a-iconbtn { width: 34px; height: 34px; border-radius: 50%; background: var(--fill); color: var(--label); margin-left: 6px; }
+  .a-iconbtn svg { width: 15px; height: 15px; }
+  .pop { position: absolute; z-index: 30; padding: 12px 14px; border-radius: 12px; background: var(--bg-3); box-shadow: 0 12px 34px rgba(0,0,0,.45), 0 0 0 1px var(--sep); font-size: 12.5px; line-height: 1.45; color: var(--label-2); }
+  [data-theme="light"] .pop { background: #fff; box-shadow: 0 12px 34px rgba(0,0,0,.14), 0 0 0 1px var(--sep); }
+  .a-privpop { top: calc(100% + 4px); left: 12px; width: 250px; }
+  .a-privpop b { display: block; color: var(--label); font-size: 13px; margin-bottom: 2px; }
+
+  .a-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 14px 14px 20px; }
+  [data-platform="ios"] .a-scroll { padding: 8px 16px 20px; }
+
+  /* ---------- conversation primitives ---------- */
+  .q { margin: 0 0 12px auto; max-width: 86%; width: fit-content; background: var(--fill); padding: 9px 13px; border-radius: 16px 16px 4px 16px; font-size: 14.5px; line-height: 1.35; }
+  .turn + .turn { margin-top: 26px; }
+  .txt { font-size: 15px; line-height: 1.5; margin: 0 0 12px; }
+  .txt b { font-weight: 650; }
+  .cite { display: inline-grid; place-items: center; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 9px; background: var(--fill); color: var(--label-2); font-size: 11px; font-weight: 700; vertical-align: 2px; margin: 0 1px; }
+  .cite:hover { background: var(--accent); color: #fff; }
+  .scope { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: -4px 0 12px; font-size: 12px; color: var(--label-3); }
+  .tok { font-size: 11.5px; padding: 2px 7px; border-radius: 6px; background: var(--fill-2); color: var(--label-2); }
+  .scope button { color: var(--accent); font-weight: 600; font-size: 12px; margin-left: 2px; }
+  .stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .blk { min-width: 0; }
+  .follow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .follow button { font-size: 13px; padding: 6px 12px; border-radius: 16px; border: 1px solid var(--sep); }
+  .follow button:hover { background: var(--fill-2); }
+
+  /* ---------- block shell (shared by every block) ---------- */
+  .blk { border-radius: 14px; background: var(--bg-2); border: 1px solid var(--sep); position: relative; }
+  [data-theme="light"] .blk { background: #fff; }
+  .blk-h { display: flex; align-items: center; gap: 8px; padding: 10px 12px; font-size: 12.5px; font-weight: 600; color: var(--label-2); }
+  .blk-h .ic { width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; color: #fff; flex: none; }
+  .blk-h .ic svg { width: 11px; height: 11px; }
+  .blk-h .c { color: var(--label-3); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .blk-h .sp { flex: 1; }
+  .blk-h .when { font-weight: 600; color: var(--orange); font-size: 12px; }
+  .blk-bar { display: flex; align-items: center; gap: 6px; padding: 9px 10px 9px 12px; border-top: 1px solid var(--sep); background: var(--fill-2); border-radius: 0 0 13px 13px; font-size: 12.5px; color: var(--label-2); position: relative; }
+  .blk-bar .lbl { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+  .btn { font-size: 12.5px; font-weight: 650; padding: 6px 11px; border-radius: 14px; background: var(--fill); color: var(--label); white-space: nowrap; flex: none; }
+  .btn:hover { background: var(--bg-4); }
+  .btn.pri { background: var(--accent); color: #fff; }
+  .btn.soft { background: var(--accent-soft); color: var(--accent); }
+  .btn.dots { width: 28px; padding: 6px 0; display: grid; place-items: center; }
+  .btn.dots svg { width: 13px; height: 13px; }
+  [data-platform="ios"] .btn { padding: 7px 12px; font-size: 13px; }
+  [data-platform="ios"] .btn.dots { width: 32px; padding: 7px 0; }
+  .srcline { display: flex; align-items: center; gap: 8px; padding: 9px 12px; border-top: 1px solid var(--sep); font-size: 12px; color: var(--label-2); width: 100%; text-align: left; }
+  .srcline:hover { background: var(--fill-2); }
+  .srcline .av { width: 18px; height: 18px; font-size: 8px; }
+  .srcline span.t { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .srcline b { color: var(--label); font-weight: 600; }
+  .srcline .o { color: var(--accent); font-weight: 600; }
+  .menu { right: 8px; bottom: calc(100% + 4px); min-width: 200px; padding: 5px; font-size: 13.5px; color: var(--label); }
+  .menu button { display: flex; width: 100%; text-align: left; padding: 7px 9px; border-radius: 7px; }
+  .menu button:hover { background: var(--accent); color: #fff; }
+
+  /* ---------- Message list block ---------- */
+  .sec { border-top: 1px solid var(--sep); }
+  .sec-h { display: flex; align-items: center; gap: 10px; padding: 9px 12px; }
+  .sec-t { display: flex; align-items: center; gap: 7px; font-size: 13.5px; font-weight: 650; min-width: 0; white-space: nowrap; }
+  .sec-t .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .sec-t .n { color: var(--label-3); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .chev { width: 10px; height: 10px; color: var(--label-3); transition: transform .2s; flex: none; }
+  .open > .sec-h .chev { transform: rotate(90deg); }
+  .sec-h .sub { margin-left: auto; font-size: 12px; color: var(--label-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .sec-rows { display: none; }
+  .sec.open .sec-rows { display: block; }
+  .more { display: block; font-size: 12.5px; color: var(--accent); padding: 7px 12px 9px 42px; }
+
+  .ck { width: 20px; height: 20px; border-radius: 50%; flex: none; display: grid; place-items: center; box-shadow: inset 0 0 0 1.5px var(--label-3); }
+  .ck svg { width: 10px; height: 10px; color: #fff; display: none; }
+  .ck.on { background: var(--accent); box-shadow: none; }
+  .ck.on svg.v { display: block; }
+  .ck.part { background: var(--accent); box-shadow: none; }
+  .ck.part svg.m { display: block; }
+
+  .mrow { display: flex; align-items: center; gap: 10px; padding: 8px 12px; width: 100%; text-align: left; font-size: 13px; cursor: pointer; }
+  .mrow:hover { background: var(--fill-2); }
+  .mrow .av { width: 28px; height: 28px; font-size: 10px; }
+  .mrow .tx { flex: 1; min-width: 0; }
+  .mrow .l1 { display: flex; gap: 8px; align-items: baseline; }
+  .mrow .l1 b { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mrow .l1 time { margin-left: auto; font-size: 11.5px; color: var(--label-3); flex: none; }
+  .mrow .l2 { color: var(--label-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; margin-top: 1px; }
+  .mrow .tag { font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 5px; background: color-mix(in srgb, var(--orange) 18%, transparent); color: var(--orange); flex: none; }
+  .mrow.off .tx { opacity: .45; }
+  .blk:not(.sel) .mrow > .ck, .blk:not(.sel) .sec-h > .ck { display: none; }
+  .blk.sel .mrow .av { display: none; }
+
+  .doneline { display: none; align-items: center; gap: 10px; padding: 10px 12px; font-size: 13px; color: var(--label-2); }
+  .doneline .okc { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--green) 20%, transparent); color: var(--green); flex: none; }
+  .doneline .okc svg { width: 10px; height: 10px; }
+  .doneline .t { flex: 1; }
+  .doneline button { font-weight: 650; color: var(--accent); }
+  .sec.done > .sec-h, .sec.done > .sec-rows { display: none; }
+  .sec.done > .doneline { display: flex; animation: fadein .25s ease; }
+  @keyframes fadein { from { opacity: 0; } }
+
+  /* ---------- Card block ---------- */
+  .card .hero { padding: 0 14px; font-size: 24px; font-weight: 700; letter-spacing: -.015em; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .card .hsub { padding: 3px 14px 12px; font-size: 13px; color: var(--label-2); }
+  .card dl { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; border-top: 1px solid var(--sep); }
+  .card dl div { padding: 8px 12px; border-left: 1px solid var(--sep); min-width: 0; }
+  .card dl div:first-child { border-left: 0; }
+  .card dt { font-size: 11px; color: var(--label-3); }
+  .card dd { margin: 1px 0 0; font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .card .acts { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 12px; border-top: 1px solid var(--sep); }
+  .card.done .acts .pri { background: color-mix(in srgb, var(--green) 20%, transparent); color: var(--green); }
+
+  /* ---------- Quote block ---------- */
+  .qt { display: flex; gap: 10px; padding: 11px 12px; border-top: 1px solid var(--sep); }
+  .qt:first-child { border-top: 0; }
+  .qt .num { width: 17px; height: 17px; border-radius: 9px; background: var(--fill); font-size: 11px; font-weight: 700; display: grid; place-items: center; color: var(--label-2); flex: none; margin-top: 1px; }
+  .qt .b { flex: 1; min-width: 0; }
+  .qt .who { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--label-2); }
+  .qt .who b { color: var(--label); font-weight: 600; }
+  .qt .who .av { width: 18px; height: 18px; font-size: 8px; }
+  .qt .who a { margin-left: auto; color: var(--accent); font-weight: 600; text-decoration: none; }
+  .qt blockquote { margin: 6px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--label-2); padding-left: 10px; border-left: 2px solid var(--sep); }
+  .qt mark { background: color-mix(in srgb, var(--orange) 26%, transparent); color: var(--label); border-radius: 3px; padding: 0 2px; }
+
+  /* ---------- Draft block ---------- */
+  .draft .to { padding: 0 12px 6px; font-size: 12.5px; color: var(--label-2); }
+  .draft .to b { color: var(--label); font-weight: 600; }
+  .draft .body { margin: 0 12px 12px; padding: 10px 12px; border-radius: 10px; background: var(--fill-2); font-size: 14px; line-height: 1.5; outline: none; }
+  .draft .body:focus { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 50%, transparent); }
+  .draft .body p { margin: 0 0 8px; }
+  .draft .body p:last-child { margin: 0; }
+  .draft.done .body, .draft.done .blk-bar, .draft.done .to { display: none; }
+  .draft.done .sentline { display: flex; }
+
+  /* ---------- empty / working / miss ---------- */
+  .empty h2 { font-size: 20px; line-height: 1.25; margin: 10px 0 16px; font-weight: 700; letter-spacing: -.01em; }
+  .now { display: grid; gap: 8px; }
+  .nowc { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 12px; border-radius: 14px; background: var(--bg-2); border: 1px solid var(--sep); }
+  [data-theme="light"] .nowc { background: #fff; }
+  .nowc:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--sep)); }
+  .nowc .big { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; width: 36px; text-align: center; flex: none; }
+  .nowc .t { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; }
+  .nowc .t span { display: block; font-weight: 400; font-size: 12.5px; color: var(--label-2); margin-top: 1px; }
+  .try-h { font-size: 12px; color: var(--label-3); font-weight: 600; margin: 22px 0 4px; }
+  .try { display: block; width: 100%; text-align: left; padding: 9px 0; font-size: 14px; color: var(--label-2); border-bottom: 1px solid var(--sep); }
+  .try:hover { color: var(--label); }
+  .steps { list-style: none; padding: 0; margin: 0; font-size: 13.5px; }
+  .steps li { display: flex; align-items: center; gap: 9px; padding: 5px 0; color: var(--label-3); }
+  .steps li.ok { color: var(--label-2); }
+  .steps li.now { color: var(--label); }
+  .steps .chk { width: 14px; height: 14px; color: var(--green); flex: none; }
+  .steps .pend { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--fill); flex: none; }
+  .miss .opt { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 10px 12px; border-top: 1px solid var(--sep); font-size: 13.5px; }
+  .miss .opt:hover { background: var(--fill-2); }
+  .miss .opt span { margin-left: auto; font-size: 12px; color: var(--label-3); white-space: nowrap; }
+
+  /* ---------- composer (unchanged from v2) ---------- */
+  .a-comp { flex: none; padding: 10px 12px 12px; }
+  [data-platform="ios"] .a-comp { padding: 8px 12px 30px; }
+  .a-field { border-radius: 18px; background: var(--bg-3); border: 1px solid var(--sep); padding: 4px 4px 4px 12px; }
+  [data-theme="light"] .a-field { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+  .a-field:focus-within { border-color: color-mix(in srgb, var(--accent) 60%, var(--sep)); }
+  .ask-input { display: block; width: 100%; border: 0; outline: 0; background: none; color: var(--label); font: inherit; font-size: 15px; padding: 8px 0 4px; }
+  .ask-input::placeholder { color: var(--label-3); }
+  .a-fbar { display: flex; align-items: center; gap: 6px; }
+  .a-scopebtn { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--label-2); padding: 5px 8px; border-radius: 10px; margin-left: -6px; }
+  .a-scopebtn:hover { background: var(--fill-2); color: var(--label); }
+  .a-scopebtn svg { width: 13px; height: 13px; }
+  .a-scopebtn .c { width: 8px; height: 8px; }
+  .a-fbar .sp { flex: 1; }
+  .a-send, .a-stop { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+  .a-send { background: var(--accent); color: #fff; }
+  .a-send svg { width: 14px; height: 14px; }
+  .a-stop { background: var(--label); color: var(--bg-mac); }
+  .a-stop i { width: 10px; height: 10px; border-radius: 2px; background: currentColor; display: block; }
+
+  /* block kit legend on the page */
+  .kit { max-width: 1480px; margin: 18px auto 0; padding: 0 28px; }
+  .kit-in { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 10px; }
+  .kit-in div { border: 1px solid var(--sep); border-radius: 12px; padding: 12px 14px; font-size: 12.5px; line-height: 1.45; color: var(--label-2); }
+  .kit-in b { display: block; color: var(--label); font-size: 13px; margin-bottom: 3px; }
+  .kit-in code { display: block; margin-top: 6px; font-family: var(--mono); font-size: 11px; color: var(--label-3); }
+</style>
+</head>
+<body data-state="cleanup" data-mac="panel">
+<header class="pagebar">
+  <div>
+    <h1>A · Result blocks <span style="color:var(--label-3);font-weight:500">v3</span></h1>
+    <p>Each answer is short text plus a few blocks from a small kit. Switch between the example questions to see the same parts combined in different ways.</p>
+  </div>
+  <nav class="nav"><a href="index.html">Overview</a><a href="a-result-blocks.html" aria-current="page">A</a><a href="a-result-blocks-v1.html">A v1</a><a href="a-result-blocks-v2.html">A v2</a><a href="b-query-lens.html">B</a><a href="c-briefing.html">C</a></nav>
+  <span class="spacer"></span>
+  <div class="seg" role="group" aria-label="Example">
+    <button data-set-state="empty">Empty</button><button data-set-state="working">Working</button><button data-set-state="cleanup">Clean up</button><button data-set-state="week">This week</button><button data-set-state="deposit">Quote + draft</button><button data-set-state="miss">No match</button>
+  </div>
+  <div class="seg" role="group" aria-label="Appearance">
+    <button data-set-theme="dark" aria-pressed="true">Dark</button><button data-set-theme="light">Light</button>
+  </div>
+</header>
+
+<section class="kit">
+  <div class="kit-in">
+    <div><b>Text</b>A short answer with numbered citations that link to their sources.<code>.text(markdown, citations)</code></div>
+    <div><b>Message list</b>Mail rows, optionally in sections. With bulk actions, rows can be selected. Without them, each row gets one quick action like Reply.<code>.messages(sections, actions)</code></div>
+    <div><b>Card</b>One thing pulled from an email: a flight, invoice, event or delivery. A headline value, a few fields, the source email and actions.<code>.card(kind, hero, fields, source, actions)</code></div>
+    <div><b>Quote</b>The exact sentences an answer relies on, highlighted, with sender and date.<code>.quotes([excerpt])</code></div>
+    <div><b>Draft</b>An editable reply or new message. Nothing is sent until you press Send.<code>.draft(to, subject, body)</code></div>
+    <div><b>Actions</b>A fixed set the app can run and undo: open, reply, archive, mark read, move, flag, snooze, unsubscribe, add to calendar, remind. The model only picks which ones to offer.</div>
+  </div>
+</section>
+
+<main class="stage" id="stage"></main>
+
+<template id="ask">
+<div class="ask-root">
+  <div class="a-grab"></div>
+  <div class="a-head">
+    <span class="a-title">Ask Mail</span>
+    <button class="a-priv" data-act="pop" aria-label="Privacy" aria-expanded="false"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M4 6V4.5a3 3 0 1 1 6 0V6h.6c.5 0 .9.4.9.9v5.2c0 .5-.4.9-.9.9H3.4a.9.9 0 0 1-.9-.9V6.9c0-.5.4-.9.9-.9zm1.3 0h3.4V4.5a1.7 1.7 0 1 0-3.4 0z"/></svg></button>
+    <div class="pop a-privpop" hidden><b>Private to this device</b>Questions and answers are processed on this device with Apple Intelligence. Nothing is sent to a server.</div>
+    <span class="sp"></span>
+    <button class="a-iconbtn" aria-label="Past conversations"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 8a5.5 5.5 0 1 0 1.6-3.9M2.5 2.5v2.5H5"/><path d="M8 5v3.2l2 1.3"/></svg></button>
+    <button class="a-iconbtn" aria-label="New conversation" data-set-state="empty"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M8 2.5H3.5v10h10V8M12 2l2 2-6 6H6V8z"/></svg></button>
+    <button class="a-iconbtn" aria-label="Close"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+  </div>
+
+  <div class="a-scroll">
+
+    <!-- ============ EMPTY ============ -->
+    <div class="empty" data-only="empty">
+      <h2>What do you need from your mail?</h2>
+      <div class="now">
+        <button class="nowc" data-set-state="week"><span class="big">3</span><span class="t">Things due this week<span>An invoice, a flight and a flat viewing</span></span></button>
+        <button class="nowc" data-set-state="cleanup"><span class="big">52</span><span class="t">Unread messages<span>46 look automated</span></span></button>
+        <button class="nowc" data-set-state="deposit"><span class="big">2</span><span class="t">Questions for you<span>From Lena and Anna</span></span></button>
+      </div>
+      <div class="try-h">Or ask</div>
+      <button class="try" data-act="ask">Who hasn't replied to me this week?</button>
+      <button class="try" data-act="ask">Find receipts from September</button>
+      <button class="try" data-act="ask">What did Anna say about the Q4 plan?</button>
+    </div>
+
+    <!-- ============ WORKING ============ -->
+    <div data-only="working">
+      <div class="q">What do I need to deal with this week?</div>
+      <ul class="steps">
+        <li class="ok"><svg class="chk" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m3 7.5 2.5 2.5L11 4.5"/></svg>Searching mail from the last 14 days</li>
+        <li class="ok"><svg class="chk" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m3 7.5 2.5 2.5L11 4.5"/></svg>Found 9 messages with dates or questions</li>
+        <li class="now"><span class="spin"></span>Pulling out due dates and bookings</li>
+        <li><span class="pend"></span>Writing the answer</li>
+      </ul>
+    </div>
+
+    <!-- ============ CLEAN UP: text + message list (sections, selectable) + message list (quick action) ============ -->
+    <div data-only="cleanup">
+      <div class="q">Group my unread emails, I want to clean some of them</div>
+      <p class="txt"><b>46 of your 52</b> unread messages are automated. I grouped them below. The <b>6 from people</b> are listed separately.</p>
+      <div class="scope">Searched <span class="tok">Unread</span><span class="tok">Inbox</span><span class="tok">Both accounts</span><button>Change</button></div>
+
+      <div class="stack">
+        <div class="blk sel" data-list>
+          <div class="blk-h"><span class="ic" style="background:var(--teal)"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M1.5 6.5h2.5l.8 1.5h2.4l.8-1.5h2.5M2.5 2h7l1 4.5v3.5h-9V6.5z"/></svg></span>Automated<span class="c">46</span></div>
+
+          <div class="sec open" data-n="21" data-noun="notifications">
+            <div class="sec-h"><button class="ck on" data-act="sec-check" aria-label="Select all notifications"><svg class="v" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg><svg class="m" viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2.5 5h5"/></svg></button><button class="sec-t" data-act="sec-open"><span class="dot" style="background:var(--teal)"></span>Notifications <span class="n">21</span><svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="m4.5 2.5 3.5 3.5-3.5 3.5"/></svg></button><span class="sub">GitHub, Slack, Linear</span></div>
+            <div class="sec-rows">
+              <div class="mrow" data-act="row" tabindex="0"><span class="ck on"><svg class="v" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="av" style="background:#24292f">G</span><span class="tx"><span class="l1"><b>GitHub</b><time>9:47</time></span><span class="l2">[plainpost] CI failed on main</span></span></div>
+              <div class="mrow" data-act="row" tabindex="0"><span class="ck on"><svg class="v" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="av" style="background:#4a154b">Z</span><span class="tx"><span class="l1"><b>ZurichJS (Slack)</b><time>10:12</time></span><span class="l2">You've got 2 unread messages</span></span></div>
+              <div class="mrow" data-act="row" tabindex="0"><span class="ck on"><svg class="v" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="av" style="background:#5e6ad2">L</span><span class="tx"><span class="l1"><b>Linear</b><time>Mon</time></span><span class="l2">PLN-214 moved to In Review</span></span></div>
+              <span class="more">Show all 21</span>
+            </div>
+            <div class="doneline"><span class="okc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="t"></span><button data-act="undo-sec">Undo</button></div>
+          </div>
+
+          <div class="sec" data-n="19" data-noun="newsletters">
+            <div class="sec-h"><button class="ck on" data-act="sec-check" aria-label="Select all newsletters"><svg class="v" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg><svg class="m" viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2.5 5h5"/></svg></button><button class="sec-t" data-act="sec-open"><span class="dot" style="background:var(--purple)"></span>Newsletters <span class="n">19</span><svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="m4.5 2.5 3.5 3.5-3.5 3.5"/></svg></button><span class="sub">4 never opened</span></div>
+            <div class="sec-rows">
+              <div class="mrow" data-act="row" tabindex="0"><span class="ck on"><svg class="v" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="av" style="background:#6d28d9">P</span><span class="tx"><span class="l1"><b>The Pragmatic Engineer</b><time>Sun</time></span><span class="l2">The state of on-device AI</span></span></div>
+              <div class="mrow" data-act="row" tabindex="0"><span class="ck on"><svg class="v" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="av" style="background:#0acf83">F</span><span class="tx"><span class="l1"><b>Figma</b><time>Yest.</time></span><span class="l2">Config 2026 replays are live</span></span></div>
+              <span class="more">Show all 19</span>
+            </div>
+            <div class="doneline"><span class="okc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="t"></span><button data-act="undo-sec">Undo</button></div>
+          </div>
+
+          <div class="sec" data-n="6" data-noun="receipts">
+            <div class="sec-h"><button class="ck on" data-act="sec-check" aria-label="Select all receipts"><svg class="v" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg><svg class="m" viewBox="0 0 10 10" stroke="currentColor" stroke-width="2"><path d="M2.5 5h5"/></svg></button><button class="sec-t" data-act="sec-open"><span class="dot" style="background:var(--green)"></span>Receipts <span class="n">6</span><svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="m4.5 2.5 3.5 3.5-3.5 3.5"/></svg></button><span class="sub">Stripe, Swiss, Galaxus</span></div>
+            <div class="sec-rows">
+              <div class="mrow" data-act="row" tabindex="0"><span class="ck on"><svg class="v" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="av" style="background:#635bff">S</span><span class="tx"><span class="l1"><b>Stripe</b><time>Mon</time></span><span class="l2">Your receipt from Linear</span></span></div>
+              <span class="more">Show all 6</span>
+            </div>
+            <div class="doneline"><span class="okc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="t"></span><button data-act="undo-sec">Undo</button></div>
+          </div>
+
+          <div class="blk-bar">
+            <span class="lbl"></span>
+            <button class="btn" data-act="apply" data-verb="Archived">Archive</button>
+            <button class="btn pri" data-act="apply" data-verb="Marked" data-what="read">Mark read</button>
+            <button class="btn dots" data-act="pop" aria-label="More actions" aria-expanded="false"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="3" cy="7" r="1.3"/><circle cx="7" cy="7" r="1.3"/><circle cx="11" cy="7" r="1.3"/></svg></button>
+            <div class="pop menu" hidden><button data-act="apply" data-verb="Moved" data-what="to a folder">Move to…</button><button data-act="apply" data-verb="Snoozed" data-what="until Monday">Snooze until Monday</button><button data-act="apply" data-verb="Unsubscribed from" data-what="">Unsubscribe</button></div>
+          </div>
+        </div>
+
+        <div class="blk">
+          <div class="blk-h"><span class="ic" style="background:var(--accent)"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="4" r="2"/><path d="M2 10.5c.4-2.2 2-3.3 4-3.3s3.6 1.1 4 3.3"/></svg></span>From people<span class="c">6</span></div>
+          <div class="mrow" tabindex="0"><span class="av" style="background:#c2410c">LB</span><span class="tx"><span class="l1"><b>Lena Brandt</b><time>9:30</time></span><span class="l2">Can you bring the signed form on Saturday?</span></span><button class="btn soft">Reply</button></div>
+          <div class="mrow" tabindex="0"><span class="av" style="background:#0f766e">MR</span><span class="tx"><span class="l1"><b>Marco Rossi</b><time>Mon</time></span><span class="l2">Invoice for September</span></span><button class="btn soft">Reply</button></div>
+          <span class="more" style="padding-left:12px">Show 4 more</span>
+        </div>
+      </div>
+
+      <div class="follow"><button data-act="ask">Only the ones from this week</button><button data-act="ask">Unsubscribe from newsletters I never open</button></div>
+    </div>
+
+    <!-- ============ THIS WEEK: text + cards + message list ============ -->
+    <div data-only="week">
+      <div class="q">What do I need to deal with this week?</div>
+      <p class="txt">Three things have a date this week: <b>Marco's invoice</b> is due Friday <button class="cite">1</button>, you <b>fly to London</b> on Thursday <button class="cite">2</button>, and the <b>flat viewing</b> with Lena is on Saturday <button class="cite">3</button>.</p>
+
+      <div class="stack">
+        <div class="blk card">
+          <div class="blk-h"><span class="ic" style="background:var(--green)"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 1.5h6v9l-1.5-.9L6 10.5l-1.5-.9L3 10.5zM4.5 4h3M4.5 6h3"/></svg></span>Invoice<span class="c">Marco Rossi</span><span class="sp"></span><span class="when">Due Fri</span></div>
+          <div class="hero">CHF 2,400.00</div>
+          <div class="hsub">September sprint · due Friday 3 October</div>
+          <dl><div><dt>Invoice</dt><dd>2026-09-14</dd></div><div><dt>Account</dt><dd>CH93 … 4410</dd></div><div><dt>Terms</dt><dd>14 days</dd></div></dl>
+          <div class="acts"><button class="btn pri" data-act="card-done" data-idle="Mark as paid" data-label="Marked as paid">Mark as paid</button><button class="btn">Remind me Thursday</button></div>
+          <button class="srcline"><span class="av" style="background:#0f766e">MR</span><span class="t"><b>Marco Rossi</b> · Invoice for September · Mon</span><span class="o">Open</span></button>
+        </div>
+
+        <div class="blk card">
+          <div class="blk-h"><span class="ic" style="background:var(--accent)"><svg viewBox="0 0 12 12" fill="currentColor"><path d="M11 6.4v-.8L7 3.3V1.3a.7.7 0 1 0-1.4 0v2L1.5 5.6v.8l4.1-1.1v2.6l-1 .8v.7l1.7-.5 1.7.5v-.7l-1-.8V5.3z" transform="rotate(90 6 6)"/></svg></span>Flight<span class="c">Swiss LX 318</span><span class="sp"></span><span class="when">Thu</span></div>
+          <div class="hero">ZRH → LHR</div>
+          <div class="hsub">Thursday 2 October · 07:40 – 08:25</div>
+          <dl><div><dt>Booking</dt><dd>KX7P2Q</dd></div><div><dt>Seat</dt><dd>14A</dd></div><div><dt>Bag</dt><dd>1 × 23 kg</dd></div></dl>
+          <div class="acts"><button class="btn pri" data-act="card-done" data-idle="Add to Calendar" data-label="Added to Calendar">Add to Calendar</button><button class="btn">Remind me to check in</button></div>
+          <button class="srcline"><span class="av" style="background:#d71920">S</span><span class="t"><b>Swiss</b> · Your booking LX 318 is confirmed · Yesterday</span><span class="o">Open</span></button>
+        </div>
+
+        <div class="blk card">
+          <div class="blk-h"><span class="ic" style="background:var(--orange)"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1.5" y="2.5" width="9" height="8" rx="1.5"/><path d="M1.5 5h9M4 1v2.5M8 1v2.5"/></svg></span>Event<span class="c">with Lena Brandt</span><span class="sp"></span><span class="when">Sat</span></div>
+          <div class="hero">Sat 4 Oct, 11:00</div>
+          <div class="hsub">Flat viewing · Seefeldstrasse 12, Zurich</div>
+          <dl><div><dt>Bring</dt><dd>Signed form</dd></div><div><dt>Contact</dt><dd>Lena Brandt</dd></div><div><dt>Reply</dt><dd>Not sent yet</dd></div></dl>
+          <div class="acts"><button class="btn pri" data-act="card-done" data-idle="Add to Calendar" data-label="Added to Calendar">Add to Calendar</button><button class="btn" data-set-state="deposit">Reply to Lena</button></div>
+          <button class="srcline"><span class="av" style="background:#c2410c">LB</span><span class="t"><b>Lena Brandt</b> · Re: Flat viewing on Saturday · 9:30</span><span class="o">Open</span></button>
+        </div>
+
+        <div class="blk">
+          <div class="blk-h"><span class="ic" style="background:var(--purple)"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h7M6 3l3 3-3 3"/></svg></span>Also waiting on you<span class="c">2</span></div>
+          <div class="mrow" tabindex="0"><span class="av" style="background:#7c3aed">AK</span><span class="tx"><span class="l1"><b>Anna Keller</b><span class="tag">by Wed</span><time>Yest.</time></span><span class="l2">Comments on the Q4 planning doc?</span></span><button class="btn soft">Reply</button></div>
+          <div class="mrow" tabindex="0" style="padding-bottom:11px"><span class="av" style="background:#2563eb">JH</span><span class="tx"><span class="l1"><b>Jonas Huber</b><time>Mon</time></span><span class="l2">Can we move our 1:1 to next week?</span></span><button class="btn soft">Reply</button></div>
+        </div>
+      </div>
+      <div class="follow"><button data-act="ask">Add all three to my calendar</button><button data-act="ask">What about next week?</button></div>
+    </div>
+
+    <!-- ============ QUOTE + DRAFT: two turns ============ -->
+    <div data-only="deposit">
+      <div class="turn">
+        <div class="q">What did we agree about the flat deposit?</div>
+        <p class="txt">The deposit is <b>two months' rent, CHF 4,800</b>, due by 15 October <button class="cite">1</button>. Lena later confirmed the landlord accepts a <b>SwissCaution guarantee</b> instead of cash <button class="cite">2</button>.</p>
+        <div class="blk">
+          <div class="qt"><span class="num">1</span><div class="b"><div class="who"><span class="av" style="background:#c2410c">LB</span><b>Lena Brandt</b> · 12 Sep<a href="#">Open</a></div><blockquote>The landlord asks for <mark>a deposit of two months' rent (CHF 4,800) paid into a blocked account by 15 October</mark>, before the keys are handed over.</blockquote></div></div>
+          <div class="qt"><span class="num">2</span><div class="b"><div class="who"><span class="av" style="background:#c2410c">LB</span><b>Lena Brandt</b> · 19 Sep<a href="#">Open</a></div><blockquote>Good news: <mark>they're fine with SwissCaution instead of cash</mark>, just send me the certificate once you have it.</blockquote></div></div>
+        </div>
+      </div>
+
+      <div class="turn">
+        <div class="q">Draft a reply saying I'll go with SwissCaution</div>
+        <div class="blk draft">
+          <div class="blk-h"><span class="ic" style="background:var(--accent)"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8.5 1.5l2 2-6 6H2.5v-2z"/></svg></span>Draft reply</div>
+          <div class="to">To <b>Lena Brandt</b> · Re: Flat deposit</div>
+          <div class="body" contenteditable="true" spellcheck="false"><p>Hi Lena,</p><p>Thanks for checking. I'll go with SwissCaution and send you the certificate as soon as I have it, well before 15 October.</p><p>See you Saturday at 11. I'll bring the signed form.</p><p>Oleh</p></div>
+          <div class="blk-bar"><button class="btn">Discard</button><span class="lbl"></span><button class="btn">Open in Compose</button><button class="btn pri" data-act="send">Send</button></div>
+          <div class="doneline sentline"><span class="okc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="t">Sent to Lena Brandt</span><button data-act="unsend">Undo</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ NO MATCH: text + options ============ -->
+    <div data-only="miss">
+      <div class="q">What did Tom say about the offsite?</div>
+      <p class="txt">I couldn't find any mail from Tom that mentions an offsite.</p>
+      <div class="scope">Searched <span class="tok">From Tom Hughes</span><span class="tok">"offsite"</span><span class="tok">Last 12 months</span><button>Change</button></div>
+      <div class="blk miss">
+        <div class="blk-h">Try instead</div>
+        <button class="opt" data-act="ask">Search all time<span>+3 years</span></button>
+        <button class="opt" data-act="ask">Include "retreat" and "team trip"<span>4 matches</span></button>
+        <button class="opt" data-act="ask">A different Tom<span>Tom Weber</span></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="a-comp">
+    <div class="a-field">
+      <input class="ask-input" placeholder="Ask or tell your mail…" aria-label="Ask Mail">
+      <div class="a-fbar">
+        <button class="a-scopebtn" aria-label="Search scope: All mail"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1.5 7.5h3l1 1.5h3l1-1.5h3M2.8 2.5h8.4l1.3 5v4h-11v-4z"/></svg>All mail<svg class="c" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m2 3.5 3 3 3-3"/></svg></button>
+        <span class="sp"></span>
+        <button class="a-stop" data-only="working" data-set-state="empty" aria-label="Stop"><i></i></button>
+        <button class="a-send" data-only="empty cleanup week deposit miss" data-act="ask" aria-label="Send"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 12V2M3 6l4-4 4 4"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<script src="shared.js"></script>
+<script>
+  // shared.js's "ask" demo ends on a state named "answer"; this page's answers are named, so land on "week".
+  document.addEventListener("click", e => {
+    if (e.target.closest('[data-act="ask"]')) setTimeout(() => document.querySelector('[data-set-state="week"]').click(), 2300);
+  }, true);
+
+  // ---- message list selection model ----
+  const rows = s => [...s.querySelectorAll(".mrow")];
+  const selected = s => {
+    if (s.classList.contains("done")) return 0;
+    const off = rows(s).filter(r => r.classList.contains("off")).length;
+    return s.classList.contains("none") ? rows(s).length - off : +s.dataset.n - off;
+  };
+  const paint = blk => {
+    const secs = [...blk.querySelectorAll(".sec[data-n]")];
+    secs.forEach(s => {
+      const n = selected(s), ck = s.querySelector(".sec-h .ck");
+      ck.classList.toggle("on", n === +s.dataset.n);
+      ck.classList.toggle("part", n > 0 && n < +s.dataset.n);
+      rows(s).forEach(r => r.querySelector(".ck").classList.toggle("on", !r.classList.contains("off")));
+      s.querySelector(".sec-t .n").textContent = n < +s.dataset.n ? `${n} of ${s.dataset.n}` : s.dataset.n;
+    });
+    const bar = blk.querySelector(".blk-bar");
+    const total = secs.reduce((t, s) => t + selected(s), 0);
+    bar.hidden = secs.every(s => s.classList.contains("done"));
+    bar.querySelector(".lbl").textContent = total ? `${total} selected` : "Nothing selected";
+    bar.querySelectorAll('[data-act="apply"]').forEach(b => { b.disabled = !total; b.style.opacity = total ? 1 : .4; });
+  };
+
+  const closePops = keep => document.querySelectorAll(".pop").forEach(p => { if (p !== keep) p.hidden = true; });
+
+  document.addEventListener("click", e => {
+    const root = e.target.closest(".ask-root");
+    if (!root) return;
+    const a = e.target.closest("[data-act]");
+    const act = a?.dataset.act;
+    if (act === "pop") {
+      const p = a.parentElement.querySelector(":scope > .pop");
+      closePops(p); p.hidden = !p.hidden; a.setAttribute("aria-expanded", !p.hidden);
+      return;
+    }
+    closePops();
+    const blk = a?.closest("[data-list]");
+    if (act === "sec-open") a.closest(".sec").classList.toggle("open");
+    if (act === "row") a.classList.toggle("off");
+    if (act === "sec-check") {
+      const s = a.closest(".sec");
+      const on = selected(s) > 0;
+      s.classList.toggle("none", on);
+      rows(s).forEach(r => r.classList.toggle("off", on));
+    }
+    if (act === "apply") {
+      blk.querySelectorAll(".sec[data-n]").forEach(s => {
+        const n = selected(s);
+        if (!n) return;
+        const whole = n === +s.dataset.n;
+        s.querySelector(".doneline .t").textContent =
+          `${a.dataset.verb} ${n}${whole ? "" : " of " + s.dataset.n} ${s.dataset.noun}${a.dataset.what ? " " + a.dataset.what : ""}`;
+        s.classList.add("done");
+      });
+    }
+    if (act === "undo-sec") a.closest(".sec").classList.remove("done");
+    if (act === "card-done") { a.closest(".card").classList.add("done"); a.textContent = "✓ " + a.dataset.label; }
+    if (act === "send") a.closest(".draft").classList.add("done");
+    if (act === "unsend") a.closest(".draft").classList.remove("done");
+    root.querySelectorAll("[data-list]").forEach(paint);
+  });
+
+  // Every example starts fresh.
+  const reset = () => document.querySelectorAll(".ask-root").forEach(root => {
+    root.querySelectorAll(".sec").forEach(s => s.classList.remove("done", "none"));
+    root.querySelectorAll(".mrow.off").forEach(r => r.classList.remove("off"));
+    root.querySelectorAll(".card.done").forEach(c => {
+      c.classList.remove("done");
+      const b = c.querySelector('[data-act="card-done"]'); b.textContent = b.dataset.idle;
+    });
+    root.querySelectorAll(".draft.done").forEach(d => d.classList.remove("done"));
+    // Start with one message unticked so the default view shows partial selection.
+    root.querySelector('.sec[data-noun="notifications"] .mrow').classList.add("off");
+    root.querySelectorAll("[data-list]").forEach(paint);
+  });
+  document.querySelectorAll("[data-set-state]").forEach(b => b.addEventListener("click", reset));
+  reset();
+</script>
+</body>
+</html>

@@ -1,0 +1,735 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 71;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A10000000000000000000018 /* PlainpostApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000008 /* PlainpostApp.swift */; };
+		A10000000000000000000041 /* PlainpostTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000039 /* PlainpostTests.swift */; };
+		A10000000000000000000051 /* PlainpostUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000049 /* PlainpostUITests.swift */; };
+		D20000000000000000000001 /* MobileMailUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20000000000000000000002 /* MobileMailUITests.swift */; };
+		1B7F013874DC425CAB45AB01 /* ContactAutocompleteAcceptanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7F013874DC425CAB45AB02 /* ContactAutocompleteAcceptanceTests.swift */; };
+		C2ECF3CD4300C2E28A5014E7 /* UITestDeviceIdiom.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED4265E0A820CCCAAC7469D /* UITestDeviceIdiom.swift */; };
+		A10000000000000000000069 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000068 /* Assets.xcassets */; };
+		A100000000000000000000F1 /* MobileAccountModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000000000000000000F0 /* MobileAccountModel.swift */; };
+		A100000000000000000000F3 /* MobileAccountRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000000000000000000F2 /* MobileAccountRootView.swift */; };
+		D10000000000000000000002 /* MobileAccountLaunchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10000000000000000000001 /* MobileAccountLaunchModel.swift */; };
+		A100000000000000000000FB /* MobileAccountSecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A100000000000000000000FA /* MobileAccountSecurityView.swift */; };
+		D13A00000000000000000001 /* MobilePlainpostAccountPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A00000000000000000011 /* MobilePlainpostAccountPage.swift */; };
+		D13A00000000000000000002 /* MobileSyncNodePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13A00000000000000000012 /* MobileSyncNodePage.swift */; };
+		B80000000000000000000002 /* MobileMailRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B80000000000000000000012 /* MobileMailRootView.swift */; };
+		E80000000000000000000002 /* DebugTwoAccountNodeSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80000000000000000000012 /* DebugTwoAccountNodeSender.swift */; };
+		E80000000000000000000003 /* MobileNodeMailTestSenders.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80000000000000000000013 /* MobileNodeMailTestSenders.swift */; };
+		E80000000000000000000004 /* MobileMailRuntimeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80000000000000000000014 /* MobileMailRuntimeModel.swift */; };
+		E80000000000000000000005 /* MobileLocalMailLaunchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80000000000000000000015 /* MobileLocalMailLaunchModel.swift */; };
+		F90000000000000000000002 /* MobileNodeSendJournal.swift in Sources */ = {isa = PBXBuildFile; fileRef = F90000000000000000000001 /* MobileNodeSendJournal.swift */; };
+		F90000000000000000000004 /* PlainpostNodeMailMode in Frameworks */ = {isa = PBXBuildFile; productRef = F90000000000000000000003 /* PlainpostNodeMailMode */; };
+		E80000000000000000000006 /* PlainpostDB in Frameworks */ = {isa = PBXBuildFile; productRef = E80000000000000000000016 /* PlainpostDB */; };
+		E80000000000000000000007 /* PlainpostSecrets in Frameworks */ = {isa = PBXBuildFile; productRef = E80000000000000000000017 /* PlainpostSecrets */; };
+		E80000000000000000000008 /* PlainpostAccounts in Frameworks */ = {isa = PBXBuildFile; productRef = E80000000000000000000018 /* PlainpostAccounts */; };
+		C90000000000000000000001 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90000000000000000000011 /* NotificationService.swift */; };
+		C90000000000000000000002 /* PlainpostAccountProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = C90000000000000000000050 /* PlainpostAccountProtocol */; };
+		C90000000000000000000003 /* PlainpostNotificationService.appex in PlugIns */ = {isa = PBXBuildFile; fileRef = C90000000000000000000010 /* PlainpostNotificationService.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A100000000000000000000F5 /* PlainpostAccountProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = A100000000000000000000F4 /* PlainpostAccountProtocol */; };
+		A100000000000000000000F7 /* PlainpostAccountRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = A100000000000000000000F6 /* PlainpostAccountRuntime */; };
+		A100000000000000000000FD /* PlainpostNotificationRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = A100000000000000000000FC /* PlainpostNotificationRuntime */; };
+		A100000000000000000000F9 /* PlainpostUI in Frameworks */ = {isa = PBXBuildFile; productRef = A100000000000000000000F8 /* PlainpostUI */; };
+		D90000000000000000000002 /* PlainpostIOSRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = D90000000000000000000001 /* PlainpostIOSRuntime */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		938F2303300E425D00F92BAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A10000000000000000000002 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A10000000000000000000001;
+			remoteInfo = Plainpost;
+		};
+		938F2304300E425D00F92BAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A10000000000000000000002 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A10000000000000000000001;
+			remoteInfo = Plainpost;
+		};
+		C90000000000000000000060 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A10000000000000000000002 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C90000000000000000000040;
+			remoteInfo = PlainpostNotificationService;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A10000000000000000000005 /* Plainpost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plainpost.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000008 /* PlainpostApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainpostApp.swift; sourceTree = "<group>"; };
+		A10000000000000000000013 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A10000000000000000000014 /* Plainpost.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Plainpost.entitlements; sourceTree = "<group>"; };
+		A10000000000000000000015 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		A10000000000000000000016 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		A10000000000000000000017 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		A10000000000000000000035 /* PlainpostTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlainpostTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000036 /* PlainpostUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlainpostUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C90000000000000000000010 /* PlainpostNotificationService.appex */ = {isa = PBXFileReference; explicitFileType = wrapper.app-extension; includeInIndex = 0; path = PlainpostNotificationService.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C90000000000000000000011 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		C90000000000000000000012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C90000000000000000000013 /* PlainpostNotificationService.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlainpostNotificationService.entitlements; sourceTree = "<group>"; };
+		A10000000000000000000039 /* PlainpostTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainpostTests.swift; sourceTree = "<group>"; };
+		A10000000000000000000049 /* PlainpostUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainpostUITests.swift; sourceTree = "<group>"; };
+		D20000000000000000000002 /* MobileMailUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileMailUITests.swift; sourceTree = "<group>"; };
+		1B7F013874DC425CAB45AB02 /* ContactAutocompleteAcceptanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactAutocompleteAcceptanceTests.swift; sourceTree = "<group>"; };
+		DED4265E0A820CCCAAC7469D /* UITestDeviceIdiom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestDeviceIdiom.swift; sourceTree = "<group>"; };
+		A10000000000000000000068 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A100000000000000000000F0 /* MobileAccountModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileAccountModel.swift; sourceTree = "<group>"; };
+		A100000000000000000000F2 /* MobileAccountRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileAccountRootView.swift; sourceTree = "<group>"; };
+		D10000000000000000000001 /* MobileAccountLaunchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileAccountLaunchModel.swift; sourceTree = "<group>"; };
+		A100000000000000000000FA /* MobileAccountSecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileAccountSecurityView.swift; sourceTree = "<group>"; };
+		D13A00000000000000000011 /* MobilePlainpostAccountPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobilePlainpostAccountPage.swift; sourceTree = "<group>"; };
+		D13A00000000000000000012 /* MobileSyncNodePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileSyncNodePage.swift; sourceTree = "<group>"; };
+		B80000000000000000000012 /* MobileMailRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileMailRootView.swift; sourceTree = "<group>"; };
+		E80000000000000000000012 /* DebugTwoAccountNodeSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTwoAccountNodeSender.swift; sourceTree = "<group>"; };
+		E80000000000000000000013 /* MobileNodeMailTestSenders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNodeMailTestSenders.swift; sourceTree = "<group>"; };
+		E80000000000000000000014 /* MobileMailRuntimeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileMailRuntimeModel.swift; sourceTree = "<group>"; };
+		E80000000000000000000015 /* MobileLocalMailLaunchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileLocalMailLaunchModel.swift; sourceTree = "<group>"; };
+		F90000000000000000000001 /* MobileNodeSendJournal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MobileNodeSendJournal.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A10000000000000000000011 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A100000000000000000000F5 /* PlainpostAccountProtocol in Frameworks */,
+				A100000000000000000000F7 /* PlainpostAccountRuntime in Frameworks */,
+				A100000000000000000000FD /* PlainpostNotificationRuntime in Frameworks */,
+				A100000000000000000000F9 /* PlainpostUI in Frameworks */,
+				D90000000000000000000002 /* PlainpostIOSRuntime in Frameworks */,
+				F90000000000000000000004 /* PlainpostNodeMailMode in Frameworks */,
+				E80000000000000000000006 /* PlainpostDB in Frameworks */,
+				E80000000000000000000007 /* PlainpostSecrets in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10000000000000000000046 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E80000000000000000000008 /* PlainpostAccounts in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10000000000000000000056 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C90000000000000000000031 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (C90000000000000000000002 /* PlainpostAccountProtocol in Frameworks */);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A10000000000000000000003 = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000006 /* Plainpost */,
+				A10000000000000000000007 /* Config */,
+				C90000000000000000000020 /* PlainpostNotificationService */,
+				A10000000000000000000037 /* PlainpostTests */,
+				A10000000000000000000038 /* PlainpostUITests */,
+				A10000000000000000000004 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A10000000000000000000004 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000005 /* Plainpost.app */,
+				C90000000000000000000010 /* PlainpostNotificationService.appex */,
+				A10000000000000000000035 /* PlainpostTests.xctest */,
+				A10000000000000000000036 /* PlainpostUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000006 /* Plainpost */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000008 /* PlainpostApp.swift */,
+				A10000000000000000000068 /* Assets.xcassets */,
+				A100000000000000000000F0 /* MobileAccountModel.swift */,
+				A100000000000000000000F2 /* MobileAccountRootView.swift */,
+				D10000000000000000000001 /* MobileAccountLaunchModel.swift */,
+				A100000000000000000000FA /* MobileAccountSecurityView.swift */,
+				D13A00000000000000000011 /* MobilePlainpostAccountPage.swift */,
+				D13A00000000000000000012 /* MobileSyncNodePage.swift */,
+				B80000000000000000000012 /* MobileMailRootView.swift */,
+				E80000000000000000000012 /* DebugTwoAccountNodeSender.swift */,
+				E80000000000000000000014 /* MobileMailRuntimeModel.swift */,
+				E80000000000000000000015 /* MobileLocalMailLaunchModel.swift */,
+				F90000000000000000000001 /* MobileNodeSendJournal.swift */,
+			);
+			path = Plainpost;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000007 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000013 /* Info.plist */,
+				A10000000000000000000014 /* Plainpost.entitlements */,
+				A10000000000000000000015 /* Base.xcconfig */,
+				A10000000000000000000016 /* Debug.xcconfig */,
+				A10000000000000000000017 /* Release.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		C90000000000000000000020 /* PlainpostNotificationService */ = {
+			isa = PBXGroup;
+			children = (
+				C90000000000000000000011 /* NotificationService.swift */,
+				C90000000000000000000012 /* Info.plist */,
+				C90000000000000000000013 /* PlainpostNotificationService.entitlements */,
+			);
+			path = PlainpostNotificationService;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000037 /* PlainpostTests */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000039 /* PlainpostTests.swift */,
+				E80000000000000000000013 /* MobileNodeMailTestSenders.swift */,
+			);
+			path = PlainpostTests;
+			sourceTree = "<group>";
+		};
+		A10000000000000000000038 /* PlainpostUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000049 /* PlainpostUITests.swift */,
+				D20000000000000000000002 /* MobileMailUITests.swift */,
+				1B7F013874DC425CAB45AB02 /* ContactAutocompleteAcceptanceTests.swift */,
+				DED4265E0A820CCCAAC7469D /* UITestDeviceIdiom.swift */,
+			);
+			path = PlainpostUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A10000000000000000000001 /* Plainpost */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000020 /* Build configuration list for PBXNativeTarget "Plainpost" */;
+			buildPhases = (
+				A10000000000000000000010 /* Sources */,
+				A10000000000000000000011 /* Frameworks */,
+				A10000000000000000000012 /* Resources */,
+				C90000000000000000000033 /* Embed Notification Service */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C90000000000000000000061 /* PBXTargetDependency */,
+			);
+			name = Plainpost;
+			packageProductDependencies = (
+				A100000000000000000000F4 /* PlainpostAccountProtocol */,
+				A100000000000000000000F6 /* PlainpostAccountRuntime */,
+				A100000000000000000000FC /* PlainpostNotificationRuntime */,
+				A100000000000000000000F8 /* PlainpostUI */,
+				D90000000000000000000001 /* PlainpostIOSRuntime */,
+				F90000000000000000000003 /* PlainpostNodeMailMode */,
+				E80000000000000000000016 /* PlainpostDB */,
+				E80000000000000000000017 /* PlainpostSecrets */,
+			);
+			productName = Plainpost;
+			productReference = A10000000000000000000005 /* Plainpost.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C90000000000000000000040 /* PlainpostNotificationService */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C90000000000000000000041 /* Build configuration list for PBXNativeTarget "PlainpostNotificationService" */;
+			buildPhases = (
+				C90000000000000000000030 /* Sources */,
+				C90000000000000000000031 /* Frameworks */,
+				C90000000000000000000032 /* Resources */,
+			);
+			buildRules = ();
+			dependencies = ();
+			name = PlainpostNotificationService;
+			packageProductDependencies = (
+				C90000000000000000000050 /* PlainpostAccountProtocol */,
+			);
+			productName = PlainpostNotificationService;
+			productReference = C90000000000000000000010 /* PlainpostNotificationService.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		A10000000000000000000040 /* PlainpostTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000044 /* Build configuration list for PBXNativeTarget "PlainpostTests" */;
+			buildPhases = (
+				A10000000000000000000045 /* Sources */,
+				A10000000000000000000046 /* Frameworks */,
+				A10000000000000000000047 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A10000000000000000000048 /* PBXTargetDependency */,
+			);
+			name = PlainpostTests;
+			packageProductDependencies = (
+				E80000000000000000000018 /* PlainpostAccounts */,
+			);
+			productName = PlainpostTests;
+			productReference = A10000000000000000000035 /* PlainpostTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A10000000000000000000050 /* PlainpostUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000054 /* Build configuration list for PBXNativeTarget "PlainpostUITests" */;
+			buildPhases = (
+				A10000000000000000000055 /* Sources */,
+				A10000000000000000000056 /* Frameworks */,
+				A10000000000000000000057 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A10000000000000000000058 /* PBXTargetDependency */,
+			);
+			name = PlainpostUITests;
+			packageProductDependencies = (
+			);
+			productName = PlainpostUITests;
+			productReference = A10000000000000000000036 /* PlainpostUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A10000000000000000000002 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					A10000000000000000000001 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					A10000000000000000000040 = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = A10000000000000000000001;
+					};
+					A10000000000000000000050 = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = A10000000000000000000001;
+					};
+					C90000000000000000000040 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = A10000000000000000000021 /* Build configuration list for PBXProject "Plainpost" */;
+			compatibilityVersion = "Xcode 16.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A10000000000000000000003;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */,
+			);
+			productRefGroup = A10000000000000000000004 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A10000000000000000000001 /* Plainpost */,
+				C90000000000000000000040 /* PlainpostNotificationService */,
+				A10000000000000000000040 /* PlainpostTests */,
+				A10000000000000000000050 /* PlainpostUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A10000000000000000000012 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000069 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10000000000000000000047 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10000000000000000000057 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C90000000000000000000032 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = ();
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C90000000000000000000033 /* Embed Notification Service */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (C90000000000000000000003 /* PlainpostNotificationService.appex in PlugIns */);
+			name = "Embed Notification Service";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A10000000000000000000010 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000018 /* PlainpostApp.swift in Sources */,
+				A100000000000000000000F1 /* MobileAccountModel.swift in Sources */,
+				A100000000000000000000F3 /* MobileAccountRootView.swift in Sources */,
+				D10000000000000000000002 /* MobileAccountLaunchModel.swift in Sources */,
+				A100000000000000000000FB /* MobileAccountSecurityView.swift in Sources */,
+				D13A00000000000000000001 /* MobilePlainpostAccountPage.swift in Sources */,
+				D13A00000000000000000002 /* MobileSyncNodePage.swift in Sources */,
+				B80000000000000000000002 /* MobileMailRootView.swift in Sources */,
+				E80000000000000000000002 /* DebugTwoAccountNodeSender.swift in Sources */,
+				E80000000000000000000004 /* MobileMailRuntimeModel.swift in Sources */,
+				E80000000000000000000005 /* MobileLocalMailLaunchModel.swift in Sources */,
+				F90000000000000000000002 /* MobileNodeSendJournal.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10000000000000000000045 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000041 /* PlainpostTests.swift in Sources */,
+				E80000000000000000000003 /* MobileNodeMailTestSenders.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10000000000000000000055 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000051 /* PlainpostUITests.swift in Sources */,
+				D20000000000000000000001 /* MobileMailUITests.swift in Sources */,
+				1B7F013874DC425CAB45AB01 /* ContactAutocompleteAcceptanceTests.swift in Sources */,
+				C2ECF3CD4300C2E28A5014E7 /* UITestDeviceIdiom.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C90000000000000000000030 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (C90000000000000000000001 /* NotificationService.swift in Sources */);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A10000000000000000000048 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A10000000000000000000001 /* Plainpost */;
+			targetProxy = 938F2303300E425D00F92BAE /* PBXContainerItemProxy */;
+		};
+		A10000000000000000000058 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A10000000000000000000001 /* Plainpost */;
+			targetProxy = 938F2304300E425D00F92BAE /* PBXContainerItemProxy */;
+		};
+		C90000000000000000000061 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C90000000000000000000040 /* PlainpostNotificationService */;
+			targetProxy = C90000000000000000000060 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A10000000000000000000022 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A10000000000000000000016 /* Debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/Plainpost.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9XN7WN8JN2;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Config/Info.plist;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marynavdovenko.Plainpost.iOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+			};
+			name = Debug;
+		};
+		A10000000000000000000023 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A10000000000000000000017 /* Release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Config/Plainpost.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9XN7WN8JN2;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Config/Info.plist;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marynavdovenko.Plainpost.iOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+			};
+			name = Release;
+		};
+		A10000000000000000000024 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Debug;
+		};
+		A10000000000000000000025 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+			};
+			name = Release;
+		};
+		A10000000000000000000042 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marynavdovenko.Plainpost.iOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Plainpost.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Plainpost";
+			};
+			name = Debug;
+		};
+		A10000000000000000000043 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marynavdovenko.Plainpost.iOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 6.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Plainpost.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Plainpost";
+			};
+			name = Release;
+		};
+		A10000000000000000000052 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marynavdovenko.Plainpost.iOSUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Plainpost;
+			};
+			name = Debug;
+		};
+		A10000000000000000000053 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marynavdovenko.Plainpost.iOSUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Plainpost;
+			};
+			name = Release;
+		};
+		C90000000000000000000042 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = PlainpostNotificationService/PlainpostNotificationService.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9XN7WN8JN2;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PlainpostNotificationService/Info.plist;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marynavdovenko.Plainpost.iOS.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C90000000000000000000043 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = PlainpostNotificationService/PlainpostNotificationService.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9XN7WN8JN2;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PlainpostNotificationService/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.marynavdovenko.Plainpost.iOS.NotificationService;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A10000000000000000000020 /* Build configuration list for PBXNativeTarget "Plainpost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000000000000000000022 /* Debug */,
+				A10000000000000000000023 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000000000000000000021 /* Build configuration list for PBXProject "Plainpost" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000000000000000000024 /* Debug */,
+				A10000000000000000000025 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000000000000000000044 /* Build configuration list for PBXNativeTarget "PlainpostTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000000000000000000042 /* Debug */,
+				A10000000000000000000043 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000000000000000000054 /* Build configuration list for PBXNativeTarget "PlainpostUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000000000000000000052 /* Debug */,
+				A10000000000000000000053 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C90000000000000000000041 /* Build configuration list for PBXNativeTarget "PlainpostNotificationService" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (C90000000000000000000042 /* Debug */, C90000000000000000000043 /* Release */);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A100000000000000000000F4 /* PlainpostAccountProtocol */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */;
+			productName = PlainpostAccountProtocol;
+		};
+		A100000000000000000000F6 /* PlainpostAccountRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */;
+			productName = PlainpostAccountRuntime;
+		};
+		A100000000000000000000FC /* PlainpostNotificationRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */;
+			productName = PlainpostNotificationRuntime;
+		};
+		A100000000000000000000F8 /* PlainpostUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */;
+			productName = PlainpostUI;
+		};
+		D90000000000000000000001 /* PlainpostIOSRuntime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */;
+			productName = PlainpostIOSRuntime;
+		};
+		F90000000000000000000003 /* PlainpostNodeMailMode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */;
+			productName = PlainpostNodeMailMode;
+		};
+		E80000000000000000000016 /* PlainpostDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */;
+			productName = PlainpostDB;
+		};
+		E80000000000000000000017 /* PlainpostSecrets */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */;
+			productName = PlainpostSecrets;
+		};
+		E80000000000000000000018 /* PlainpostAccounts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */;
+			productName = PlainpostAccounts;
+		};
+		C90000000000000000000050 /* PlainpostAccountProtocol */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000029 /* XCLocalSwiftPackageReference "../.." */;
+			productName = PlainpostAccountProtocol;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = A10000000000000000000002 /* Project object */;
+}

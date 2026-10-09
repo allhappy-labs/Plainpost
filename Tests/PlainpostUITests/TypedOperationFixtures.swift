@@ -1,0 +1,2 @@
+let plainpostTestAIOperationPayloadJSON = #"{"operation":"recategorizeInbox","recordID":"","providerID":"deterministic","conversation":[],"smartInboxRunRequest":{"mode":"incremental","scope":{"allAccounts":{}}},"smartInboxClassifierIdentity":{"providerID":"deterministic","modelID":"deterministic-local","promptVersion":"2026-07-23","schemaVersion":"smart-inbox-triage-labels-v2"},"enqueueOnly":false}"#
+let plainpostTestInboxSyncPayloadJSON = #"{"accountID":"acc_personal","trigger":"manual","scope":"incremental"}"#

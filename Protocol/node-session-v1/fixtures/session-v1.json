@@ -1,0 +1,37 @@
+{
+  "kind": "node-session-v1.fixture",
+  "schemaVersion": 1,
+  "endpoint": {
+    "kind": "node.endpoint.v1",
+    "ciphertext": "AQIDBAUGBwgJCgsMDQ4PEA"
+  },
+  "activation": {
+    "kind": "node.activation.v2",
+    "resultWire": "eyJraW5kIjoicmVzdWx0In0",
+    "refreshWire": "AQIDBA",
+    "leaseWire": "BAUGBwg",
+    "trustCommitWire": "CQoLDA0ODw",
+    "admissionEvidenceWire": "eyJraW5kIjoiZXZpZGVuY2UifQ",
+    "claimProofSignature": "KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKg"
+  },
+  "request": {
+    "kind": "node.signed-request.v1",
+    "accountID": "11111111-2222-4333-8444-555555555555",
+    "clientID": "22222222-3333-4444-8555-666666666666",
+    "nodeID": "33333333-4444-4555-8666-777777777777",
+    "trustEpoch": "7",
+    "audience": "node.plainpost.tailnet.ts.net:8443",
+    "sequence": "42",
+    "method": "POST",
+    "path": "/v1/sync",
+    "bodySHA256": "9DiOlPYH9M441HmLaluU4Rshn8ER-nEEj5PRbeNTLrc",
+    "issuedAt": "2026-08-15T12:34:56Z",
+    "signature": "KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw"
+  },
+  "requestBodyUTF8": "{\"op\":\"sync\"}",
+  "requestBodyLimit": 1048576,
+  "endpointTranscript": "AAAAGVBsYWlucG9zdC5Ob2RlRW5kcG9pbnQudjEAAAACAAEAAAAQAQIDBAUGBwgJCgsMDQ4PEA",
+  "activationTranscript": "AAAAG1BsYWlucG9zdC5Ob2RlQWN0aXZhdGlvbi52MgAAAAIAAgAAABF7ImtpbmQiOiJyZXN1bHQifQAAAAQBAgMEAAAABQQFBgcIAAAABwkKCwwNDg8AAAATeyJraW5kIjoiZXZpZGVuY2UifQAAAEAqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq",
+  "requestTranscript": "AAAAGFBsYWlucG9zdC5Ob2RlUmVxdWVzdC52MQAAAAIAAQAAABARERERIiJDM4REVVVVVVVVAAAAECIiIiIzM0REhVVmZmZmZmYAAAAQMzMzM0RERVWGZnd3d3d3dwAAAAgAAAAAAAAABwAAACJub2RlLnBsYWlucG9zdC50YWlsbmV0LnRzLm5ldDo4NDQzAAAACAAAAAAAAAAqAAAABFBPU1QAAAAIL3YxL3N5bmMAAAAg9DiOlPYH9M441HmLaluU4Rshn8ER-nEEj5PRbeNTLrcAAAAUMjAyNi0wOC0xNVQxMjozNDo1Nlo",
+  "requestDigest": "1UXc-ySuZMrFyJAa5sJAJNRwzbu4BzwpW2S4HXLoA7o"
+}

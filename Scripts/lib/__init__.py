@@ -1,0 +1,1 @@
+"""Plainpost acceptance helpers."""

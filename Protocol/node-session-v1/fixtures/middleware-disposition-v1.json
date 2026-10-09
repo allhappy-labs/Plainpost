@@ -1,0 +1,18 @@
+{
+  "kind": "node-session-v1.middleware-disposition",
+  "schemaVersion": 1,
+  "closedPreConsumption": [
+    { "name": "auth-rejected", "type": "urn:plainpost:node-auth-rejected", "status": 401 },
+    { "name": "request-too-large", "type": "urn:plainpost:node-request-too-large", "status": 413 },
+    { "name": "sequence-rejected", "type": "urn:plainpost:node-sequence-rejected", "status": 409 }
+  ],
+  "exactConsumed": { "type": "urn:plainpost:node-sequence-consumed", "status": 409 },
+  "preConsumptionUncertain": { "type": "urn:plainpost:node-sequence-unavailable", "status": 503 },
+  "postDispatchExamples": [
+    { "name": "application-bad-request", "status": 400 },
+    { "name": "application-forbidden", "status": 403 },
+    { "name": "application-not-found", "status": 404 },
+    { "name": "bare-conflict", "status": 409 },
+    { "name": "application-server-error", "status": 503 }
+  ]
+}

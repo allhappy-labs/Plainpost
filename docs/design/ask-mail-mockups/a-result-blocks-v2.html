@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask Mail · A · Result blocks v2</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .ask-root { display: flex; flex-direction: column; height: 100%; min-height: 0; position: relative; container-type: inline-size; }
+
+  /* ---------- header ---------- */
+  .a-head { display: flex; align-items: center; gap: 4px; flex: none; position: relative; }
+  [data-platform="mac"] .a-head { height: 52px; padding: 0 10px 0 16px; border-bottom: 1px solid var(--sep); }
+  [data-platform="ios"] .a-head { padding: 18px 14px 8px 18px; }
+  .a-grab { width: 36px; height: 5px; border-radius: 3px; background: var(--fill); position: absolute; top: 6px; left: 50%; transform: translateX(-50%); }
+  [data-platform="mac"] .a-grab { display: none; }
+  .a-title { font-weight: 650; font-size: 15px; }
+  [data-platform="ios"] .a-title { font-size: 17px; }
+  .a-priv { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; color: var(--label-3); margin-left: 2px; }
+  .a-priv:hover, .a-priv[aria-expanded="true"] { color: var(--label-2); background: var(--fill-2); }
+  .a-priv svg { width: 13px; height: 13px; }
+  .a-head .sp { flex: 1; }
+  .a-iconbtn { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: var(--label-2); }
+  .a-iconbtn:hover { background: var(--fill-2); color: var(--label); }
+  [data-platform="ios"] .a-iconbtn { width: 34px; height: 34px; border-radius: 50%; background: var(--fill); color: var(--label); margin-left: 6px; }
+  .a-iconbtn svg { width: 15px; height: 15px; }
+  .a-pop { position: absolute; top: calc(100% + 4px); left: 12px; z-index: 30; width: 250px; padding: 12px 14px; border-radius: 12px; background: var(--bg-3); box-shadow: 0 12px 34px rgba(0,0,0,.45), 0 0 0 1px var(--sep); font-size: 12.5px; line-height: 1.45; color: var(--label-2); }
+  [data-theme="light"] .a-pop { background: #fff; box-shadow: 0 12px 34px rgba(0,0,0,.14), 0 0 0 1px var(--sep); }
+  .a-pop b { display: block; color: var(--label); font-size: 13px; margin-bottom: 2px; }
+
+  .a-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 14px 14px 20px; scroll-behavior: smooth; }
+  [data-platform="ios"] .a-scroll { padding: 8px 16px 20px; }
+
+  /* ---------- empty ---------- */
+  .a-empty h2 { font-size: 20px; line-height: 1.25; margin: 10px 0 18px; font-weight: 700; letter-spacing: -.01em; }
+  .a-now { display: grid; gap: 8px; }
+  .a-card { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; padding: 12px; border-radius: 14px; background: var(--bg-2); border: 1px solid var(--sep); }
+  [data-theme="light"] .a-card { background: #fff; }
+  .a-card:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--sep)); }
+  .a-card .big { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; width: 38px; text-align: center; flex: none; }
+  .a-card .t { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; }
+  .a-card .t span { display: block; font-weight: 400; font-size: 12.5px; color: var(--label-2); margin-top: 1px; }
+  .a-card .go { font-size: 12.5px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+  .a-try-h { font-size: 12px; color: var(--label-3); font-weight: 600; margin: 22px 0 4px; }
+  .a-try { display: block; width: 100%; text-align: left; padding: 9px 0; font-size: 14px; color: var(--label-2); border-bottom: 1px solid var(--sep); }
+  .a-try:hover { color: var(--label); }
+
+  /* ---------- turn ---------- */
+  .a-q { margin: 0 0 14px auto; max-width: 86%; width: fit-content; background: var(--fill); padding: 9px 13px; border-radius: 16px 16px 4px 16px; font-size: 14.5px; line-height: 1.35; }
+  .a-lead { font-size: 15px; line-height: 1.45; margin: 0 0 12px; }
+  .a-lead b { font-weight: 650; }
+  .a-scope { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: -4px 0 12px; font-size: 12px; color: var(--label-3); }
+  .a-tok { font-size: 11.5px; padding: 2px 7px; border-radius: 6px; background: var(--fill-2); color: var(--label-2); }
+  .a-scope button { color: var(--accent); font-weight: 600; font-size: 12px; margin-left: 2px; }
+
+  .a-steps { list-style: none; padding: 0; margin: 0; font-size: 13.5px; }
+  .a-steps li { display: flex; align-items: center; gap: 9px; padding: 5px 0; color: var(--label-3); }
+  .a-steps li.ok { color: var(--label-2); }
+  .a-steps li.now { color: var(--label); }
+  .a-steps .chk { width: 14px; height: 14px; color: var(--green); flex: none; }
+  .a-steps .pend { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--fill); flex: none; }
+
+  /* ---------- clean-up block ---------- */
+  .a-block { border-radius: 14px; background: var(--bg-2); border: 1px solid var(--sep); }
+  [data-theme="light"] .a-block { background: #fff; }
+  .a-bhead { display: flex; align-items: center; gap: 10px; padding: 11px 12px 10px; border-bottom: 1px solid var(--sep); font-size: 12.5px; color: var(--label-2); }
+  .a-meter { flex: 1; height: 5px; border-radius: 3px; background: var(--fill); overflow: hidden; }
+  .a-meter i { display: block; height: 100%; width: 0; background: var(--green); border-radius: 3px; transition: width .35s ease; }
+  .a-bhead b { color: var(--label); font-variant-numeric: tabular-nums; }
+
+  .a-group { border-top: 1px solid var(--sep); position: relative; }
+  .a-people + .a-group { border-top: 0; }
+  .a-grow { display: flex; align-items: center; gap: 10px; padding: 10px 10px 10px 12px; }
+  .a-gbtn { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; text-align: left; }
+  .a-gico { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; flex: none; color: #fff; }
+  .a-gico svg { width: 15px; height: 15px; }
+  .a-gtxt { flex: 1; min-width: 0; }
+  .a-gname { font-size: 14px; font-weight: 600; white-space: nowrap; min-width: 0; overflow: hidden; display: flex; align-items: center; gap: 6px; }
+  .a-gname .n { color: var(--label-3); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .a-chev { width: 10px; height: 10px; color: var(--label-3); transition: transform .2s; flex: none; }
+  .open .a-chev { transform: rotate(90deg); }
+  .a-gsub { font-size: 12px; color: var(--label-2); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .a-do { font-size: 12.5px; font-weight: 650; padding: 6px 11px; border-radius: 14px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; flex: none; }
+  .a-do:hover { background: color-mix(in srgb, var(--accent) 26%, transparent); }
+  .a-more { width: 28px; height: 28px; border-radius: 14px; display: grid; place-items: center; color: var(--label-2); flex: none; }
+  .a-more:hover, .a-more[aria-expanded="true"] { background: var(--fill); }
+  .a-more svg { width: 14px; height: 14px; }
+  [data-platform="ios"] .a-do { padding: 7px 12px; font-size: 13px; }
+  [data-platform="ios"] .a-more { width: 32px; height: 32px; }
+
+  .a-menu { position: absolute; right: 10px; top: 46px; z-index: 25; min-width: 200px; padding: 5px; border-radius: 12px; background: var(--bg-3); box-shadow: 0 12px 34px rgba(0,0,0,.45), 0 0 0 1px var(--sep); font-size: 13.5px; }
+  [data-theme="light"] .a-menu { background: #fff; box-shadow: 0 12px 34px rgba(0,0,0,.14), 0 0 0 1px var(--sep); }
+  .a-menu button { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 7px 9px; border-radius: 7px; }
+  .a-menu button:hover { background: var(--accent); color: #fff; }
+  .a-menu button span { margin-left: auto; font-size: 12px; opacity: .6; }
+  .a-menu hr { border: 0; border-top: 1px solid var(--sep); margin: 4px 6px; }
+
+  .a-msgs { display: none; padding: 0 12px 10px 52px; }
+  @container (max-width: 360px) { .a-msgs { padding-left: 12px; } }
+  .open .a-msgs { display: block; }
+  .a-hint { font-size: 11.5px; color: var(--label-3); padding: 0 0 4px; }
+  .a-msg { display: flex; align-items: center; gap: 9px; padding: 7px 0; border-top: 1px solid var(--sep); font-size: 12.5px; }
+  .a-inc { width: 18px; height: 18px; border-radius: 50%; background: var(--accent); display: grid; place-items: center; flex: none; }
+  .a-inc svg { width: 9px; height: 9px; color: #fff; }
+  .kept .a-inc { background: none; box-shadow: inset 0 0 0 1.5px var(--label-3); }
+  .kept .a-inc svg { opacity: 0; }
+  .a-msg .tx { flex: 1; min-width: 0; }
+  .a-msg .who { font-weight: 600; }
+  .a-msg .sub { color: var(--label-2); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kept .who, .kept .sub { color: var(--label-3); }
+  .a-msg .when { color: var(--label-3); flex: none; font-size: 11.5px; }
+  .a-msg .kl { display: none; font-size: 11px; color: var(--label-2); background: var(--fill-2); padding: 1px 6px; border-radius: 5px; flex: none; }
+  .kept .kl { display: inline; }
+  .a-all { font-size: 12.5px; color: var(--accent); padding: 7px 0 0; display: block; }
+
+  /* a finished group collapses to one line with Undo */
+  .a-doneline { display: none; align-items: center; gap: 10px; padding: 11px 12px; font-size: 13px; color: var(--label-2); }
+  .a-doneline .ck { width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; background: color-mix(in srgb, var(--green) 18%, transparent); color: var(--green); flex: none; }
+  .a-doneline .ck svg { width: 14px; height: 14px; }
+  .a-doneline span.t { flex: 1; }
+  .a-doneline button { font-weight: 650; color: var(--accent); }
+  .a-group.done .a-grow, .a-group.done .a-msgs, .a-group.done .a-menu { display: none; }
+  .a-group.done .a-doneline { display: flex; animation: fadein .25s ease; }
+  @keyframes fadein { from { opacity: 0; } }
+
+  .a-people { border-bottom: 1px solid var(--sep); }
+  .a-plist { display: none; padding-bottom: 4px; }
+  .a-people.open .a-plist { display: block; }
+  .a-people.open .a-stack { display: none; }
+  @container (max-width: 360px) { .a-stack { display: none !important; } }
+  .a-stack { display: inline-flex; padding-right: 4px; flex: none; }
+  .a-stack .av { width: 24px; height: 24px; font-size: 9px; margin-left: -7px; box-shadow: 0 0 0 2px var(--bg-2); }
+  [data-theme="light"] .a-stack .av { box-shadow: 0 0 0 2px #fff; }
+  .a-person { display: flex; gap: 10px; align-items: center; padding: 8px 12px 8px 52px; font-size: 13px; width: 100%; text-align: left; }
+  .a-person:hover { background: var(--fill-2); }
+  .a-person .t { flex: 1; min-width: 0; }
+  .a-person .t b { font-weight: 600; }
+  .a-person .t div:last-child { color: var(--label-2); font-size: 12.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .a-person .av { width: 26px; height: 26px; font-size: 10px; }
+  @container (max-width: 360px) { .a-person { padding-left: 12px; } }
+  .a-due { font-size: 11px; font-weight: 600; color: var(--orange); white-space: nowrap; }
+
+  .a-bfoot { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--sep); background: var(--fill-2); border-radius: 0 0 13px 13px; font-size: 12.5px; color: var(--label-2); }
+  .a-bfoot .sp { flex: 1; }
+  .a-bfoot button { font-size: 12.5px; font-weight: 650; padding: 6px 11px; border-radius: 14px; background: var(--fill); color: var(--label); white-space: nowrap; }
+  .a-bfoot button.pri { background: var(--accent); color: #fff; }
+
+  /* ---------- factual answer ---------- */
+  .a-fact { border-radius: 14px; border: 1px solid var(--sep); background: var(--bg-2); overflow: hidden; }
+  [data-theme="light"] .a-fact { background: #fff; }
+  .a-fact .top { padding: 14px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 8px; }
+  .a-fact .ap { font-size: 26px; font-weight: 700; letter-spacing: -.01em; }
+  .a-fact .ap span { display: block; font-size: 12px; font-weight: 500; color: var(--label-2); letter-spacing: 0; }
+  .a-fact .ap.r { text-align: right; }
+  .a-fact .mid { font-size: 11.5px; color: var(--label-3); text-align: center; }
+  .a-fact .mid svg { width: 18px; height: 18px; color: var(--label-2); display: block; margin: 0 auto 2px; }
+  .a-fact dl { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; border-top: 1px solid var(--sep); }
+  .a-fact dl div { padding: 9px 14px; border-left: 1px solid var(--sep); }
+  .a-fact dl div:first-child { border-left: 0; }
+  .a-fact dt { font-size: 11px; color: var(--label-3); }
+  .a-fact dd { margin: 1px 0 0; font-size: 13.5px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .a-src { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-top: 1px solid var(--sep); font-size: 12.5px; width: 100%; text-align: left; }
+  .a-src:hover { background: var(--fill-2); }
+  .a-src .t { flex: 1; min-width: 0; color: var(--label-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .a-src .t b { color: var(--label); font-weight: 600; }
+  .a-src .av { width: 22px; height: 22px; font-size: 9px; }
+  .a-src .o { color: var(--accent); font-weight: 600; }
+  .a-row { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+  .a-chipbtn { font-size: 13px; font-weight: 600; padding: 7px 12px; border-radius: 16px; background: var(--fill); }
+  .a-chipbtn:hover { background: var(--bg-4); }
+
+  /* ---------- nothing found ---------- */
+  .a-miss { border-radius: 14px; border: 1px dashed var(--sep); padding: 14px; }
+  .a-miss p { margin: 0 0 10px; font-size: 13.5px; color: var(--label-2); line-height: 1.45; }
+  .a-miss .opts { display: grid; gap: 6px; }
+  .a-miss .opts button { display: flex; align-items: center; gap: 10px; text-align: left; padding: 10px 12px; border-radius: 10px; background: var(--fill-2); font-size: 13.5px; }
+  .a-miss .opts button:hover { background: var(--fill); }
+  .a-miss .opts span { margin-left: auto; font-size: 12px; color: var(--label-3); white-space: nowrap; }
+
+  .a-follow { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .a-follow button { font-size: 13px; padding: 6px 12px; border-radius: 16px; border: 1px solid var(--sep); }
+  .a-follow button:hover { background: var(--fill-2); }
+
+  /* ---------- composer ---------- */
+  .a-comp { flex: none; padding: 10px 12px 12px; }
+  [data-platform="ios"] .a-comp { padding: 8px 12px 30px; }
+  .a-field { border-radius: 18px; background: var(--bg-3); border: 1px solid var(--sep); padding: 4px 4px 4px 12px; }
+  [data-theme="light"] .a-field { background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+  .a-field:focus-within { border-color: color-mix(in srgb, var(--accent) 60%, var(--sep)); }
+  .ask-input { display: block; width: 100%; border: 0; outline: 0; background: none; color: var(--label); font: inherit; font-size: 15px; padding: 8px 0 4px; }
+  .ask-input::placeholder { color: var(--label-3); }
+  .a-fbar { display: flex; align-items: center; gap: 6px; }
+  .a-scopebtn { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--label-2); padding: 5px 8px; border-radius: 10px; margin-left: -6px; }
+  .a-scopebtn:hover { background: var(--fill-2); color: var(--label); }
+  .a-scopebtn svg { width: 13px; height: 13px; }
+  .a-scopebtn .c { width: 8px; height: 8px; }
+  .a-fbar .sp { flex: 1; }
+  .a-send, .a-stop { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+  .a-send { background: var(--accent); color: #fff; }
+  .a-send svg { width: 14px; height: 14px; }
+  .a-stop { background: var(--label); color: var(--bg-mac); }
+  .a-stop i { width: 10px; height: 10px; border-radius: 2px; background: currentColor; display: block; }
+</style>
+</head>
+<body data-state="answer" data-mac="panel">
+<header class="pagebar">
+  <div>
+    <h1>A · Result blocks <span style="color:var(--label-3);font-weight:500">v2</span></h1>
+    <p>Chat that answers with structured, actionable blocks. This round: a quieter header, one clear action per group, the option to keep individual messages out of a bulk action, and states for factual answers and no results.</p>
+  </div>
+  <nav class="nav"><a href="index.html">Overview</a><a href="a-result-blocks.html">A</a><a href="a-result-blocks-v1.html">A v1</a><a href="a-result-blocks-v2.html" aria-current="page">A v2</a><a href="b-query-lens.html">B</a><a href="c-briefing.html">C</a></nav>
+  <span class="spacer"></span>
+  <div class="seg" role="group" aria-label="State">
+    <button data-set-state="empty">Empty</button><button data-set-state="working">Working</button><button data-set-state="answer">Clean-up</button><button data-set-state="fact">Question</button><button data-set-state="miss">No match</button>
+  </div>
+  <div class="seg" role="group" aria-label="Appearance">
+    <button data-set-theme="dark" aria-pressed="true">Dark</button><button data-set-theme="light">Light</button>
+  </div>
+</header>
+
+<section class="notes">
+  <div><b>Header</b>The provider line is gone. A small lock next to the title explains privacy when you tap it. On Mac the header lines up with the list toolbar. A history button brings back past conversations.</div>
+  <div><b>Clean-up</b>Each group shows one main action and a ••• menu for the rest. Expand a group and untick messages to keep them out of the action. A done group folds into one line with Undo, and the bar at the top shows how much is left.</div>
+  <div><b>Other answers</b>Factual questions get a fact card with its source email. When nothing matches, the answer says what it searched and offers concrete ways to widen the search.</div>
+</section>
+
+<main class="stage" id="stage"></main>
+
+<template id="ask">
+<div class="ask-root">
+  <div class="a-grab"></div>
+  <div class="a-head">
+    <span class="a-title">Ask Mail</span>
+    <button class="a-priv" data-act="priv" aria-label="Privacy" aria-expanded="false"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M4 6V4.5a3 3 0 1 1 6 0V6h.6c.5 0 .9.4.9.9v5.2c0 .5-.4.9-.9.9H3.4a.9.9 0 0 1-.9-.9V6.9c0-.5.4-.9.9-.9zm1.3 0h3.4V4.5a1.7 1.7 0 1 0-3.4 0z"/></svg></button>
+    <div class="a-pop" hidden><b>Private to this device</b>Questions and answers are processed on this device with Apple Intelligence. Nothing is sent to a server.</div>
+    <span class="sp"></span>
+    <button class="a-iconbtn" aria-label="Past conversations"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 8a5.5 5.5 0 1 0 1.6-3.9M2.5 2.5v2.5H5"/><path d="M8 5v3.2l2 1.3"/></svg></button>
+    <button class="a-iconbtn" aria-label="New conversation" data-set-state="empty"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M8 2.5H3.5v10h10V8M12 2l2 2-6 6H6V8z"/></svg></button>
+    <button class="a-iconbtn" aria-label="Close"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+  </div>
+
+  <div class="a-scroll">
+    <!-- EMPTY: suggestions come from the mailbox itself -->
+    <div class="a-empty" data-only="empty">
+      <h2>What do you need from your mail?</h2>
+      <div class="a-now">
+        <button class="a-card" data-act="ask"><span class="big">52</span><span class="t">Unread messages<span>Group them so you can clear the noise</span></span><span class="go">Clean up</span></button>
+        <button class="a-card" data-act="ask"><span class="big">3</span><span class="t">People waiting on you<span>Lena, Marco and Anna asked you something</span></span><span class="go">Review</span></button>
+        <button class="a-card" data-set-state="fact"><span class="big" style="font-size:18px">✈︎</span><span class="t">Flight on Thursday<span>LX 318 to London, 07:40</span></span><span class="go">Details</span></button>
+      </div>
+      <div class="a-try-h">Or ask</div>
+      <button class="a-try" data-act="ask">Which newsletters do I never open?</button>
+      <button class="a-try" data-act="ask">What did we agree about the flat deposit?</button>
+      <button class="a-try" data-act="ask">Find receipts from September</button>
+    </div>
+
+    <!-- CLEAN-UP turn -->
+    <div data-only="working answer"><div class="a-q">Group my unread emails, I want to clean some of them</div></div>
+
+    <ul class="a-steps" data-only="working">
+      <li class="ok"><svg class="chk" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m3 7.5 2.5 2.5L11 4.5"/></svg>Looking at unread mail in Inbox</li>
+      <li class="ok"><svg class="chk" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m3 7.5 2.5 2.5L11 4.5"/></svg>Found 52 messages</li>
+      <li class="now"><span class="spin"></span>Grouping by sender and type</li>
+      <li><span class="pend"></span>Checking which ones need you</li>
+    </ul>
+
+    <div data-only="answer">
+      <p class="a-lead"><b>46 of your 52</b> unread messages are automated and can be cleared in bulk. <b>6 are from people</b>, so I kept them separate.</p>
+      <div class="a-scope">Searched <span class="a-tok">Unread</span><span class="a-tok">Inbox</span><span class="a-tok">Both accounts</span><button>Change</button></div>
+
+      <div class="a-block">
+        <div class="a-bhead"><span><b class="a-left">52</b> unread</span><span class="a-meter"><i></i></span><span class="a-cleared">0 cleared</span></div>
+
+        <div class="a-people" data-scope>
+          <div class="a-grow">
+            <button class="a-gbtn" data-act="toggle" aria-label="Show messages from people">
+              <span class="a-gico" style="background:var(--accent)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 14c.5-3 2.5-4.5 5-4.5s4.5 1.5 5 4.5"/></svg></span>
+              <span class="a-gtxt"><div class="a-gname">From people <span class="n">6</span><svg class="a-chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="m4.5 2.5 3.5 3.5-3.5 3.5"/></svg></div><div class="a-gsub">Lena, Marco and Anna asked you something</div></span>
+            </button>
+            <span class="a-stack"><span class="av" style="background:#c2410c">L</span><span class="av" style="background:#0f766e">M</span><span class="av" style="background:#7c3aed">A</span></span>
+          </div>
+          <div class="a-plist">
+            <button class="a-person"><span class="av" style="background:#c2410c">LB</span><span class="t"><div><b>Lena Brandt</b></div><div>Can you bring the signed form on Saturday?</div></span><span class="a-due">Sat</span></button>
+            <button class="a-person"><span class="av" style="background:#0f766e">MR</span><span class="t"><div><b>Marco Rossi</b></div><div>Invoice for September, payment due</div></span><span class="a-due">Fri</span></button>
+            <button class="a-person"><span class="av" style="background:#7c3aed">AK</span><span class="t"><div><b>Anna Keller</b></div><div>Comments on the Q4 planning doc?</div></span><span class="a-due">Wed</span></button>
+            <button class="a-person" style="color:var(--label-2)"><span class="av" style="background:var(--fill);color:var(--label-2)">+3</span><span class="t"><div>3 more from people</div><div>No questions for you</div></span></button>
+          </div>
+        </div>
+
+        <div class="a-group" data-scope data-n="21" data-noun="notifications">
+          <div class="a-grow">
+            <button class="a-gbtn" data-act="toggle" aria-label="Show notifications">
+              <span class="a-gico" style="background:var(--teal)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7a4 4 0 0 1 8 0v3l1.5 2h-11L4 10zM6.5 14h3"/></svg></span>
+              <span class="a-gtxt"><div class="a-gname">Notifications <span class="n">21</span><svg class="a-chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="m4.5 2.5 3.5 3.5-3.5 3.5"/></svg></div><div class="a-gsub">GitHub 12 · Slack 6 · Linear 3</div></span>
+            </button>
+            <button class="a-do" data-act="clear" data-verb="Marked" data-what="read">Mark read</button>
+            <button class="a-more" data-act="menu" aria-label="More actions" aria-expanded="false"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="3" cy="7" r="1.3"/><circle cx="7" cy="7" r="1.3"/><circle cx="11" cy="7" r="1.3"/></svg></button>
+          </div>
+          <div class="a-menu" hidden>
+            <button data-act="clear" data-verb="Archived" data-what="">Archive</button>
+            <button>Mute GitHub CI alerts<span>12</span></button>
+            <hr><button>Always group like this</button>
+          </div>
+          <div class="a-msgs">
+            <div class="a-hint">Untick anything you want to keep</div>
+            <button class="a-msg" data-act="keep" style="width:100%;text-align:left"><span class="a-inc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="tx"><span class="who">GitHub</span><span class="sub">[plainpost] CI failed on main</span></span><span class="kl">Keep</span><span class="when">9:47</span></button>
+            <button class="a-msg" data-act="keep" style="width:100%;text-align:left"><span class="a-inc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="tx"><span class="who">ZurichJS (Slack)</span><span class="sub">You've got 2 unread messages</span></span><span class="kl">Keep</span><span class="when">10:12</span></button>
+            <button class="a-msg" data-act="keep" style="width:100%;text-align:left"><span class="a-inc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="tx"><span class="who">Linear</span><span class="sub">PLN-214 moved to In Review</span></span><span class="kl">Keep</span><span class="when">Mon</span></button>
+            <span class="a-all">Show all 21</span>
+          </div>
+          <div class="a-doneline"><span class="ck"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 7.5 2.5 2.5L11 4.5"/></svg></span><span class="t"></span><button data-act="undo-group">Undo</button></div>
+        </div>
+
+        <div class="a-group" data-scope data-n="19" data-noun="newsletters">
+          <div class="a-grow">
+            <button class="a-gbtn" data-act="toggle" aria-label="Show newsletters">
+              <span class="a-gico" style="background:var(--purple)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3h10v10H3zM5.5 6h5M5.5 8.5h5M5.5 11h3"/></svg></span>
+              <span class="a-gtxt"><div class="a-gname">Newsletters <span class="n">19</span><svg class="a-chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="m4.5 2.5 3.5 3.5-3.5 3.5"/></svg></div><div class="a-gsub">4 you never open · Figma, Stratechery +7</div></span>
+            </button>
+            <button class="a-do" data-act="clear" data-verb="Archived" data-what="">Archive</button>
+            <button class="a-more" data-act="menu" aria-label="More actions" aria-expanded="false"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="3" cy="7" r="1.3"/><circle cx="7" cy="7" r="1.3"/><circle cx="11" cy="7" r="1.3"/></svg></button>
+          </div>
+          <div class="a-menu" hidden>
+            <button data-act="clear" data-verb="Marked" data-what="read">Mark read</button>
+            <button>Unsubscribe from unopened<span>4</span></button>
+            <hr><button>Always group like this</button>
+          </div>
+          <div class="a-msgs">
+            <div class="a-hint">Untick anything you want to keep</div>
+            <button class="a-msg" data-act="keep" style="width:100%;text-align:left"><span class="a-inc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="tx"><span class="who">Pragmatic Engineer</span><span class="sub">The state of on-device AI</span></span><span class="kl">Keep</span><span class="when">Sun</span></button>
+            <button class="a-msg" data-act="keep" style="width:100%;text-align:left"><span class="a-inc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="tx"><span class="who">Figma</span><span class="sub">Config 2026 replays are live</span></span><span class="kl">Keep</span><span class="when">Yest.</span></button>
+            <span class="a-all">Show all 19</span>
+          </div>
+          <div class="a-doneline"><span class="ck"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 7.5 2.5 2.5L11 4.5"/></svg></span><span class="t"></span><button data-act="undo-group">Undo</button></div>
+        </div>
+
+        <div class="a-group" data-scope data-n="6" data-noun="receipts">
+          <div class="a-grow">
+            <button class="a-gbtn" data-act="toggle" aria-label="Show receipts">
+              <span class="a-gico" style="background:var(--green)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 2h8v12l-2-1.2L8 14l-2-1.2L4 14zM6 5.5h4M6 8h4"/></svg></span>
+              <span class="a-gtxt"><div class="a-gname">Receipts &amp; travel <span class="n">6</span><svg class="a-chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="m4.5 2.5 3.5 3.5-3.5 3.5"/></svg></div><div class="a-gsub">Stripe, Swiss, Galaxus</div></span>
+            </button>
+            <button class="a-do" data-act="clear" data-verb="Marked" data-what="read">Mark read</button>
+            <button class="a-more" data-act="menu" aria-label="More actions" aria-expanded="false"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="3" cy="7" r="1.3"/><circle cx="7" cy="7" r="1.3"/><circle cx="11" cy="7" r="1.3"/></svg></button>
+          </div>
+          <div class="a-menu" hidden>
+            <button data-act="clear" data-verb="Moved" data-what="to Receipts">Move to Receipts</button>
+            <button data-act="clear" data-verb="Archived" data-what="">Archive</button>
+          </div>
+          <div class="a-msgs">
+            <div class="a-hint">Untick anything you want to keep</div>
+            <button class="a-msg" data-act="keep" style="width:100%;text-align:left"><span class="a-inc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="tx"><span class="who">Swiss</span><span class="sub">Your booking LX 318 is confirmed</span></span><span class="kl">Keep</span><span class="when">Yest.</span></button>
+            <button class="a-msg" data-act="keep" style="width:100%;text-align:left"><span class="a-inc"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="tx"><span class="who">Stripe</span><span class="sub">Your receipt from Linear</span></span><span class="kl">Keep</span><span class="when">Mon</span></button>
+            <span class="a-all">Show all 6</span>
+          </div>
+          <div class="a-doneline"><span class="ck"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 7.5 2.5 2.5L11 4.5"/></svg></span><span class="t"></span><button data-act="undo-group">Undo</button></div>
+        </div>
+
+        <div class="a-bfoot"><span>All 46 automated</span><span class="sp"></span><button data-act="clear-all" data-verb="Archived" data-what="">Archive</button><button class="pri" data-act="clear-all" data-verb="Marked" data-what="read">Mark read</button></div>
+      </div>
+
+      <div class="a-follow">
+        <button data-act="ask">Draft replies to Lena and Marco</button>
+        <button data-act="ask">Unsubscribe from what I never open</button>
+      </div>
+    </div>
+
+    <!-- FACTUAL QUESTION -->
+    <div data-only="fact">
+      <div class="a-q">When is my flight to London?</div>
+      <p class="a-lead"><b>Thursday 2 October at 07:40</b> from Zurich. You land at Heathrow at 08:25 local time.</p>
+      <div class="a-fact">
+        <div class="top">
+          <div class="ap">ZRH<span>07:40 · Thu 2 Oct</span></div>
+          <div class="mid"><svg viewBox="0 0 18 18" fill="currentColor"><path d="M16 9.6v-1.2l-6-3.5V2a1 1 0 1 0-2 0v2.9L2 8.4v1.2l6-1.6v3.8L6.5 13v1l2.5-.7 2.5.7v-1L10 11.8V8z" transform="rotate(90 9 9)"/></svg>LX 318</div>
+          <div class="ap r">LHR<span>08:25 · local</span></div>
+        </div>
+        <dl><div><dt>Booking</dt><dd>KX7P2Q</dd></div><div><dt>Seat</dt><dd>14A</dd></div><div><dt>Bag</dt><dd>1 × 23 kg</dd></div></dl>
+        <button class="a-src"><span class="av" style="background:#d71920">S</span><span class="t"><b>Swiss</b> · Your booking LX 318 is confirmed · Yesterday</span><span class="o">Open</span></button>
+      </div>
+      <div class="a-row"><button class="a-chipbtn">Add to Calendar</button><button class="a-chipbtn">Remind me to check in</button></div>
+      <div class="a-follow"><button data-act="ask">How do I get to the airport by 06:40?</button></div>
+    </div>
+
+    <!-- NOTHING FOUND -->
+    <div data-only="miss">
+      <div class="a-q">What did Tom say about the offsite?</div>
+      <p class="a-lead">I couldn't find any mail from Tom that mentions an offsite.</p>
+      <div class="a-scope">Searched <span class="a-tok">From Tom Hughes</span><span class="a-tok">"offsite"</span><span class="a-tok">Last 12 months</span><button>Change</button></div>
+      <div class="a-miss">
+        <p>Try one of these:</p>
+        <div class="opts">
+          <button data-act="ask">Search all time<span>+3 years</span></button>
+          <button data-act="ask">Include "retreat" and "team trip"<span>4 matches</span></button>
+          <button data-act="ask">A different Tom<span>Tom Weber</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="a-comp">
+    <div class="a-field">
+      <input class="ask-input" placeholder="Ask or tell your mail…" aria-label="Ask Mail">
+      <div class="a-fbar">
+        <button class="a-scopebtn" aria-label="Search scope: All mail"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M1.5 7.5h3l1 1.5h3l1-1.5h3M2.8 2.5h8.4l1.3 5v4h-11v-4z"/></svg>All mail<svg class="c" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m2 3.5 3 3 3-3"/></svg></button>
+        <span class="sp"></span>
+        <button class="a-stop" data-only="working" data-set-state="empty" aria-label="Stop"><i></i></button>
+        <button class="a-send" data-only="empty answer fact miss" data-act="ask" aria-label="Send"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 12V2M3 6l4-4 4 4"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<script src="shared.js"></script>
+<script>
+  // Page-specific behaviour: privacy popover, ••• menus, keep toggles, clearing groups with Undo.
+  const TOTAL = 52;
+  const kept = g => g.querySelectorAll(".a-msg.kept").length;
+  const count = g => +g.dataset.n - kept(g);
+
+  const refresh = root => {
+    const cleared = [...root.querySelectorAll(".a-group.done")].reduce((s, g) => s + +g.dataset.cleared, 0);
+    const bar = root.querySelector(".a-meter i");
+    if (!bar) return;
+    bar.style.width = `${(cleared / TOTAL) * 100}%`;
+    root.querySelector(".a-left").textContent = TOTAL - cleared;
+    root.querySelector(".a-cleared").textContent = `${cleared} cleared`;
+    root.querySelectorAll(".a-group").forEach(g => {
+      const n = count(g);
+      g.querySelector(".a-gname .n").textContent = kept(g) ? `${n} of ${g.dataset.n}` : n;
+    });
+    const open = [...root.querySelectorAll(".a-group:not(.done)")];
+    const foot = root.querySelector(".a-bfoot");
+    foot.hidden = open.length === 0;
+    foot.querySelector("span").textContent = `All ${open.reduce((s, g) => s + count(g), 0)} automated`;
+  };
+
+  const clear = (g, verb, what) => {
+    const n = count(g);
+    g.dataset.cleared = n;
+    const k = kept(g);
+    g.querySelector(".a-doneline .t").textContent =
+      `${verb} ${n} ${g.dataset.noun}${what ? " " + what : ""}${k ? ` · kept ${k}` : ""}`;
+    g.classList.add("done");
+    g.classList.remove("open");
+  };
+
+  const closeMenus = (except) => document.querySelectorAll(".a-menu, .a-pop").forEach(m => {
+    if (m === except) return;
+    m.hidden = true;
+    m.previousElementSibling?.setAttribute?.("aria-expanded", "false");
+  });
+
+  document.addEventListener("click", e => {
+    const root = e.target.closest(".ask-root");
+    const a = e.target.closest("[data-act]");
+    const act = a?.dataset.act;
+    if (!root) return;
+    if (act === "priv") {
+      const pop = root.querySelector(".a-pop");
+      closeMenus(pop);
+      pop.hidden = !pop.hidden;
+      a.setAttribute("aria-expanded", !pop.hidden);
+      return;
+    }
+    if (act === "menu") {
+      const menu = a.closest(".a-group").querySelector(".a-menu");
+      closeMenus(menu);
+      menu.hidden = !menu.hidden;
+      a.setAttribute("aria-expanded", !menu.hidden);
+      return;
+    }
+    closeMenus();
+    if (act === "keep") a.classList.toggle("kept");
+    if (act === "clear") clear(a.closest(".a-group"), a.dataset.verb, a.dataset.what);
+    if (act === "clear-all") root.querySelectorAll(".a-group:not(.done)").forEach(g => clear(g, a.dataset.verb, a.dataset.what));
+    if (act === "undo-group") a.closest(".a-group").classList.remove("done");
+    refresh(root);
+  });
+
+  // New state = fresh block
+  document.querySelectorAll("[data-set-state]").forEach(b => b.addEventListener("click", () =>
+    document.querySelectorAll(".ask-root").forEach(root => {
+      root.querySelectorAll(".a-group").forEach(g => g.classList.remove("done", "open"));
+      root.querySelectorAll(".kept").forEach(m => m.classList.remove("kept"));
+      closeMenus();
+      refresh(root);
+    })));
+
+  document.querySelectorAll('.ask-root[data-platform="mac"]').forEach(root => {
+    // On Mac, show the first group expanded with one message kept, so the default view demonstrates it.
+    const first = root.querySelector(".a-group");
+    first.classList.add("open");
+    first.querySelectorAll(".a-msg")[0].classList.add("kept");
+  });
+  document.querySelectorAll(".ask-root").forEach(refresh);
+</script>
+</body>
+</html>

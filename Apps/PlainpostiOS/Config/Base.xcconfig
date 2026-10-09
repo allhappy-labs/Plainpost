@@ -1,0 +1,19 @@
+IPHONEOS_DEPLOYMENT_TARGET = 26.0
+PRODUCT_BUNDLE_IDENTIFIER = com.marynavdovenko.Plainpost.iOS
+SWIFT_VERSION = 6.0
+TARGETED_DEVICE_FAMILY = 1,2
+PLAINPOST_GOOGLE_REDIRECT_URI = https://mail.plainpost.app/oauth/google
+PLAINPOST_GOOGLE_REDIRECT_HOST = mail.plainpost.app
+// Supply both public iOS OAuth values from the release build environment.
+// The scheme must be the exact reversed iOS client ID registered at Google.
+PLAINPOST_GOOGLE_IOS_OAUTH_CLIENT_ID =
+PLAINPOST_GOOGLE_IOS_OAUTH_CALLBACK_SCHEME = com.marynavdovenko.plainpost.oauth.unconfigured
+// Supply public Entra native-client registration values for a release build.
+// Confirm supported account audience in Entra before setting PERSONAL_AUDIENCE = YES.
+PLAINPOST_MICROSOFT_IOS_OAUTH_CLIENT_ID =
+PLAINPOST_MICROSOFT_IOS_OAUTH_CALLBACK_SCHEME = com.marynavdovenko.plainpost.microsoft.unconfigured
+PLAINPOST_MICROSOFT_IOS_OAUTH_REDIRECT_URI = com.marynavdovenko.plainpost.microsoft.unconfigured:/oauth/microsoft
+PLAINPOST_MICROSOFT_IOS_OAUTH_PERSONAL_AUDIENCE = NO
+PLAINPOST_APS_ENVIRONMENT = development
+PLAINPOST_APP_ATTEST_ENVIRONMENT = development
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon

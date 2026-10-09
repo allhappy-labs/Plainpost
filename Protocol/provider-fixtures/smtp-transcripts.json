@@ -1,0 +1,2917 @@
+{
+  "schemaVersion": 1,
+  "operations": [
+    {
+      "id": "failure-before-data-is-unavailable",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "pre_data_unavailable",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "error",
+          "error": {
+            "tag": "unavailable",
+            "retry": "safe",
+            "cause": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "recipient-rejection-never-sends-data",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "recipient_rejected",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "rejected",
+            "code": "provider_rejected",
+            "sentCopy": "not_applicable",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "partial-recipient-rejection-aborts-all",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "first@example.invalid",
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "recipient_rejected",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "rejected",
+            "code": "provider_rejected",
+            "sentCopy": "not_applicable",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "drop-after-354-is-delivery-uncertain",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "disconnect_after_354",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "delivery_uncertain",
+            "code": "acceptance_unknown",
+            "sentCopy": "unknown",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "drop-while-writing-data-is-delivery-uncertain",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "disconnect_while_writing_data",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "delivery_uncertain",
+            "code": "acceptance_unknown",
+            "sentCopy": "unknown",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "drop-before-final-reply-is-delivery-uncertain",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "disconnect_before_final_reply",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "delivery_uncertain",
+            "code": "acceptance_unknown",
+            "sentCopy": "unknown",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "final-451-is-definitive-rejection",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "final_451",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "rejected",
+            "code": "provider_rejected",
+            "sentCopy": "not_applicable",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "final-550-is-definitive-rejection",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "final_550",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "rejected",
+            "code": "provider_rejected",
+            "sentCopy": "not_applicable",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "final-250-then-quit-drop-is-applied",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "accepted_quit_drop",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "applied",
+            "code": "accepted",
+            "sentCopy": "not_applicable",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "gmail-accepted-is-provider-managed-sent",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "accepted",
+        "sentBehavior": "provider_managed",
+        "cancellation": "none",
+        "provider": "gmail",
+        "transport": "starttls",
+        "authentication": "oauth_bearer",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH XOAUTH2"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "applied",
+            "code": "accepted",
+            "sentCopy": "provider_managed",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "icloud-accepted-append-success",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "accepted",
+        "sentBehavior": "append_success",
+        "cancellation": "none",
+        "provider": "icloud",
+        "transport": "starttls",
+        "authentication": "app_password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "applied",
+            "code": "accepted",
+            "sentCopy": "appended",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "icloud-accepted-append-rejected-stays-applied",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "accepted",
+        "sentBehavior": "append_rejected",
+        "cancellation": "none",
+        "provider": "icloud",
+        "transport": "starttls",
+        "authentication": "app_password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "applied",
+            "code": "accepted",
+            "sentCopy": "missing",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "icloud-accepted-append-uncertain-stays-applied",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "accepted",
+        "sentBehavior": "append_unavailable",
+        "cancellation": "none",
+        "provider": "icloud",
+        "transport": "starttls",
+        "authentication": "app_password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "applied",
+            "code": "accepted",
+            "sentCopy": "unknown",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "smtputf8-required-but-missing-rejects-before-data",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IGNhZsOpDQoNCmJvZHk=",
+        "scenario": "smtp_utf8_missing",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "rejected",
+            "code": "unsupported",
+            "sentCopy": "not_applicable",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "gmail-oauth-auth-refresh-once",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "accepted",
+        "sentBehavior": "provider_managed",
+        "cancellation": "none",
+        "provider": "gmail",
+        "transport": "starttls",
+        "authentication": "oauth_bearer",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH XOAUTH2"],
+        "authRejections": 1
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "applied",
+            "code": "accepted",
+            "sentCopy": "provider_managed",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "password-auth-never-precedes-tls",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "accepted",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "applied",
+            "code": "accepted",
+            "sentCopy": "not_applicable",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "oversized-response-and-message-fail-bounded",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "oversized_response",
+        "sentBehavior": "not_applicable",
+        "cancellation": "none",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "error",
+          "error": {
+            "tag": "resource_limit",
+            "retry": "never",
+            "cause": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "cancellation-before-data-preserves-context",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "cancel_before_data",
+        "sentBehavior": "not_applicable",
+        "cancellation": "before_data",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "error",
+          "error": {
+            "tag": "unavailable",
+            "retry": "safe",
+            "cause": "context_canceled"
+          }
+        }
+      }
+    },
+    {
+      "id": "cancellation-after-data-is-delivery-uncertain",
+      "input": {
+        "action": "submit",
+        "envelopeFrom": "sender@example.invalid",
+        "recipients": [
+          "recipient@example.invalid"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "messageBase64": "TWVzc2FnZS1JRDogPHNlbWFudGljQGV4YW1wbGUuaW52YWxpZD4NClN1YmplY3Q6IHNlbWFudGljDQoNCmJvZHk=",
+        "scenario": "cancel_after_data",
+        "sentBehavior": "not_applicable",
+        "cancellation": "after_data",
+        "provider": "generic",
+        "transport": "starttls",
+        "authentication": "password",
+        "capabilities": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN"],
+        "authRejections": 0
+      },
+      "expected": {
+        "result": {
+          "kind": "outcome",
+          "outcome": {
+            "state": "delivery_uncertain",
+            "code": "acceptance_unknown",
+            "sentCopy": "unknown",
+            "destinationRawID": "",
+            "providerReference": ""
+          }
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "failure-before-data-is-unavailable",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "NTUwIHJlamVjdGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "rejected",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "recipient-rejection-never-sends-data",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "NTUwIHJlY2lwaWVudCByZWplY3RlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UlNFVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlc2V0DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "rejected",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "partial-recipient-rejection-aborts-all",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "first@example.invalid",
+            "second@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8Zmlyc3RAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8c2Vjb25kQGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "NTUwIHJlY2lwaWVudCByZWplY3RlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UlNFVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlc2V0DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "rejected",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "first@example.invalid",
+              "second@example.invalid"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "drop-after-354-is-delivery-uncertain",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "disconnect",
+          "direction": "server"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "delivery_uncertain",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "drop-while-writing-data-is-delivery-uncertain",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "prefixSize": "8"
+        },
+        {
+          "kind": "disconnect",
+          "direction": "server"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "delivery_uncertain",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "1edf47d5fb6ce7aac0f5ff1b652c40523ff047ff917a10a2e23db8d1f7b7e504",
+            "size": "8"
+          }
+        }
+      }
+    },
+    {
+      "id": "drop-before-final-reply-is-delivery-uncertain",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "disconnect",
+          "direction": "server"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "delivery_uncertain",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "final-451-is-definitive-rejection",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "NDUxIHJlamVjdGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "rejected",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "final-550-is-definitive-rejection",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "NTUwIHJlamVjdGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "rejected",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "final-250-then-quit-drop-is-applied",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIGFjY2VwdGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "disconnect",
+          "direction": "server"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "applied",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "gmail-accepted-is-provider-managed-sent",
+      "provider": "gmail",
+      "transport": "starttls",
+      "authentication": "oauth_bearer",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggWE9BVVRIMg0K"
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIGFjY2VwdGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "AUTH XOAUTH2",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "applied",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "icloud-accepted-append-success",
+      "provider": "icloud",
+      "transport": "starttls",
+      "authentication": "app_password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIGFjY2VwdGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "applied",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "icloud-accepted-append-rejected-stays-applied",
+      "provider": "icloud",
+      "transport": "starttls",
+      "authentication": "app_password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIGFjY2VwdGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "applied",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "icloud-accepted-append-uncertain-stays-applied",
+      "provider": "icloud",
+      "transport": "starttls",
+      "authentication": "app_password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIGFjY2VwdGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "applied",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "smtputf8-required-but-missing-rejects-before-data",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "josé@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDog0J/RgNC40LLQtdGCDQoNCmJvZHk="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MCBBVVRIIFBMQUlODQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "STARTTLS"
+          ],
+          "result": "unsupported"
+        }
+      }
+    },
+    {
+      "id": "gmail-oauth-auth-refresh-once",
+      "provider": "gmail",
+      "transport": "starttls",
+      "authentication": "oauth_bearer",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggWE9BVVRIMg0K"
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIGFjY2VwdGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "AUTH XOAUTH2",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "applied",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "password-auth-never-precedes-tls",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIGFjY2VwdGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "applied",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    },
+    {
+      "id": "oversized-response-and-message-fail-bounded",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4DQo="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [],
+          "result": "rejected"
+        }
+      }
+    },
+    {
+      "id": "cancellation-before-data-preserves-context",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "NDIxIGNhbmNlbGVkDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UVVJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIxIGJ5ZQ0K"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "rejected"
+        }
+      }
+    },
+    {
+      "id": "cancellation-after-data-is-delivery-uncertain",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIGZpeHR1cmUgcmVhZHkNCg=="
+        },
+        {
+          "kind": "message",
+          "from": "sender@example.invalid",
+          "to": [
+            "recipient@example.invalid"
+          ],
+          "bytesBase64": "U3ViamVjdDogZml4dHVyZQ0KDQpib2R5"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TVEFSVFRMUw0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "U1RBUlRUTFMNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjIwIHByb2NlZWQNCg=="
+        },
+        {
+          "kind": "tls",
+          "direction": "client"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "RUhMTyBwbGFpbnBvc3QubG9jYWwNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwLWZpeHR1cmUNCjI1MC1TTVRQVVRGOA0KMjUwIEFVVEggUExBSU4NCg=="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjM1IGF1dGhlbnRpY2F0ZWQNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "TUFJTCBGUk9NOjxzZW5kZXJAZXhhbXBsZS5pbnZhbGlkPg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHNlbmRlcg0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "UkNQVCBUTzo8cmVjaXBpZW50QGV4YW1wbGUuaW52YWxpZD4NCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MjUwIHJlY2lwaWVudA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "REFUQQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "MzU0IGRhdGENCg=="
+        },
+        {
+          "kind": "data",
+          "messageSHA256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+          "messageSize": "29"
+        },
+        {
+          "kind": "disconnect",
+          "direction": "server"
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "AUTH PLAIN",
+            "SMTPUTF8",
+            "STARTTLS"
+          ],
+          "result": "delivery_uncertain",
+          "envelope": {
+            "from": "sender@example.invalid",
+            "to": [
+              "recipient@example.invalid"
+            ]
+          },
+          "message": {
+            "sha256": "26b5dfae41143d60df16768e513ccc9d4955f8f4d560d907d8235924b0b9a99b",
+            "size": "29"
+          }
+        }
+      }
+    }
+  ]
+}

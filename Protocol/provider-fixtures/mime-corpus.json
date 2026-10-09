@@ -1,0 +1,825 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "multipart-alternative-prefers-plain",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "TUlNRS1WZXJzaW9uOiAxLjANCkZyb206IEFsdGVybmF0aXZlcyA8YWx0QGV4YW1wbGUuaW52YWxpZD4NClRvOiByZWFkZXJAZXhhbXBsZS5pbnZhbGlkDQpTdWJqZWN0OiBhbHRlcm5hdGl2ZXMNCkNvbnRlbnQtVHlwZTogbXVsdGlwYXJ0L2FsdGVybmF0aXZlOyBib3VuZGFyeT1hbHQNCg0KLS1hbHQNCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA0KDQpQbGFpbiBhbHRlcm5hdGl2ZQ0KLS1hbHQNCkNvbnRlbnQtVHlwZTogdGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04DQoNCjxwPkhUTUwgYWx0ZXJuYXRpdmU8L3A+DQotLWFsdC0t",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "alternatives",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [
+            {
+              "displayName": "Alternatives",
+              "mailbox": "alt@example.invalid"
+            }
+          ],
+          "sender": null,
+          "replyTo": [],
+          "to": [
+            {
+              "displayName": "",
+              "mailbox": "reader@example.invalid"
+            }
+          ],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "complete",
+            "value": "Plain alternative"
+          },
+          "htmlBody": {
+            "state": "complete",
+            "value": "<p>HTML alternative</p>"
+          },
+          "parts": []
+        }
+      }
+    },
+    {
+      "id": "encoded-unicode-subject-and-address",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "RnJvbTogPT9VVEYtOD9CP1NtOXp3Nms9Pz0gPEpPU0VAZXhhbXBsZS5pbnZhbGlkPg0KVG86ID0/VVRGLTg/Qj9XbS9EcXc9PT89IDxaT0VAZXhhbXBsZS5pbnZhbGlkPg0KU3ViamVjdDogPT9VVEYtOD9CP1VzT3BjM1Z0dzZrPT89DQpNZXNzYWdlLUlEOiA8ZW5jb2RlZEBleGFtcGxlLmludmFsaWQ+DQpDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9dXRmLTgNCg0KQm9uam91cg==",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "Résumé",
+          "rfcMessageID": "<encoded@example.invalid>",
+          "date": "",
+          "from": [
+            {
+              "displayName": "José",
+              "mailbox": "JOSE@example.invalid"
+            }
+          ],
+          "sender": null,
+          "replyTo": [],
+          "to": [
+            {
+              "displayName": "Zoë",
+              "mailbox": "ZOE@example.invalid"
+            }
+          ],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "complete",
+            "value": "Bonjour"
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": []
+        }
+      }
+    },
+    {
+      "id": "windows-charsets-and-flowed-text",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "U3ViamVjdDogRmxvd2VkIFdpbmRvd3MNCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD13aW5kb3dzLTEyNTI7IGZvcm1hdD1mbG93ZWQ7IGRlbHNwPXllcw0KDQpQcmljZTogk3F1b3RlZJQgDQpjb250aW51ZXM=",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "Flowed Windows",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "complete",
+            "value": "Price: “quoted”continues"
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": []
+        }
+      }
+    },
+    {
+      "id": "nested-signed-related-and-inline-rfc822",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "TUlNRS1WZXJzaW9uOiAxLjANClN1YmplY3Q6IHNpZ25lZCByZWxhdGVkDQpDb250ZW50LVR5cGU6IG11bHRpcGFydC9zaWduZWQ7IGJvdW5kYXJ5PSJzaWduZWQiOyBwcm90b2NvbD0iYXBwbGljYXRpb24vcGdwLXNpZ25hdHVyZSINCg0KLS1zaWduZWQNCkNvbnRlbnQtVHlwZTogbXVsdGlwYXJ0L3JlbGF0ZWQ7IGJvdW5kYXJ5PSJyZWxhdGVkIg0KDQotLXJlbGF0ZWQNCkNvbnRlbnQtVHlwZTogdGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04DQoNCjxwPk5lc3RlZCBIVE1MPC9wPg0KLS1yZWxhdGVkDQpDb250ZW50LVR5cGU6IGltYWdlL3BuZw0KQ29udGVudC1EaXNwb3NpdGlvbjogaW5saW5lDQpDb250ZW50LUlEOiA8bG9nb0BleGFtcGxlLmludmFsaWQ+DQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBiYXNlNjQNCg0KQUFFQw0KLS1yZWxhdGVkDQpDb250ZW50LVR5cGU6IG1lc3NhZ2UvcmZjODIyDQpDb250ZW50LURpc3Bvc2l0aW9uOiBpbmxpbmUNCkNvbnRlbnQtSUQ6IDxuZXN0ZWRAZXhhbXBsZS5pbnZhbGlkPg0KDQpGcm9tOiBuZXN0ZWRAZXhhbXBsZS5pbnZhbGlkDQpTdWJqZWN0OiBFbWJlZGRlZCBSRkM4MjINCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA0KDQplbWJlZGRlZCBib2R5DQotLXJlbGF0ZWQtLQ0KLS1zaWduZWQNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vcGdwLXNpZ25hdHVyZQ0KDQpzaWduYXR1cmUNCi0tc2lnbmVkLS0=",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "signed related",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "htmlBody": {
+            "state": "complete",
+            "value": "<p>Nested HTML</p>"
+          },
+          "parts": [
+            {
+              "path": "1.2",
+              "filename": "Attachment",
+              "mediaType": "image/png",
+              "disposition": "inline",
+              "contentID": "<logo@example.invalid>",
+              "declaredSize": 0,
+              "bytes": {
+                "base64": "AAEC",
+                "size": 3,
+                "sha256": "ae4b3280e56e2faf83f414a6e3dabe9d5fbe18976544c05fed121accb85b53fc"
+              }
+            },
+            {
+              "path": "1.3",
+              "filename": "Attachment",
+              "mediaType": "message/rfc822",
+              "disposition": "inline",
+              "contentID": "<nested@example.invalid>",
+              "declaredSize": 0,
+              "bytes": {
+                "base64": "RnJvbTogbmVzdGVkQGV4YW1wbGUuaW52YWxpZA0KU3ViamVjdDogRW1iZWRkZWQgUkZDODIyDQpDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9dXRmLTgNCg0KZW1iZWRkZWQgYm9keQ==",
+                "size": 112,
+                "sha256": "7aeab8583c9df66ded6a9aa0eed6e6425371d5bcbfdaec8b1ea6a73bb563f37d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "attached-rfc822-is-not-display-body",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "U3ViamVjdDogYXR0YWNoZWQgcmZjODIyDQpDb250ZW50LVR5cGU6IG11bHRpcGFydC9taXhlZDsgYm91bmRhcnk9b3V0ZXINCg0KLS1vdXRlcg0KQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PXV0Zi04DQoNCk91dGVyIHZpc2libGUgYm9keQ0KLS1vdXRlcg0KQ29udGVudC1UeXBlOiBtZXNzYWdlL3JmYzgyMjsgbmFtZT1mb3J3YXJkZWQuZW1sDQpDb250ZW50LURpc3Bvc2l0aW9uOiBhdHRhY2htZW50OyBmaWxlbmFtZT1mb3J3YXJkZWQuZW1sDQoNCkZyb206IGZvcndhcmRlckBleGFtcGxlLmludmFsaWQNClN1YmplY3Q6IEZvcndhcmRlZCBjb250ZW50DQpDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9dXRmLTgNCg0KaW5uZXIgb25seQ0KLS1vdXRlci0t",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "attached rfc822",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "complete",
+            "value": "Outer visible body"
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": [
+            {
+              "path": "2",
+              "filename": "forwarded.eml",
+              "mediaType": "message/rfc822",
+              "disposition": "attachment",
+              "contentID": "",
+              "declaredSize": 0,
+              "bytes": {
+                "base64": "RnJvbTogZm9yd2FyZGVyQGV4YW1wbGUuaW52YWxpZA0KU3ViamVjdDogRm9yd2FyZGVkIGNvbnRlbnQNCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA0KDQppbm5lciBvbmx5",
+                "size": 114,
+                "sha256": "a866b22fdae38a529fa531d76b55087848071943603583ce7ba12bc451d0014d"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "rfc2231-unicode-filename-sanitized-nfc",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "U3ViamVjdDogcmZjMjIzMSBmaWxlbmFtZQ0KQ29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi9wZGY7IG5hbWUqMCo9VVRGLTgnJ3JlJUNDJTgxc3VtZSVDQyU4MSUyRjIwOyBuYW1lKjEqPTI2LnBkZg0KQ29udGVudC1EaXNwb3NpdGlvbjogYXR0YWNobWVudDsgZmlsZW5hbWUqMCo9VVRGLTgnJ3JlJUNDJTgxc3VtZSVDQyU4MSUyRjIwOyBmaWxlbmFtZSoxKj0yNi5wZGYNCkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IGJhc2U2NA0KDQpKVkJFUmkweExqYz0=",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "rfc2231 filename",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": [
+            {
+              "path": "1",
+              "filename": "résumé_2026.pdf",
+              "mediaType": "application/pdf",
+              "disposition": "attachment",
+              "contentID": "",
+              "declaredSize": 0,
+              "bytes": {
+                "base64": "JVBERi0xLjc=",
+                "size": 8,
+                "sha256": "86edbaa24831badfa0a8b04bb410141e2ee4182b6d0014493fe262a7a331c20b"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "duplicate-filenames-preserve-part-paths",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "U3ViamVjdDogZHVwbGljYXRlIGZpbGVuYW1lcw0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PWR1cGxpY2F0ZQ0KDQotLWR1cGxpY2F0ZQ0KQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PXV0Zi04DQoNCmJvZHkNCi0tZHVwbGljYXRlDQpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbTsgbmFtZT1kdXBsaWNhdGUuYmluDQpDb250ZW50LURpc3Bvc2l0aW9uOiBhdHRhY2htZW50OyBmaWxlbmFtZT1kdXBsaWNhdGUuYmluDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBiYXNlNjQNCg0KQVE9PQ0KLS1kdXBsaWNhdGUNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vb2N0ZXQtc3RyZWFtOyBuYW1lPWR1cGxpY2F0ZS5iaW4NCkNvbnRlbnQtRGlzcG9zaXRpb246IGF0dGFjaG1lbnQ7IGZpbGVuYW1lPWR1cGxpY2F0ZS5iaW4NCkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IGJhc2U2NA0KDQpBZz09DQotLWR1cGxpY2F0ZS0t",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "duplicate filenames",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "complete",
+            "value": "body"
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": [
+            {
+              "path": "2",
+              "filename": "duplicate.bin",
+              "mediaType": "application/octet-stream",
+              "disposition": "attachment",
+              "contentID": "",
+              "declaredSize": 0,
+              "bytes": {
+                "base64": "AQ==",
+                "size": 1,
+                "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+              }
+            },
+            {
+              "path": "3",
+              "filename": "duplicate.bin",
+              "mediaType": "application/octet-stream",
+              "disposition": "attachment",
+              "contentID": "",
+              "declaredSize": 0,
+              "bytes": {
+                "base64": "Ag==",
+                "size": 1,
+                "sha256": "dbc1b4c900ffe48d575b5da5c638040125f65db0fe3e24494b76ea986457d986"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "base64-and-quoted-printable-attachments",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "Q29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PW0NClN1YmplY3Q6IGJhc2U2NCBhbmQgcXVvdGVkIHByaW50YWJsZSBhdHRhY2htZW50cw0KDQotLW0NCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA0KDQpib2R5DQotLW0NCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vb2N0ZXQtc3RyZWFtOyBuYW1lPW9uZS5iaW4NCkNvbnRlbnQtRGlzcG9zaXRpb246IGF0dGFjaG1lbnQ7IGZpbGVuYW1lPW9uZS5iaW4NCkNvbnRlbnQtSUQ6IDxvbmVAZXhhbXBsZS5pbnZhbGlkPg0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmFzZTY0DQoNCkFBRUNBdz09DQotLW0NCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgbmFtZT10d28udHh0DQpDb250ZW50LURpc3Bvc2l0aW9uOiBhdHRhY2htZW50OyBmaWxlbmFtZT10d28udHh0DQpDb250ZW50LUlEOiA8dHdvQGV4YW1wbGUuaW52YWxpZD4NCkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IHF1b3RlZC1wcmludGFibGUNCg0KZmlyc3Q9MEFzZWNvbmQNCi0tbS0t",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "base64 and quoted printable attachments",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "complete",
+            "value": "body"
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": [
+            {
+              "path": "2",
+              "filename": "one.bin",
+              "mediaType": "application/octet-stream",
+              "disposition": "attachment",
+              "contentID": "<one@example.invalid>",
+              "declaredSize": 0,
+              "bytes": {
+                "base64": "AAECAw==",
+                "size": 4,
+                "sha256": "054edec1d0211f624fed0cbca9d4f9400b0e491c43742af2c5b0abebf0c990d8"
+              }
+            },
+            {
+              "path": "3",
+              "filename": "two.txt",
+              "mediaType": "text/plain",
+              "disposition": "attachment",
+              "contentID": "<two@example.invalid>",
+              "declaredSize": 0,
+              "bytes": {
+                "base64": "Zmlyc3QKc2Vjb25k",
+                "size": 12,
+                "sha256": "4252f8d56b4bb236d0b1bc95a1202e392ca84ce0644bf628398fbb9517287da8"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "message-id-references-normalized-and-bounded",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "U3ViamVjdDogaWRlbnRpZmllcnMNCk1lc3NhZ2UtSUQ6IDxyb290QGV4YW1wbGUuaW52YWxpZD4NCkluLVJlcGx5LVRvOiBtYWxmb3JtZWQgPG9uZUBleGFtcGxlLmludmFsaWQ+IDxvbmVAZXhhbXBsZS5pbnZhbGlkPiA8YnJva2VuPiA8dHdvQGV4YW1wbGUuaW52YWxpZD4gPGJhZEBAZXhhbXBsZS5pbnZhbGlkPg0KUmVmZXJlbmNlczogc3RyYXkgPG9uZUBleGFtcGxlLmludmFsaWQ+DQogPG9uZUBleGFtcGxlLmludmFsaWQ+IDxicm9rZW4+IDx0d29AZXhhbXBsZS5pbnZhbGlkPiA8dGhyZWVAZXhhbXBsZS5pbnZhbGlkPiA8YmFkQEBleGFtcGxlLmludmFsaWQ+DQpDb250ZW50LVR5cGU6IHRleHQvcGxhaW47IGNoYXJzZXQ9dXRmLTgNCg0KaWRlbnRpZmllciBib2R5",
+      "boundarySources": [
+        {
+          "kind": "message_ids",
+          "header": "references",
+          "dimension": "count",
+          "accepted": 256,
+          "rejected": 257
+        },
+        {
+          "kind": "message_ids",
+          "header": "in_reply_to",
+          "dimension": "aggregate_bytes",
+          "accepted": 65536,
+          "rejected": 65537
+        },
+        {
+          "kind": "addresses",
+          "header": "to",
+          "dimension": "count",
+          "accepted": 256,
+          "rejected": 257
+        },
+        {
+          "kind": "addresses",
+          "header": "cc",
+          "dimension": "aggregate_bytes",
+          "accepted": 65536,
+          "rejected": 65537
+        }
+      ],
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "identifiers",
+          "rfcMessageID": "<root@example.invalid>",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [
+            "<one@example.invalid>",
+            "<two@example.invalid>"
+          ],
+          "references": [
+            "<one@example.invalid>",
+            "<two@example.invalid>",
+            "<three@example.invalid>"
+          ],
+          "textBody": {
+            "state": "complete",
+            "value": "identifier body"
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": []
+        }
+      }
+    },
+    {
+      "id": "missing-content-type-defaults-text-plain-us-ascii",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "U3ViamVjdDogZGVmYXVsdCBtZWRpYSB0eXBlDQoNCkFTQ0lJIGZhbGxiYWNrIGJvZHk=",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "default media type",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "complete",
+            "value": "ASCII fallback body"
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": []
+        }
+      }
+    },
+    {
+      "id": "malformed-base64-rejects-part-bytes",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "U3ViamVjdDogbWFsZm9ybWVkIGJhc2U2NA0KQ29udGVudC1UeXBlOiBtdWx0aXBhcnQvbWl4ZWQ7IGJvdW5kYXJ5PWJhZA0KDQotLWJhZA0KQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PXV0Zi04DQoNCnZpc2libGUgYm9keQ0KLS1iYWQNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vb2N0ZXQtc3RyZWFtOyBuYW1lPWJyb2tlbi5iaW4NCkNvbnRlbnQtRGlzcG9zaXRpb246IGF0dGFjaG1lbnQ7IGZpbGVuYW1lPWJyb2tlbi5iaW4NCkNvbnRlbnQtVHJhbnNmZXItRW5jb2Rpbmc6IGJhc2U2NA0KDQolJSUNCi0tYmFkLS0=",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "malformed base64",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "complete",
+            "value": "visible body"
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": [
+            {
+              "path": "2",
+              "filename": "broken.bin",
+              "mediaType": "application/octet-stream",
+              "disposition": "attachment",
+              "contentID": "",
+              "declaredSize": 0,
+              "bytesError": "protocol"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "unsupported-transfer-encoding-rejects-part-bytes",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "U3ViamVjdDogdW5zdXBwb3J0ZWQgdHJhbnNmZXIgZW5jb2RpbmcNCkNvbnRlbnQtVHlwZTogbXVsdGlwYXJ0L21peGVkOyBib3VuZGFyeT1vcGFxdWUNCg0KLS1vcGFxdWUNCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA0KDQp2aXNpYmxlIGJvZHkNCi0tb3BhcXVlDQpDb250ZW50LVR5cGU6IGFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbTsgbmFtZT1vcGFxdWUuYmluDQpDb250ZW50LURpc3Bvc2l0aW9uOiBhdHRhY2htZW50OyBmaWxlbmFtZT1vcGFxdWUuYmluDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiB4LW9wYXF1ZQ0KDQpvcGFxdWUgYnl0ZXMNCi0tb3BhcXVlLS0=",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "unsupported transfer encoding",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "complete",
+            "value": "visible body"
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": [
+            {
+              "path": "2",
+              "filename": "opaque.bin",
+              "mediaType": "application/octet-stream",
+              "disposition": "attachment",
+              "contentID": "",
+              "declaredSize": 0,
+              "bytesError": "protocol"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "depth-64-accepted-depth-65-rejected",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "generator"
+        }
+      ],
+      "expected": {
+        "result": "resource_limit",
+        "error": "provider resource limit exceeded"
+      },
+      "generator": {
+        "kind": "nested_multipart",
+        "dimension": "depth",
+        "accepted": 64,
+        "rejected": 65
+      }
+    },
+    {
+      "id": "parts-2000-accepted-2001-rejected",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "generator"
+        }
+      ],
+      "expected": {
+        "result": "resource_limit",
+        "error": "provider resource limit exceeded"
+      },
+      "generator": {
+        "kind": "repeated_parts",
+        "dimension": "part_count",
+        "accepted": 2000,
+        "rejected": 2001
+      }
+    },
+    {
+      "id": "header-2mib-accepted-plus-one-rejected",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "generator"
+        }
+      ],
+      "expected": {
+        "result": "resource_limit",
+        "error": "provider resource limit exceeded"
+      },
+      "generator": {
+        "kind": "header_bytes",
+        "dimension": "header_bytes",
+        "accepted": 2097152,
+        "rejected": 2097153
+      }
+    },
+    {
+      "id": "attachment-50mib-accepted-plus-one-rejected",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "generator"
+        }
+      ],
+      "expected": {
+        "result": "resource_limit",
+        "error": "provider resource limit exceeded"
+      },
+      "generator": {
+        "kind": "attachment_bytes",
+        "dimension": "attachment_bytes",
+        "accepted": 52428800,
+        "rejected": 52428801
+      }
+    },
+    {
+      "id": "aggregate-100mib-accepted-plus-one-rejected",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "generator"
+        }
+      ],
+      "expected": {
+        "result": "resource_limit",
+        "error": "provider resource limit exceeded"
+      },
+      "generator": {
+        "kind": "aggregate_attachment_bytes",
+        "dimension": "aggregate_attachment_bytes",
+        "accepted": 104857600,
+        "rejected": 104857601
+      }
+    },
+    {
+      "id": "body-over-1mib-is-explicitly-omitted",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "generator"
+        }
+      ],
+      "expected": {
+        "result": "resource_limit",
+        "error": "provider resource limit exceeded"
+      },
+      "generator": {
+        "kind": "header_bytes",
+        "dimension": "body_bytes",
+        "accepted": 1048576,
+        "rejected": 1048577
+      }
+    },
+    {
+      "id": "attachments-256-and-metadata-64kib-boundaries",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "generator"
+        }
+      ],
+      "expected": {
+        "result": "resource_limit",
+        "error": "provider resource limit exceeded"
+      },
+      "generator": {
+        "kind": "repeated_parts",
+        "dimension": "attachment_boundaries",
+        "attachmentCount": {
+          "accepted": 256,
+          "rejected": 257
+        },
+        "attachmentMetadataBytes": {
+          "accepted": 65536,
+          "rejected": 65537
+        }
+      }
+    },
+    {
+      "id": "nul-rejected-other-controls-normalized",
+      "provider": "generic",
+      "transport": "starttls",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "message"
+        }
+      ],
+      "inputBase64": "U3ViamVjdDogY29udHJvbHMBbm9ybWFsaXplZA0KQ29udGVudC1UeXBlOiB0ZXh0L3BsYWluOyBjaGFyc2V0PXV0Zi04DQoNCnZpc2libGUAaGlkZGVuAg==",
+      "expected": {
+        "result": "normalized",
+        "normalized": {
+          "subject": "controls normalized",
+          "rfcMessageID": "",
+          "date": "",
+          "from": [],
+          "sender": null,
+          "replyTo": [],
+          "to": [],
+          "cc": [],
+          "bcc": [],
+          "inReplyTo": [],
+          "references": [],
+          "textBody": {
+            "state": "malformed",
+            "value": ""
+          },
+          "htmlBody": {
+            "state": "absent",
+            "value": ""
+          },
+          "parts": []
+        }
+      }
+    }
+  ]
+}

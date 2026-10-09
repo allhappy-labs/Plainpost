@@ -1,0 +1,134 @@
+<style>
+  .phones { display:flex; gap:26px; flex-wrap:wrap; justify-content:center; }
+  .phone { width:300px; height:650px; border-radius:46px; background:#000; position:relative; overflow:hidden; color:#fff;
+           box-shadow:0 0 0 9px #2c2c2e, 0 18px 40px rgba(0,0,0,.5); font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif; }
+  .phone * { box-sizing:border-box; }
+  .status { height:42px; display:flex; justify-content:space-between; align-items:center; padding:0 28px; font-size:13px; font-weight:600; }
+  .g { background:rgba(58,58,60,.72); border:0.5px solid rgba(255,255,255,.10); box-shadow:0 6px 18px rgba(0,0,0,.45); border-radius:999px; color:#fff; }
+  .c { width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:16px; flex:none; }
+  .p { height:36px; padding:0 14px; display:flex; align-items:center; font-size:15px; font-weight:500; }
+  .h { font-size:12px; color:#8e8e93; padding:12px 18px 6px; text-transform:uppercase; }
+  .sug { display:flex; align-items:center; gap:10px; padding:9px 18px; font-size:15px; position:relative; }
+  .sug + .sug::before { content:""; position:absolute; left:48px; right:0; top:0; border-top:0.5px solid #38383a; }
+  .sug i { font-style:normal; width:20px; text-align:center; color:#8e8e93; }
+  .mrow { display:flex; gap:10px; padding:9px 14px; position:relative; }
+  .mrow::after { content:""; position:absolute; left:58px; right:12px; bottom:0; border-bottom:0.5px solid #38383a; }
+  .ic { width:36px; height:36px; border-radius:9px; flex:none; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; }
+  .rt { flex:1; min-width:0; }
+  .l1 { display:flex; justify-content:space-between; font-size:15px; font-weight:600; }
+  .l1 span:last-child { font-weight:400; color:#8e8e93; font-size:12px; }
+  .l2 { font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .l3 { font-size:13px; color:#8e8e93; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  mark { background:rgba(255,214,10,.35); color:inherit; border-radius:3px; padding:0 1px; }
+  .kb { position:absolute; left:0; right:0; bottom:0; height:230px; background:#1c1c1e; border-top:0.5px solid #38383a; display:flex; align-items:center; justify-content:center; color:#5a5a5e; font-size:13px; }
+  .sbar { position:absolute; left:12px; right:12px; display:flex; gap:8px; align-items:center; }
+  .sfield { flex:1; height:44px; display:flex; align-items:center; gap:8px; padding:0 14px; font-size:15px; }
+  .sheet { position:absolute; left:0; right:0; bottom:0; background:#1c1c1e; border-radius:26px 26px 0 0; }
+  .grab { width:36px; height:5px; border-radius:3px; background:#48484a; margin:7px auto 4px; }
+  .crow { display:flex; align-items:center; gap:8px; padding:11px 16px; font-size:15px; border-bottom:0.5px solid #38383a; }
+  .crow .k { color:#8e8e93; width:56px; }
+  .tok { background:rgba(10,132,255,.2); color:#0a84ff; border-radius:999px; padding:3px 10px; font-size:14px; }
+  .send { width:34px; height:34px; border-radius:50%; background:#0a84ff; display:flex; align-items:center; justify-content:center; font-size:16px; }
+  .pop { margin:0 12px; background:#2c2c2e; border-radius:14px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,.6); }
+  .pop div { padding:9px 14px; font-size:14px; border-bottom:0.5px solid #3a3a3c; }
+  .pop div span { display:block; color:#8e8e93; font-size:12px; }
+  .ask { margin:10px 16px; font-size:14px; line-height:1.45; color:#e5e5ea; }
+  .blk { margin:8px 16px; background:#2c2c2e; border-radius:14px; overflow:hidden; }
+  .blk div { padding:9px 12px; font-size:13px; border-bottom:0.5px solid #3a3a3c; }
+  .blk div span { color:#8e8e93; float:right; }
+  .caption { width:300px; margin-top:22px; font-size:12.5px; line-height:1.45; color:#d1d1d6; }
+  .caption b { color:#fff; }
+  .col { display:flex; flex-direction:column; align-items:center; }
+</style>
+
+<h2>Search, Compose and Ask Mail</h2>
+<p class="subtitle">All three open from the bottom glass bar and behave like iOS Mail. Back always returns to where you were.</p>
+
+<div class="phones">
+
+<!-- SEARCH -->
+<div class="col">
+<div class="phone">
+  <div class="status"><span>21:12</span><span>▮▮▮ ◠ 13</span></div>
+
+  <div class="h">Suggestions</div>
+  <div class="sug"><i>✦</i><span>Ask Mail: <b>"parcel"</b></span></div>
+  <div class="sug"><i>👤</i>Swiss Post<span style="margin-left:auto;color:#8e8e93;font-size:12px">from</span></div>
+  <div class="sug"><i>📎</i>Has attachment</div>
+  <div class="h">Top hits</div>
+  <div class="mrow"><div class="ic" style="background:#30d158">SP</div><div class="rt"><div class="l1"><span>Swiss Post</span><span>17:27</span></div><div class="l2"><mark>Parcel</mark> update: out for delivery</div><div class="l3">Your <mark>parcel</mark> 99.00.123456 is out…</div></div></div>
+  <div class="mrow"><div class="ic" style="background:#ff9f0a">AM</div><div class="rt"><div class="l1"><span>Amazon</span><span>Sep 27</span></div><div class="l2">Your order has shipped</div><div class="l3">Your <mark>parcel</mark> with 2 items is on the way</div></div></div>
+  <div class="sbar" style="bottom:240px">
+    <div class="g sfield">🔍 parcel<span style="margin-left:auto;color:#8e8e93">✕</span></div>
+    <div class="g p" style="height:44px">Cancel</div>
+  </div>
+  <div class="kb">keyboard</div>
+</div>
+<div class="caption"><b>Search</b> (tap the bottom field)<br>
+• The field rises with the keyboard, as in iOS Mail. It <b>always searches all mailboxes</b>; no scope toggle.<br>
+• Suggestions: <b>Ask Mail about the query</b>, people, "has attachment", date filters. No syntax cheat sheet; power syntax (<code>from:</code>) still works.<br>
+• Results use the same row as the Inbox, with matches highlighted. Opening one pushes the conversation, and <b>Back returns to the results</b>.</div>
+</div>
+
+<!-- COMPOSE -->
+<div class="col">
+<div class="phone" style="background:#000">
+  <div class="status"><span>21:13</span><span>▮▮▮ ◠ 13</span></div>
+  <div class="sheet" style="top:52px">
+    <div class="grab"></div>
+    <div style="display:flex;align-items:center;padding:4px 12px 8px">
+      <div class="g c">✕</div>
+      <div style="flex:1;text-align:center;font-weight:600">New Message</div>
+      <div class="send">↑</div>
+    </div>
+    <div class="crow"><span class="k">To:</span><span class="tok">Maria Chen</span><span>ma|</span></div>
+    <div class="pop">
+      <div>Maria Chen<span>maria.chen@northwind.example · from your mail</span></div>
+      <div>Mark Stein<span>mark@stein.example · Contacts</span></div>
+    </div>
+    <div class="crow"><span class="k">Cc/Bcc, From:</span><span style="color:#8e8e93">oleg.olhapi@gmail.com</span></div>
+    <div class="crow"><span class="k">Subject:</span></div>
+    <div style="padding:12px 16px;color:#5a5a5e;font-size:15px">Write your message…</div>
+    <div class="kb" style="height:210px">keyboard · formatting bar ( Aa ✦ 📎 📷 ) above it</div>
+  </div>
+</div>
+<div class="caption"><b>Compose</b> (a real sheet, like iOS Mail)<br>
+• ✕ offers Save Draft or Delete Draft; the ↑ Send button sits top-right.<br>
+• Recipients use an email keyboard with no autocorrect. Suggestions come from <b>people you've emailed</b> plus Contacts, in a dropdown rather than a popover.<br>
+• Contacts permission is asked only when you first type a recipient.<br>
+• A bar above the keyboard holds text formatting, ✦ Draft with AI, and attachments. It replaces the Markdown toolbar.<br>
+• Reply, Reply All and Forward open this same sheet, pre-filled.</div>
+</div>
+
+<!-- ASK MAIL -->
+<div class="col">
+<div class="phone">
+  <div class="status"><span>21:14</span><span>▮▮▮ ◠ 13</span></div>
+  <div style="padding:8px 16px;opacity:.35;font-size:26px;font-weight:700">Smart Inbox</div>
+  <div class="sheet" style="top:120px">
+    <div class="grab"></div>
+    <div style="display:flex;align-items:center;padding:4px 12px 6px">
+      <div class="g c">✕</div>
+      <div style="flex:1;text-align:center;font-weight:600">Ask Mail <span style="color:#8e8e93;font-size:13px">🔒</span></div>
+      <div class="g c">✎</div>
+    </div>
+    <div class="ask" style="text-align:right;color:#0a84ff">What am I waiting on replies for?</div>
+    <div class="ask">3 threads are waiting on others:</div>
+    <div class="blk">
+      <div>Quarterly planning<span>Maria · 2d</span></div>
+      <div>Boiler service<span>Peter · 1d</span></div>
+      <div>Dinner on Saturday?<span>Tom · 5h</span></div>
+    </div>
+    <div class="sbar" style="bottom:22px">
+      <div class="g sfield" style="color:#8e8e93">Ask about your mail…</div>
+      <div class="g c" style="width:44px;height:44px">↑</div>
+    </div>
+  </div>
+</div>
+<div class="caption"><b>Ask Mail</b> (✦ in the bottom bar)<br>
+• A sheet with medium and large detents, so your list stays visible behind it.<br>
+• Its content is the <b>already-approved Ask Mail redesign</b> (text plus result blocks, lock icon only), used as-is. This rewrite only hosts it.<br>
+• Tapping a result pushes that conversation in the main stack and lowers the sheet.</div>
+</div>
+
+</div>

@@ -1,0 +1,2403 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://plainpost.olhapi.com/protocol/provider-fixtures/imap-transcripts.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "operations",
+    "cases"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 18,
+      "items": {
+        "$ref": "#/$defs/operation"
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 18,
+      "items": {
+        "$ref": "#/$defs/case"
+      }
+    }
+  },
+  "$defs": {
+    "wire": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "direction",
+        "bytesBase64"
+      ],
+      "properties": {
+        "kind": {
+          "const": "wire"
+        },
+        "direction": {
+          "enum": [
+            "client",
+            "server"
+          ]
+        },
+        "bytesBase64": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]*={0,2}$"
+        }
+      }
+    },
+    "auth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "direction",
+        "credentialGeneration"
+      ],
+      "properties": {
+        "kind": {
+          "const": "auth"
+        },
+        "direction": {
+          "const": "client"
+        },
+        "credentialGeneration": {
+          "const": "synthetic-v1"
+        }
+      }
+    },
+    "tls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "direction"
+      ],
+      "properties": {
+        "kind": {
+          "const": "tls"
+        },
+        "direction": {
+          "const": "client"
+        }
+      }
+    },
+    "message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "from",
+        "to",
+        "bytesBase64"
+      ],
+      "properties": {
+        "kind": {
+          "const": "message"
+        },
+        "from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "bytesBase64": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]*={0,2}$"
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "const": "data"
+        },
+        "messageSHA256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "messageSize": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "prefixSize": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "messageSHA256",
+            "messageSize"
+          ]
+        },
+        {
+          "required": [
+            "prefixSize"
+          ]
+        }
+      ]
+    },
+    "disconnect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "direction"
+      ],
+      "properties": {
+        "kind": {
+          "const": "disconnect"
+        },
+        "direction": {
+          "const": "server"
+        }
+      }
+    },
+    "envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "messageObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256",
+        "size"
+      ],
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "size": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        }
+      }
+    },
+    "normalized": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result"
+      ],
+      "properties": {
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "action": {
+          "type": "string"
+        },
+        "envelope": {
+          "$ref": "#/$defs/envelope"
+        },
+        "message": {
+          "$ref": "#/$defs/messageObservation"
+        },
+        "result": {
+          "enum": [
+            "applied",
+            "rejected",
+            "unsupported",
+            "delivery_uncertain"
+          ]
+        }
+      }
+    },
+    "semanticMailbox": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "displayName",
+        "selectable",
+        "specialUse"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "selectable": {
+          "type": "boolean"
+        },
+        "specialUse": {
+          "enum": [
+            "none",
+            "inbox",
+            "sent",
+            "drafts",
+            "trash",
+            "junk",
+            "archive",
+            "all"
+          ]
+        }
+      }
+    },
+    "semanticPeer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "capabilities",
+        "mailboxes",
+        "uidValidity",
+        "idleBehavior",
+        "appendResponses",
+        "disconnect",
+        "catalogBehavior",
+        "metadataBehavior",
+        "security",
+        "oauthBehavior"
+      ],
+      "properties": {
+        "capabilities": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 64,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "mailboxes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 4096,
+          "items": {
+            "$ref": "#/$defs/semanticMailbox"
+          }
+        },
+        "uidValidity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "idleBehavior": {
+          "enum": [
+            "changed",
+            "renew",
+            "poll",
+            "disabled"
+          ]
+        },
+        "appendResponses": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "enum": [
+              "append_uid",
+              "append_without_uid"
+            ]
+          }
+        },
+        "disconnect": {
+          "enum": [
+            "none",
+            "metadata"
+          ]
+        },
+        "catalogBehavior": {
+          "enum": [
+            "normal",
+            "oversized"
+          ]
+        },
+        "security": {
+          "enum": [
+            "verified",
+            "invalid_certificate",
+            "cleartext_nonloopback"
+          ]
+        },
+        "oauthBehavior": {
+          "enum": [
+            "none",
+            "refresh_before_connect"
+          ]
+        },
+        "metadataBehavior": {
+          "enum": [
+            "normal",
+            "oversized_gmail_labels_literal"
+          ]
+        }
+      }
+    },
+    "operationInput": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/discoverInput"
+        },
+        {
+          "$ref": "#/$defs/syncInput"
+        },
+        {
+          "$ref": "#/$defs/waitInput"
+        },
+        {
+          "$ref": "#/$defs/setFlagsInput"
+        },
+        {
+          "$ref": "#/$defs/setLabelsInput"
+        },
+        {
+          "$ref": "#/$defs/moveInput"
+        },
+        {
+          "$ref": "#/$defs/deleteInput"
+        },
+        {
+          "$ref": "#/$defs/appendInput"
+        },
+        {
+          "$ref": "#/$defs/fetchPartInput"
+        }
+      ]
+    },
+    "semanticMailboxRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "epoch"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "semanticMessageRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mailbox",
+        "rawID"
+      ],
+      "properties": {
+        "mailbox": {
+          "$ref": "#/$defs/semanticMailboxRef"
+        },
+        "rawID": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      }
+    },
+    "semanticAddress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "displayName",
+        "mailbox"
+      ],
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "mailbox": {
+          "type": "string",
+          "maxLength": 512
+        }
+      }
+    },
+    "semanticLabel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "displayName"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 512
+        }
+      }
+    },
+    "semanticBody": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "value"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "complete",
+            "absent",
+            "malformed",
+            "omitted_oversized"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 1048576
+        }
+      }
+    },
+    "semanticPartDescriptor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "filename",
+        "mimeType",
+        "disposition",
+        "contentID",
+        "declaredSize"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*(?:\\.[1-9][0-9]*)*$"
+        },
+        "filename": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "mimeType": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "disposition": {
+          "enum": [
+            "none",
+            "inline",
+            "attachment"
+          ]
+        },
+        "contentID": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "declaredSize": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 52428800
+        }
+      }
+    },
+    "semanticMessage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rfcMessageID",
+        "providerStableID",
+        "providerThreadID",
+        "inReplyTo",
+        "references",
+        "from",
+        "sender",
+        "replyTo",
+        "to",
+        "cc",
+        "bcc",
+        "subject",
+        "receivedAt",
+        "sentAt",
+        "flags",
+        "labels",
+        "textBody",
+        "htmlBody",
+        "parts"
+      ],
+      "properties": {
+        "rfcMessageID": {
+          "type": "string",
+          "maxLength": 998
+        },
+        "providerStableID": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "providerThreadID": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "inReplyTo": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 998
+          }
+        },
+        "references": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 998
+          }
+        },
+        "from": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/semanticAddress"
+          }
+        },
+        "sender": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/semanticAddress"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "replyTo": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/semanticAddress"
+          }
+        },
+        "to": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/semanticAddress"
+          }
+        },
+        "cc": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/semanticAddress"
+          }
+        },
+        "bcc": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/semanticAddress"
+          }
+        },
+        "subject": {
+          "type": "string",
+          "maxLength": 1048576
+        },
+        "receivedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "sentAt": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "seen",
+              "answered",
+              "flagged",
+              "draft",
+              "deleted"
+            ]
+          }
+        },
+        "labels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/semanticLabel"
+          }
+        },
+        "textBody": {
+          "$ref": "#/$defs/semanticBody"
+        },
+        "htmlBody": {
+          "$ref": "#/$defs/semanticBody"
+        },
+        "parts": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/semanticPartDescriptor"
+          }
+        }
+      }
+    },
+    "semanticUpsertChange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "ref",
+        "message"
+      ],
+      "properties": {
+        "kind": {
+          "const": "upsert"
+        },
+        "ref": {
+          "$ref": "#/$defs/semanticMessageRef"
+        },
+        "message": {
+          "$ref": "#/$defs/semanticMessage"
+        }
+      }
+    },
+    "semanticRemovalChange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "ref",
+        "message"
+      ],
+      "properties": {
+        "kind": {
+          "const": "membership_removed"
+        },
+        "ref": {
+          "$ref": "#/$defs/semanticMessageRef"
+        },
+        "message": {
+          "type": "null"
+        }
+      }
+    },
+    "semanticChange": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/semanticUpsertChange"
+        },
+        {
+          "$ref": "#/$defs/semanticRemovalChange"
+        }
+      ]
+    },
+    "semanticCursor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "provider",
+        "mailboxID",
+        "epoch",
+        "uidValidity",
+        "lastUID",
+        "scanUID"
+      ],
+      "properties": {
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "mailboxID": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "epoch": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "uidValidity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "lastUID": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        },
+        "scanUID": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4294967295
+        }
+      }
+    },
+    "semanticPage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mailbox",
+        "changes",
+        "nextCursor",
+        "hasMore",
+        "observedUIDValidity",
+        "epochReset"
+      ],
+      "properties": {
+        "mailbox": {
+          "$ref": "#/$defs/semanticMailboxRef"
+        },
+        "changes": {
+          "type": "array",
+          "maxItems": 500,
+          "items": {
+            "$ref": "#/$defs/semanticChange"
+          }
+        },
+        "nextCursor": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/semanticCursor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hasMore": {
+          "type": "boolean"
+        },
+        "observedUIDValidity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 4294967295
+        },
+        "epochReset": {
+          "type": "boolean"
+        }
+      }
+    },
+    "semanticPart": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "descriptor",
+        "bytesBase64",
+        "bytesRead",
+        "sha256",
+        "complete"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/semanticMessageRef"
+        },
+        "descriptor": {
+          "$ref": "#/$defs/semanticPartDescriptor"
+        },
+        "bytesBase64": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]*={0,2}$"
+        },
+        "bytesRead": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 52428800
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "complete": {
+          "const": true
+        }
+      }
+    },
+    "semanticWait": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mailbox",
+        "kind"
+      ],
+      "properties": {
+        "mailbox": {
+          "$ref": "#/$defs/semanticMailboxRef"
+        },
+        "kind": {
+          "enum": [
+            "provider_change",
+            "poll_due",
+            "epoch_may_have_changed"
+          ]
+        }
+      }
+    },
+    "semanticOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "code",
+        "providerReference",
+        "destinationRawID",
+        "sentCopy"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "applied",
+            "rejected",
+            "conflicted",
+            "delivery_uncertain"
+          ]
+        },
+        "code": {
+          "enum": [
+            "applied",
+            "accepted",
+            "unsupported",
+            "not_found",
+            "permission_denied",
+            "recipient_rejected",
+            "provider_rejected",
+            "precondition_failed",
+            "acceptance_unknown"
+          ]
+        },
+        "providerReference": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "destinationRawID": {
+          "type": "string",
+          "pattern": "^(?:|[1-9][0-9]*)$"
+        },
+        "sentCopy": {
+          "enum": [
+            "not_applicable",
+            "provider_managed",
+            "appended",
+            "observed",
+            "missing",
+            "unknown"
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "properties": {
+                "state": {
+                  "const": "applied"
+                },
+                "code": {
+                  "const": "applied"
+                },
+                "sentCopy": {
+                  "const": "not_applicable"
+                }
+              }
+            },
+            {
+              "properties": {
+                "state": {
+                  "const": "applied"
+                },
+                "code": {
+                  "const": "accepted"
+                },
+                "sentCopy": {
+                  "enum": [
+                    "not_applicable",
+                    "provider_managed",
+                    "appended",
+                    "observed",
+                    "missing",
+                    "unknown"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "state": {
+                  "const": "rejected"
+                },
+                "code": {
+                  "enum": [
+                    "unsupported",
+                    "not_found",
+                    "permission_denied",
+                    "recipient_rejected",
+                    "provider_rejected"
+                  ]
+                },
+                "sentCopy": {
+                  "const": "not_applicable"
+                }
+              }
+            },
+            {
+              "properties": {
+                "state": {
+                  "const": "conflicted"
+                },
+                "code": {
+                  "const": "precondition_failed"
+                },
+                "sentCopy": {
+                  "const": "not_applicable"
+                }
+              }
+            },
+            {
+              "properties": {
+                "state": {
+                  "const": "delivery_uncertain"
+                },
+                "code": {
+                  "const": "acceptance_unknown"
+                },
+                "sentCopy": {
+                  "const": "unknown"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "semanticMutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "outcomes"
+      ],
+      "properties": {
+        "outcomes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "items": {
+            "$ref": "#/$defs/semanticIMAPOutcome"
+          }
+        }
+      }
+    },
+    "semanticError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tag",
+        "retry",
+        "cause"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "invalid",
+            "unsupported",
+            "authentication",
+            "permission",
+            "not_found",
+            "conflict",
+            "rate_limited",
+            "unavailable",
+            "protocol",
+            "tls",
+            "resource_limit",
+            "closed"
+          ]
+        },
+        "retry": {
+          "enum": [
+            "never",
+            "safe",
+            "reconcile_first"
+          ]
+        },
+        "cause": {
+          "enum": [
+            "",
+            "context_canceled",
+            "deadline_exceeded"
+          ]
+        }
+      }
+    },
+    "semanticCatalogResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "catalog"
+      ],
+      "properties": {
+        "kind": {
+          "const": "catalog"
+        },
+        "catalog": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mailboxes"
+          ],
+          "properties": {
+            "mailboxes": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 4096,
+              "items": {
+                "$ref": "#/$defs/semanticMailbox"
+              }
+            }
+          }
+        }
+      }
+    },
+    "semanticPageResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "page"
+      ],
+      "properties": {
+        "kind": {
+          "const": "page"
+        },
+        "page": {
+          "$ref": "#/$defs/semanticPage"
+        }
+      }
+    },
+    "semanticPartResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "part"
+      ],
+      "properties": {
+        "kind": {
+          "const": "part"
+        },
+        "part": {
+          "$ref": "#/$defs/semanticPart"
+        }
+      }
+    },
+    "semanticWaitResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "wait"
+      ],
+      "properties": {
+        "kind": {
+          "const": "wait"
+        },
+        "wait": {
+          "$ref": "#/$defs/semanticWait"
+        }
+      }
+    },
+    "semanticMutationResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "mutation"
+      ],
+      "properties": {
+        "kind": {
+          "const": "mutation"
+        },
+        "mutation": {
+          "$ref": "#/$defs/semanticMutation"
+        }
+      }
+    },
+    "semanticErrorResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "error"
+      ],
+      "properties": {
+        "kind": {
+          "const": "error"
+        },
+        "error": {
+          "$ref": "#/$defs/semanticError"
+        }
+      }
+    },
+    "semanticResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/semanticCatalogResult"
+        },
+        {
+          "$ref": "#/$defs/semanticPageResult"
+        },
+        {
+          "$ref": "#/$defs/semanticPartResult"
+        },
+        {
+          "$ref": "#/$defs/semanticWaitResult"
+        },
+        {
+          "$ref": "#/$defs/semanticMutationResult"
+        },
+        {
+          "$ref": "#/$defs/semanticErrorResult"
+        }
+      ]
+    },
+    "semanticExpected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result"
+      ],
+      "properties": {
+        "result": {
+          "$ref": "#/$defs/semanticResult"
+        }
+      }
+    },
+    "operation": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/discoverOperation"
+        },
+        {
+          "$ref": "#/$defs/syncOperation"
+        },
+        {
+          "$ref": "#/$defs/waitOperation"
+        },
+        {
+          "$ref": "#/$defs/setFlagsOperation"
+        },
+        {
+          "$ref": "#/$defs/setLabelsOperation"
+        },
+        {
+          "$ref": "#/$defs/moveOperation"
+        },
+        {
+          "$ref": "#/$defs/deleteOperation"
+        },
+        {
+          "$ref": "#/$defs/appendOperation"
+        },
+        {
+          "$ref": "#/$defs/fetchPartOperation"
+        }
+      ]
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "provider",
+        "transport",
+        "authentication",
+        "script",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "enum": [
+            "implicit_tls",
+            "starttls",
+            "loopback_fixture"
+          ]
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "script": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/wire"
+              },
+              {
+                "$ref": "#/$defs/auth"
+              },
+              {
+                "$ref": "#/$defs/tls"
+              },
+              {
+                "$ref": "#/$defs/message"
+              },
+              {
+                "$ref": "#/$defs/data"
+              },
+              {
+                "$ref": "#/$defs/disconnect"
+              }
+            ]
+          }
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "normalized"
+          ],
+          "properties": {
+            "normalized": {
+              "$ref": "#/$defs/normalized"
+            }
+          }
+        }
+      }
+    },
+    "discoverInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer"
+      ],
+      "properties": {
+        "action": {
+          "const": "discover"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        }
+      }
+    },
+    "syncBaselineInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer",
+        "mailbox",
+        "pageSize",
+        "syncMode"
+      ],
+      "properties": {
+        "action": {
+          "const": "sync"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        },
+        "mailbox": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "pageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "syncMode": {
+          "const": "baseline"
+        }
+      }
+    },
+    "syncIncrementalInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer",
+        "mailbox",
+        "pageSize",
+        "syncMode",
+        "cursor"
+      ],
+      "properties": {
+        "action": {
+          "const": "sync"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        },
+        "mailbox": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "pageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "syncMode": {
+          "const": "incremental"
+        },
+        "cursor": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]*$",
+          "maxLength": 512
+        }
+      }
+    },
+    "syncReconcileInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer",
+        "mailbox",
+        "pageSize",
+        "syncMode",
+        "cursor",
+        "knownRawIDs"
+      ],
+      "properties": {
+        "action": {
+          "const": "sync"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        },
+        "mailbox": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "pageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        },
+        "syncMode": {
+          "const": "reconcile"
+        },
+        "cursor": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]*$",
+          "maxLength": 512
+        },
+        "knownRawIDs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 500,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          }
+        }
+      }
+    },
+    "syncInput": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/syncBaselineInput"
+        },
+        {
+          "$ref": "#/$defs/syncIncrementalInput"
+        },
+        {
+          "$ref": "#/$defs/syncReconcileInput"
+        }
+      ]
+    },
+    "waitInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer",
+        "mailbox",
+        "maximumWaitMilliseconds"
+      ],
+      "properties": {
+        "action": {
+          "const": "wait"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        },
+        "mailbox": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "maximumWaitMilliseconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1500000
+        }
+      }
+    },
+    "setFlagsInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer",
+        "mailbox",
+        "rawID",
+        "addFlags",
+        "removeFlags"
+      ],
+      "properties": {
+        "action": {
+          "const": "set_flags"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        },
+        "mailbox": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "rawID": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "addFlags": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "seen",
+              "answered",
+              "flagged",
+              "draft",
+              "deleted"
+            ]
+          },
+          "maxItems": 256,
+          "uniqueItems": true
+        },
+        "removeFlags": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "seen",
+              "answered",
+              "flagged",
+              "draft",
+              "deleted"
+            ]
+          },
+          "maxItems": 256,
+          "uniqueItems": true
+        },
+        "expectedModSequence": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "setLabelsInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer",
+        "mailbox",
+        "rawID",
+        "addLabels",
+        "removeLabels"
+      ],
+      "properties": {
+        "action": {
+          "const": "set_labels"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        },
+        "mailbox": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "rawID": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "addLabels": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/semanticLabel"
+          }
+        },
+        "removeLabels": {
+          "type": "array",
+          "maxItems": 256,
+          "items": {
+            "$ref": "#/$defs/semanticLabel"
+          }
+        }
+      }
+    },
+    "moveInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer",
+        "mailbox",
+        "rawID",
+        "destination"
+      ],
+      "properties": {
+        "action": {
+          "const": "move"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        },
+        "mailbox": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "rawID": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "destination": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "deleteInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer",
+        "mailbox",
+        "rawID"
+      ],
+      "properties": {
+        "action": {
+          "const": "delete"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        },
+        "mailbox": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "rawID": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      }
+    },
+    "appendInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer",
+        "mailbox",
+        "destination",
+        "flags",
+        "messageID",
+        "appendPurpose",
+        "appendAttempts"
+      ],
+      "properties": {
+        "action": {
+          "const": "append"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        },
+        "mailbox": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "destination": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 512
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "flags": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "seen",
+              "answered",
+              "flagged",
+              "draft",
+              "deleted"
+            ]
+          },
+          "maxItems": 256,
+          "uniqueItems": true
+        },
+        "messageID": {
+          "type": "string",
+          "pattern": "^<[^<>\\s]+>$",
+          "maxLength": 998
+        },
+        "appendPurpose": {
+          "enum": [
+            "draft",
+            "sent_copy"
+          ]
+        },
+        "appendAttempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        }
+      }
+    },
+    "fetchPartInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "peer",
+        "mailbox",
+        "rawID",
+        "path",
+        "pageSize"
+      ],
+      "properties": {
+        "action": {
+          "const": "fetch_part"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "const": "loopback_fixture"
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "peer": {
+          "$ref": "#/$defs/semanticPeer"
+        },
+        "mailbox": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "rawID": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*(?:\\.[1-9][0-9]*)*$"
+        },
+        "pageSize": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500
+        }
+      }
+    },
+    "semanticIMAPOutcome": {
+      "oneOf": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/semanticOutcome"
+            },
+            {
+              "properties": {
+                "state": {
+                  "const": "applied"
+                },
+                "code": {
+                  "const": "applied"
+                },
+                "sentCopy": {
+                  "const": "not_applicable"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/semanticOutcome"
+            },
+            {
+              "properties": {
+                "state": {
+                  "const": "rejected"
+                },
+                "code": {
+                  "enum": [
+                    "unsupported",
+                    "not_found",
+                    "permission_denied",
+                    "recipient_rejected",
+                    "provider_rejected"
+                  ]
+                },
+                "sentCopy": {
+                  "const": "not_applicable"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/semanticOutcome"
+            },
+            {
+              "properties": {
+                "state": {
+                  "const": "conflicted"
+                },
+                "code": {
+                  "const": "precondition_failed"
+                },
+                "sentCopy": {
+                  "const": "not_applicable"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "discoverOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "input": {
+          "$ref": "#/$defs/discoverInput"
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result"
+          ],
+          "properties": {
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/semanticCatalogResult"
+                },
+                {
+                  "$ref": "#/$defs/semanticErrorResult"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "syncOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "input": {
+          "$ref": "#/$defs/syncInput"
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result"
+          ],
+          "properties": {
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/semanticPageResult"
+                },
+                {
+                  "$ref": "#/$defs/semanticErrorResult"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "waitOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "input": {
+          "$ref": "#/$defs/waitInput"
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result"
+          ],
+          "properties": {
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/semanticWaitResult"
+                },
+                {
+                  "$ref": "#/$defs/semanticErrorResult"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "setFlagsOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "input": {
+          "$ref": "#/$defs/setFlagsInput"
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result"
+          ],
+          "properties": {
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/semanticMutationResult"
+                },
+                {
+                  "$ref": "#/$defs/semanticErrorResult"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "setLabelsOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "input": {
+          "$ref": "#/$defs/setLabelsInput"
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result"
+          ],
+          "properties": {
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/semanticMutationResult"
+                },
+                {
+                  "$ref": "#/$defs/semanticErrorResult"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "moveOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "input": {
+          "$ref": "#/$defs/moveInput"
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result"
+          ],
+          "properties": {
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/semanticMutationResult"
+                },
+                {
+                  "$ref": "#/$defs/semanticErrorResult"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "deleteOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "input": {
+          "$ref": "#/$defs/deleteInput"
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result"
+          ],
+          "properties": {
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/semanticMutationResult"
+                },
+                {
+                  "$ref": "#/$defs/semanticErrorResult"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "appendOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "input": {
+          "$ref": "#/$defs/appendInput"
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result"
+          ],
+          "properties": {
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/semanticMutationResult"
+                },
+                {
+                  "$ref": "#/$defs/semanticErrorResult"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "fetchPartOperation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "input": {
+          "$ref": "#/$defs/fetchPartInput"
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "result"
+          ],
+          "properties": {
+            "result": {
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/semanticPartResult"
+                },
+                {
+                  "$ref": "#/$defs/semanticErrorResult"
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

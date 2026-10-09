@@ -1,0 +1,1219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://plainpost.olhapi.com/protocol/account-v1/account.schema.json",
+  "title": "Plainpost account protocol v1",
+  "description": "Bounded closed JSON account messages. Binary strings are canonical unpadded base64url. Wire UInt64 values are canonical positive decimal strings and are converted to U64BE only in signed transcripts. Semantic validation and signer rules are defined in trust-transcript.md.",
+  "oneOf": [
+    { "$ref": "#/$defs/CentralBootstrapKeyManifestV1" },
+    { "$ref": "#/$defs/CentralBootstrapKeyManifestResponseV1" },
+    { "$ref": "#/$defs/AccountExchangeRequestV1" },
+    { "$ref": "#/$defs/AccountBootstrapChallengeV1" },
+    { "$ref": "#/$defs/AccountBootstrapFinalizeV1" },
+    { "$ref": "#/$defs/AccountActivationV1" },
+    { "$ref": "#/$defs/SessionKeyManifestResponseV1" },
+    { "$ref": "#/$defs/SessionRefreshRequestV1" },
+    { "$ref": "#/$defs/SessionRefreshV1" },
+    { "$ref": "#/$defs/SessionDeviceProofV1" },
+    { "$ref": "#/$defs/AccountRequestProofV1" },
+    { "$ref": "#/$defs/PendingDeviceV1" },
+    { "$ref": "#/$defs/PendingDevicesV1" },
+    { "$ref": "#/$defs/PendingDeviceRequestV1" },
+    { "$ref": "#/$defs/AccountDevicesV1" },
+    { "$ref": "#/$defs/RecoveryAuthorizationV1" },
+    { "$ref": "#/$defs/AccountRecoveryRequestV1" },
+    { "$ref": "#/$defs/AccountRecoveryPreparationV1" },
+    { "$ref": "#/$defs/AccountRecoveryCommitRequestV1" },
+    { "$ref": "#/$defs/AccountRecoveryActivationV1" },
+    { "$ref": "#/$defs/TrustAdmissionOfferEnvelopeV1" },
+    { "$ref": "#/$defs/TrustAdmissionResponseEnvelopeV1" },
+    { "$ref": "#/$defs/TrustAdmissionCancelEnvelopeV1" },
+    { "$ref": "#/$defs/TrustAdmissionEvidenceV1" },
+    { "$ref": "#/$defs/TrustRecoveryEvidenceV1" },
+    { "$ref": "#/$defs/TrustCommitSubmissionV1" },
+    { "$ref": "#/$defs/TrustHistoryEntryV1" },
+    { "$ref": "#/$defs/TrustCursorV1" },
+    { "$ref": "#/$defs/TrustStatePageV1" },
+    { "$ref": "#/$defs/SyncNodeCurrentAuthorityRequestV1" },
+    { "$ref": "#/$defs/SyncNodeCurrentAuthorityResponseV1" },
+    { "$ref": "#/$defs/AccountGroupKeyPackageV1" },
+    { "$ref": "#/$defs/TrustStateCommitV1" },
+    { "$ref": "#/$defs/AccountRecordInventoryRequestV1" },
+    { "$ref": "#/$defs/AccountRecordInventoryProofV1" },
+    { "$ref": "#/$defs/AccountStepUpRequestV1" },
+    { "$ref": "#/$defs/AccountStepUpAuthorizationV1" },
+    { "$ref": "#/$defs/AccountLifecycleSubmissionV1" },
+    { "$ref": "#/$defs/AccountSecurityEventV1" },
+    { "$ref": "#/$defs/AccountSecurityEventPageV1" },
+    { "$ref": "#/$defs/AccountDeletionRequestV1" },
+    { "$ref": "#/$defs/AccountDeletionResultV1" },
+    { "$ref": "#/$defs/AccountCleanupRegistrationV1" },
+    { "$ref": "#/$defs/AccountCleanupRegistrationReceiptV1" },
+    { "$ref": "#/$defs/AccountCleanupCheckV1" },
+    { "$ref": "#/$defs/AccountCleanupDirectiveV1" },
+    { "$ref": "#/$defs/AccountCleanupAckV1" },
+    { "$ref": "#/$defs/EncryptedAccountRecordPageV1" },
+    { "$ref": "#/$defs/EncryptedAccountRecordV1" },
+    { "$ref": "#/$defs/SyncNodeEnrollmentClaimPublicV1" },
+    { "$ref": "#/$defs/SyncNodeAdmissionEvidenceV1" },
+    { "$ref": "#/$defs/SyncNodeEnrollmentResultV1" },
+    { "$ref": "#/$defs/SyncNodeOfflineLeaseV1" },
+    { "$ref": "#/$defs/SyncNodeRefreshCredentialV1" },
+    { "$ref": "#/$defs/SyncNodeCleanupCapabilityV1" },
+    { "$ref": "#/$defs/SyncNodeEnrollmentResultV2" },
+    { "$ref": "#/$defs/SyncNodeOfflineLeaseV2" },
+    { "$ref": "#/$defs/SyncNodeRefreshCredentialV2" },
+    { "$ref": "#/$defs/SyncNodeAdmissionResponseV2" },
+    { "$ref": "#/$defs/AccountCleanupCheckV2" },
+    { "$ref": "#/$defs/AccountCleanupCheckResultV2" }
+  ],
+  "$defs": {
+    "UUID": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "minLength": 36,
+      "maxLength": 36
+    },
+    "AccountID": { "$ref": "#/$defs/UUID", "description": "Nominal account identifier." },
+    "DeviceID": { "$ref": "#/$defs/UUID", "description": "Nominal device identifier." },
+    "ClaimID": { "$ref": "#/$defs/UUID", "description": "Nominal Sync Node enrollment claim identifier; distinct from accounts and devices." },
+    "ChallengeID": { "$ref": "#/$defs/UUID", "description": "Nominal bootstrap challenge identifier." },
+    "AuthorizationID": { "$ref": "#/$defs/UUID", "description": "Nominal one-time recovery-authorization identifier." },
+    "RecordID": { "$ref": "#/$defs/UUID", "description": "Nominal encrypted account-record identifier." },
+    "Base64URL": { "type": "string", "pattern": "^[A-Za-z0-9_-]+$" },
+    "Bytes12": {
+      "allOf": [
+        { "$ref": "#/$defs/Base64URL" },
+        { "minLength": 16, "maxLength": 16, "description": "Exactly 12 decoded bytes." }
+      ]
+    },
+    "Bytes32": {
+      "allOf": [
+        { "$ref": "#/$defs/Base64URL" },
+        { "minLength": 43, "maxLength": 43, "description": "Exactly 32 decoded bytes." }
+      ]
+    },
+    "P256PublicKey": {
+      "allOf": [
+        { "$ref": "#/$defs/Base64URL" },
+        { "minLength": 87, "maxLength": 87, "description": "Exactly 65 decoded bytes in SEC1/X9.63 uncompressed form: 0x04 || X || Y. The point must be on P-256." }
+      ]
+    },
+    "P256Signature": {
+      "allOf": [
+        { "$ref": "#/$defs/Base64URL" },
+        { "minLength": 86, "maxLength": 86, "description": "Exactly 64 decoded bytes: big-endian low-S r || s." }
+      ]
+    },
+    "UTCDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+      "minLength": 20,
+      "maxLength": 20,
+      "description": "Canonical whole-second UTC RFC 3339 timestamp."
+    },
+    "PositiveUInt64": {
+      "type": "string",
+      "pattern": "^[1-9][0-9]{0,19}$",
+      "minLength": 1,
+      "maxLength": 20,
+      "description": "Canonical positive decimal UInt64. Semantic parsing rejects values above 18446744073709551615."
+    },
+    "TrustEpoch": {
+      "$ref": "#/$defs/PositiveUInt64",
+      "description": "Canonical positive account-trust epoch; distinct from revisions, key generations, and provider counters."
+    },
+    "Platform": {
+      "type": "string",
+      "enum": ["macos", "ios", "sync_node"],
+      "description": "Server-derived entitlement class. ios includes iPhone and iPad. sync_node is assigned only by trusted-device node enrollment."
+    },
+    "BootstrapMode": { "type": "string", "enum": ["genesis", "pending"] },
+    "KeyID": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._-]+$",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "CentralAudience": { "type": "string", "minLength": 1, "maxLength": 255, "pattern": "^[^\\u0000\\r\\n]+$", "description": "Canonical configured Central audience. Go and Swift additionally enforce the 255-byte UTF-8 bound." },
+    "PublicKeyBundleV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["signingKey", "agreementKey"],
+      "properties": {
+        "signingKey": { "$ref": "#/$defs/P256PublicKey" },
+        "agreementKey": { "$ref": "#/$defs/P256PublicKey" }
+      }
+    },
+    "CentralBootstrapKeyEntryV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["keyID", "purpose", "publicKey", "notBefore", "expiresAt", "status"],
+      "properties": {
+        "keyID": { "$ref": "#/$defs/KeyID" },
+        "purpose": { "type": "string", "enum": ["bootstrap_challenge", "trust_pagination", "recovery_authorization"] },
+        "publicKey": { "$ref": "#/$defs/P256PublicKey" },
+        "notBefore": { "$ref": "#/$defs/UTCDateTime" },
+        "expiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "status": { "type": "string", "enum": ["active", "revoked"] }
+      }
+    },
+    "CentralBootstrapKeyManifestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "rootKeyID", "manifestVersion", "notBefore", "expiresAt", "keys", "rootSignature"],
+      "properties": {
+        "kind": { "const": "central.bootstrap-key-manifest.v1" },
+        "rootKeyID": { "$ref": "#/$defs/KeyID" },
+        "manifestVersion": { "$ref": "#/$defs/PositiveUInt64" },
+        "notBefore": { "$ref": "#/$defs/UTCDateTime" },
+        "expiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "previousManifestDigest": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/Bytes32" }
+          ]
+        },
+        "keys": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/CentralBootstrapKeyEntryV1" }
+        },
+        "rootSignature": { "$ref": "#/$defs/P256Signature" }
+      }
+    },
+    "CentralBootstrapKeyManifestResponseV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "current", "overlap"],
+      "properties": {
+        "kind": { "const": "central.bootstrap-key-manifest-response.v1" },
+        "current": { "$ref": "#/$defs/CentralBootstrapKeyManifestV1" },
+        "overlap": {
+          "type": "array",
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/CentralBootstrapKeyManifestV1" }
+        }
+      }
+    },
+    "PriorRecordDigestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deviceID", "recordDigest"],
+      "properties": {
+        "deviceID": { "$ref": "#/$defs/DeviceID" },
+        "recordDigest": { "$ref": "#/$defs/Bytes32" }
+      }
+    },
+    "GenesisTransitionV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "targetDeviceIDs", "priorRecordDigests"],
+      "properties": {
+        "kind": { "const": "genesis" },
+        "targetDeviceIDs": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "$ref": "#/$defs/DeviceID" } },
+        "priorRecordDigests": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "AdmissionTransitionV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "targetDeviceIDs", "priorRecordDigests", "handshakeDigest", "pendingDeviceDigest"],
+      "properties": {
+        "kind": { "const": "admission" },
+        "targetDeviceIDs": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "$ref": "#/$defs/DeviceID" } },
+        "priorRecordDigests": { "type": "array", "maxItems": 0 },
+        "handshakeDigest": { "$ref": "#/$defs/Bytes32" },
+        "pendingDeviceDigest": { "$ref": "#/$defs/Bytes32", "description": "Digest of the exact server-stored pending authorization whose account, device ID, audience-derived platform, and public bundle must equal the admitted record." }
+      }
+    },
+    "RemovalTransitionV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "targetDeviceIDs", "priorRecordDigests"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["revocation", "suspension"] },
+        "targetDeviceIDs": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "$ref": "#/$defs/DeviceID" } },
+        "priorRecordDigests": { "type": "array", "minItems": 1, "maxItems": 1, "items": { "$ref": "#/$defs/PriorRecordDigestV1" } }
+      }
+    },
+    "RecoveryTransitionV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "targetDeviceIDs", "priorRecordDigests", "recoveryAuthorizationDigest"],
+      "properties": {
+        "kind": { "const": "recovery" },
+        "targetDeviceIDs": { "type": "array", "minItems": 1, "maxItems": 11, "uniqueItems": true, "items": { "$ref": "#/$defs/DeviceID" } },
+        "priorRecordDigests": { "type": "array", "minItems": 1, "maxItems": 11, "uniqueItems": true, "items": { "$ref": "#/$defs/PriorRecordDigestV1" } },
+        "recoveryAuthorizationDigest": { "$ref": "#/$defs/Bytes32", "description": "Digest of the exact valid, unconsumed RecoveryAuthorizationV1 matching the replacement record and new epoch." }
+      }
+    },
+    "TrustTransitionV1": {
+      "oneOf": [
+        { "$ref": "#/$defs/GenesisTransitionV1" },
+        { "$ref": "#/$defs/AdmissionTransitionV1" },
+        { "$ref": "#/$defs/RemovalTransitionV1" },
+        { "$ref": "#/$defs/RecoveryTransitionV1" }
+      ]
+    },
+    "DeviceTrustRecordV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Active member authority record. accountID/epoch equal the enclosing state. Enclosing-transition signer rules apply only when a record is newly created or changed: genesis is self-signed; recovery replacement is self-signed only with an exact live RecoveryAuthorizationV1; admission is signed by the matching prior active approver and exactly matches the bound PendingDeviceV1 account, ID, audience-derived platform, and bundle. Changed/admitted revision equals the resulting state revision. An unchanged survivor is byte-identical to its exact verified predecessor record and inherits that predecessor authority even if its original signer is no longer active.",
+      "required": ["accountID", "epoch", "revision", "deviceID", "platform", "publicBundle", "signerDeviceID", "signature"],
+      "properties": {
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "epoch": { "$ref": "#/$defs/TrustEpoch" },
+        "revision": { "$ref": "#/$defs/PositiveUInt64" },
+        "deviceID": { "$ref": "#/$defs/DeviceID" },
+        "platform": { "$ref": "#/$defs/Platform" },
+        "publicBundle": { "$ref": "#/$defs/PublicKeyBundleV1" },
+        "signerDeviceID": { "$ref": "#/$defs/DeviceID", "description": "For a newly created or changed record, semantically authorized by the enclosing transition. An unchanged survivor retains its byte-identical predecessor signer and authority. Cross-account, cross-epoch, unauthorized new/changed signing, and survivor mutation without current-transition authorization are rejected." },
+        "signature": { "$ref": "#/$defs/P256Signature" }
+      }
+    },
+    "TrustStateV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["accountID", "epoch", "revision", "previousCommitDigest", "transition", "keyGeneration", "keyCommitment", "members", "signerDeviceID", "signature"],
+      "properties": {
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "epoch": { "$ref": "#/$defs/TrustEpoch" },
+        "revision": { "$ref": "#/$defs/PositiveUInt64" },
+        "previousCommitDigest": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/Bytes32" }
+          ],
+          "description": "Genesis alone is null. Every successor, including recovery in a new epoch, binds the exact prior atomic TrustStateCommitV1 digest rather than only its signed state."
+        },
+        "transition": { "$ref": "#/$defs/TrustTransitionV1" },
+        "keyGeneration": { "$ref": "#/$defs/PositiveUInt64" },
+        "keyCommitment": { "$ref": "#/$defs/Bytes32" },
+        "members": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 11,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/DeviceTrustRecordV1" },
+          "description": "Only current active trusted members. deviceID values are unique and strictly sorted by raw UUID bytes; every record accountID/epoch equals the state. Unchanged survivors are byte-identical to exact verified predecessor records and need not be reauthorized by the current transition; any survivor mutation is a changed record requiring current-transition authorization."
+        },
+        "signerDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "signature": { "$ref": "#/$defs/P256Signature" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "transition": { "properties": { "kind": { "const": "genesis" } }, "required": ["kind"] } } },
+          "then": { "properties": { "previousCommitDigest": { "type": "null" } } },
+          "else": { "properties": { "previousCommitDigest": { "$ref": "#/$defs/Bytes32" } } }
+        }
+      ]
+    },
+    "TrustCheckpointV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["epoch", "revision", "commitDigest"],
+      "properties": {
+        "epoch": { "$ref": "#/$defs/TrustEpoch" },
+        "revision": { "$ref": "#/$defs/PositiveUInt64" },
+        "commitDigest": { "$ref": "#/$defs/Bytes32" }
+      }
+    },
+    "TrustGenesisSentinelV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "const": "genesis" }
+      }
+    },
+    "TrustAfterV1": {
+      "oneOf": [
+        { "$ref": "#/$defs/TrustGenesisSentinelV1" },
+        { "$ref": "#/$defs/TrustCheckpointV1" }
+      ]
+    },
+    "TrustCursorV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "after", "snapshotHead", "issuedAt", "expiresAt", "serverKeyID", "signature"],
+      "properties": {
+        "kind": { "const": "account.trust-cursor.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "after": { "$ref": "#/$defs/TrustAfterV1" },
+        "snapshotHead": { "$ref": "#/$defs/TrustCheckpointV1" },
+        "issuedAt": { "$ref": "#/$defs/UTCDateTime" },
+        "expiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "serverKeyID": { "$ref": "#/$defs/KeyID" },
+        "signature": { "$ref": "#/$defs/P256Signature" }
+      },
+      "description": "Server-signed pagination delivery state only; it conveys no end-to-end trust authority."
+    },
+    "TrustStatePageV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "requestCursor", "accountID", "snapshotHead", "entries", "nextCursor", "terminal", "issuedAt", "expiresAt", "serverKeyID", "serverSignature"],
+      "properties": {
+        "kind": { "const": "account.trust-state-page.v1" },
+        "requestCursor": { "$ref": "#/$defs/TrustCursorV1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "snapshotHead": { "$ref": "#/$defs/TrustCheckpointV1" },
+        "entries": { "type": "array", "maxItems": 32, "items": { "$ref": "#/$defs/TrustHistoryEntryV1" }, "description": "Exact commit/evidence pairs. Admission and recovery evidence are transport authority, not optional relay hints." },
+        "nextCursor": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/TrustCursorV1" }
+          ]
+        },
+        "terminal": { "type": "boolean" },
+        "issuedAt": { "$ref": "#/$defs/UTCDateTime" },
+        "expiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "serverKeyID": { "$ref": "#/$defs/KeyID" },
+        "serverSignature": { "$ref": "#/$defs/P256Signature" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "terminal": { "const": false } }, "required": ["terminal"] },
+          "then": {
+            "properties": {
+              "entries": { "minItems": 1 },
+              "nextCursor": { "$ref": "#/$defs/TrustCursorV1" }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "terminal": { "const": true } }, "required": ["terminal"] },
+          "then": { "properties": { "nextCursor": { "type": "null" } } }
+        }
+      ]
+    },
+    "SyncNodeCurrentAuthorityRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "after", "centralAudience", "clientDeviceID", "clientRequestDigest", "cursor", "issuedAt", "nodeDeviceID", "nonce", "signature"],
+      "properties": {
+        "kind": { "const": "account.sync-node-current-authority-request.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "after": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/TrustCheckpointV1" }] },
+        "centralAudience": { "$ref": "#/$defs/CentralAudience" },
+        "clientDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "clientRequestDigest": { "$ref": "#/$defs/Bytes32" },
+        "cursor": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Base64URL" }] },
+        "issuedAt": { "$ref": "#/$defs/UTCDateTime" },
+        "nodeDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "nonce": { "$ref": "#/$defs/Bytes32" },
+        "signature": { "$ref": "#/$defs/P256Signature" }
+      },
+      "oneOf": [
+        { "properties": { "after": { "$ref": "#/$defs/TrustCheckpointV1" }, "cursor": { "type": "null" } } },
+        { "properties": { "after": { "type": "null" }, "cursor": { "$ref": "#/$defs/Base64URL" } } }
+      ]
+    },
+    "SyncNodeCurrentAuthorityResponseV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "authorityHead", "centralAudience", "clientDeviceID", "clientRequestDigest", "expiresAt", "issuedAt", "nodeDeviceID", "nodeRecordDigest", "page", "requestDigest", "serverKeyID", "serverSignature"],
+      "properties": {
+        "kind": { "const": "account.sync-node-current-authority.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "authorityHead": { "$ref": "#/$defs/TrustCheckpointV1" },
+        "centralAudience": { "$ref": "#/$defs/CentralAudience" },
+        "clientDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "clientRequestDigest": { "$ref": "#/$defs/Bytes32" },
+        "expiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "issuedAt": { "$ref": "#/$defs/UTCDateTime" },
+        "nodeDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "nodeRecordDigest": { "$ref": "#/$defs/Bytes32" },
+        "page": { "$ref": "#/$defs/TrustStatePageV1" },
+        "requestDigest": { "$ref": "#/$defs/Bytes32" },
+        "serverKeyID": { "$ref": "#/$defs/KeyID" },
+        "serverSignature": { "$ref": "#/$defs/P256Signature" }
+      }
+    },
+    "AccountExchangeRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "appleIdentityToken", "nonce", "deviceBundle", "deviceProof"],
+      "properties": {
+        "kind": { "const": "account.exchange.v1" },
+        "appleIdentityToken": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._~-]+$",
+          "minLength": 1,
+          "maxLength": 16384,
+          "description": "Bounded compact JWT; only its SHA-256 digest enters canonical transcripts. Raw value is never persisted or logged."
+        },
+        "nonce": { "$ref": "#/$defs/Bytes32" },
+        "deviceBundle": { "$ref": "#/$defs/PublicKeyBundleV1" },
+        "deviceProof": { "$ref": "#/$defs/P256Signature" }
+      }
+    },
+    "AccountBootstrapChallengeV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "challengeID", "challengeNonce", "exchangeRequestDigest", "accountID", "deviceID", "mode", "platform", "publicBundle", "createdAt", "expiresAt", "serverKeyID", "serverSignature"],
+      "properties": {
+        "kind": { "const": "account.bootstrap-challenge.v1" },
+        "challengeID": { "$ref": "#/$defs/ChallengeID" },
+        "challengeNonce": { "$ref": "#/$defs/Bytes32" },
+        "exchangeRequestDigest": { "$ref": "#/$defs/Bytes32" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "deviceID": { "$ref": "#/$defs/DeviceID" },
+        "mode": { "$ref": "#/$defs/BootstrapMode" },
+        "platform": { "$ref": "#/$defs/Platform" },
+        "publicBundle": { "$ref": "#/$defs/PublicKeyBundleV1" },
+        "createdAt": { "$ref": "#/$defs/UTCDateTime" },
+        "expiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "serverKeyID": { "$ref": "#/$defs/KeyID" },
+        "serverSignature": { "$ref": "#/$defs/P256Signature" }
+      }
+    },
+    "AccountBootstrapFinalizeV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "challenge", "challengeDigest", "exchangeRequestDigest", "genesisCommit", "deviceSignature"],
+      "properties": {
+        "kind": { "const": "account.bootstrap-finalize.v1" },
+        "challenge": { "$ref": "#/$defs/AccountBootstrapChallengeV1" },
+        "challengeDigest": { "$ref": "#/$defs/Bytes32" },
+        "exchangeRequestDigest": { "$ref": "#/$defs/Bytes32" },
+        "genesisCommit": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/TrustStateCommitV1" }
+          ]
+        },
+        "deviceSignature": { "$ref": "#/$defs/P256Signature", "description": "Verified exactly by challenge.publicBundle.signingKey." }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "challenge": { "properties": { "mode": { "const": "genesis" } }, "required": ["mode"] } } },
+          "then": { "properties": { "genesisCommit": { "$ref": "#/$defs/TrustStateCommitV1" } } }
+        },
+        {
+          "if": { "properties": { "challenge": { "properties": { "mode": { "const": "pending" } }, "required": ["mode"] } } },
+          "then": { "properties": { "genesisCommit": { "type": "null" } } }
+        }
+      ]
+    },
+    "AccountActivationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "deviceID", "accessToken", "refreshCredential", "offlineLease", "currentTrustCommit"],
+      "properties": {
+        "kind": { "const": "account.activation.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "deviceID": { "$ref": "#/$defs/DeviceID" },
+        "accessToken": { "type": "string", "pattern": "^[A-Za-z0-9._~-]+$", "minLength": 1, "maxLength": 4096 },
+        "refreshCredential": { "allOf": [{ "$ref": "#/$defs/Base64URL" }, { "minLength": 43, "maxLength": 43 }] },
+        "offlineLease": { "type": "string", "pattern": "^[A-Za-z0-9._~-]+$", "minLength": 1, "maxLength": 8192 },
+        "currentTrustCommit": { "$ref": "#/$defs/TrustStateCommitV1", "description": "Required untrusted convenience hint. It is accepted only after contiguous signed commit-chain verification from the client's high-water." }
+      }
+    },
+    "SessionKeyManifestResponseV1": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "current"],
+      "properties": { "kind": { "const": "account.session-key-manifest-response.v1" }, "current": { "$ref": "#/$defs/SessionKeyManifestV1" } }
+    },
+    "SessionKeyManifestV1": {
+      "type": "object",
+	  "additionalProperties": false,
+      "required": ["kind", "rootKeyID", "manifestVersion", "notBefore", "expiresAt", "keys", "rootSignature"],
+      "properties": {
+        "kind": { "const": "account.session-key-manifest.v1" }, "rootKeyID": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "manifestVersion": { "$ref": "#/$defs/PositiveUInt64" }, "notBefore": { "$ref": "#/$defs/UTCDateTime" }, "expiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "keys": { "type": "array", "minItems": 2, "maxItems": 16, "items": { "$ref": "#/$defs/SessionKeyV1" } }, "rootSignature": { "$ref": "#/$defs/P256Signature" }
+      }
+    },
+    "SessionKeyV1": {
+      "type": "object", "additionalProperties": false, "required": ["keyID", "purpose", "publicKey", "notBefore", "expiresAt", "status"],
+      "properties": { "keyID": { "type": "string", "minLength": 1, "maxLength": 128 }, "purpose": { "enum": ["access", "offline_lease"] }, "publicKey": { "$ref": "#/$defs/P256PublicKey" }, "notBefore": { "$ref": "#/$defs/UTCDateTime" }, "expiresAt": { "$ref": "#/$defs/UTCDateTime" }, "status": { "enum": ["active", "retired"] } }
+    },
+    "SessionRefreshV1": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "accessToken", "accessExpiresAt", "refreshCredential", "offlineLease", "offlineLeaseExpiresAt"],
+      "properties": { "kind": { "const": "account.session-refresh.v1" }, "accessToken": { "type": "string", "minLength": 1, "maxLength": 4096 }, "accessExpiresAt": { "$ref": "#/$defs/UTCDateTime" }, "refreshCredential": { "$ref": "#/$defs/Bytes32" }, "offlineLease": { "type": "string", "minLength": 1, "maxLength": 8192 }, "offlineLeaseExpiresAt": { "$ref": "#/$defs/UTCDateTime" } }
+    },
+    "SessionRefreshRequestV1": {
+      "type": "object", "additionalProperties": false, "required": ["accountID", "deviceID", "refreshCredential"],
+      "properties": { "accountID": { "$ref": "#/$defs/AccountID" }, "deviceID": { "$ref": "#/$defs/DeviceID" }, "refreshCredential": { "allOf": [{ "$ref": "#/$defs/Base64URL" }, { "minLength": 43, "maxLength": 43 }] } },
+      "description": "Exact canonical sorted-key JSON request body for POST /v1/sessions/refresh. The DPoP proof binds SHA-256 of these exact bytes."
+    },
+    "SessionDPoPHeaderV1": {
+      "allOf": [{ "$ref": "#/$defs/Base64URL" }, { "minLength": 1, "maxLength": 2731 }],
+      "description": "Canonical unpadded base64url HTTP DPoP header whose decoded bytes are an exact SessionDeviceProofV1 JSON object and are limited to 2048 bytes."
+    },
+    "SessionDeviceProofV1": {
+      "type": "object", "additionalProperties": false, "required": ["method", "path", "bodyDigest", "timestamp", "nonce", "signature"],
+      "properties": { "method": { "const": "POST" }, "path": { "const": "/v1/sessions/refresh" }, "bodyDigest": { "$ref": "#/$defs/Bytes32" }, "timestamp": { "$ref": "#/$defs/UTCDateTime" }, "nonce": { "$ref": "#/$defs/Bytes32" }, "signature": { "$ref": "#/$defs/P256Signature" } }
+    },
+    "AccountRequestProofV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "target", "bodyDigest", "accessTokenDigest", "timestamp", "nonce", "signature"],
+      "properties": {
+        "method": { "enum": ["GET", "POST", "PUT"] },
+        "target": { "type": "string", "pattern": "^/v1/[A-Za-z0-9_./?=&%-]{1,4088}$", "maxLength": 4096 },
+        "bodyDigest": { "$ref": "#/$defs/Bytes32" },
+        "accessTokenDigest": { "$ref": "#/$defs/Bytes32" },
+        "timestamp": { "$ref": "#/$defs/UTCDateTime" },
+        "nonce": { "$ref": "#/$defs/Bytes32" },
+        "signature": { "$ref": "#/$defs/P256Signature" }
+      },
+      "description": "Decoded canonical DPoP header for authenticated account routes, bound to exact RequestURI, body, access token, device and account."
+    },
+    "PendingDeviceV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "deviceID", "platform", "publicBundle", "exchangeRequestDigest", "createdAt", "expiresAt"],
+      "properties": {
+        "kind": { "const": "account.pending-device.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "deviceID": { "$ref": "#/$defs/DeviceID" },
+        "platform": { "$ref": "#/$defs/Platform" },
+        "publicBundle": { "$ref": "#/$defs/PublicKeyBundleV1" },
+        "exchangeRequestDigest": { "$ref": "#/$defs/Bytes32" },
+        "createdAt": { "$ref": "#/$defs/UTCDateTime" },
+        "expiresAt": { "$ref": "#/$defs/UTCDateTime" }
+      },
+      "description": "Server-stored admission authorization. platform is derived from the validated official Apple audience; sync_node is created only by trusted-device enrollment, never Apple exchange."
+    },
+    "PendingDeviceRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "deviceID"],
+      "properties": {
+        "kind": { "const": "account.pending-device-request.v1" },
+        "deviceID": { "$ref": "#/$defs/DeviceID" }
+      },
+      "description": "An active account device requests one exact already-stored pending authorization; clients cannot author pending fields."
+    },
+    "PendingDevicesV1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "pendingDevices"],
+      "properties": {
+        "kind": { "const": "account.pending-devices.v1" },
+        "pendingDevices": { "type": "array", "minItems": 0, "maxItems": 10, "uniqueItems": true, "items": { "$ref": "#/$defs/PendingDeviceV1" } }
+      },
+      "description": "Active-owner-only, deviceID-sorted live pending authorization discovery. Pending principals cannot list sibling authorizations."
+    },
+    "AccountDevicesV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "devices"],
+      "properties": {
+        "kind": { "const": "account.devices.v1" },
+        "devices": { "type": "array", "minItems": 1, "maxItems": 11, "uniqueItems": true, "items": { "$ref": "#/$defs/DeviceTrustRecordV1" } }
+      }
+    },
+    "RecoveryAuthorizationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "authorizationID", "accountID", "epoch", "deviceID", "platform", "publicBundle", "priorCommitDigest", "exchangeRequestDigest", "issuedAt", "expiresAt", "serverKeyID", "serverSignature"],
+      "properties": {
+        "kind": { "const": "account.recovery-authorization.v1" },
+        "authorizationID": { "$ref": "#/$defs/AuthorizationID" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "epoch": { "$ref": "#/$defs/TrustEpoch" },
+        "deviceID": { "$ref": "#/$defs/DeviceID" },
+        "platform": { "type": "string", "enum": ["macos", "ios"], "description": "Derived from a validated official Apple audience. sync_node is forbidden." },
+        "publicBundle": { "$ref": "#/$defs/PublicKeyBundleV1" },
+        "priorCommitDigest": { "$ref": "#/$defs/Bytes32", "description": "Exact authenticated trust head that this authorization permits the fresh epoch to replace." },
+        "exchangeRequestDigest": { "$ref": "#/$defs/Bytes32" },
+        "issuedAt": { "$ref": "#/$defs/UTCDateTime" },
+        "expiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "serverKeyID": { "$ref": "#/$defs/KeyID" },
+        "serverSignature": { "$ref": "#/$defs/P256Signature" }
+      },
+      "description": "Short-lived, one-time server authorization consumed atomically with recovery. Its exact account/new epoch, replacement ID, audience-derived platform, bundle, prior trust head, and exchange digest must match the replacement record and stored recovery attempt."
+    },
+    "TrustHandshakeOfferEvidenceV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["accountID", "existingDeviceID", "pendingDeviceID", "existingPublicBundle", "pendingPublicBundle", "existingNonce", "createdAtUnixMilliseconds", "expiresAtUnixMilliseconds"],
+      "properties": {
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "existingDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "pendingDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "existingPublicBundle": { "$ref": "#/$defs/PublicKeyBundleV1" },
+        "pendingPublicBundle": { "$ref": "#/$defs/PublicKeyBundleV1" },
+        "existingNonce": { "$ref": "#/$defs/Bytes32" },
+        "createdAtUnixMilliseconds": { "$ref": "#/$defs/PositiveUInt64" },
+        "expiresAtUnixMilliseconds": { "$ref": "#/$defs/PositiveUInt64" }
+      }
+    },
+    "TrustHandshakeResponseEvidenceV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["offer", "pendingNonce"],
+      "properties": {
+        "offer": { "$ref": "#/$defs/TrustHandshakeOfferEvidenceV1" },
+        "pendingNonce": { "$ref": "#/$defs/Bytes32" }
+      }
+    },
+    "TrustAdmissionOfferEnvelopeV1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "offer", "offerDigest"],
+      "properties": {
+        "kind": { "const": "account.trust-admission-offer.v1" },
+        "offer": { "$ref": "#/$defs/TrustHandshakeOfferEvidenceV1" },
+        "offerDigest": { "$ref": "#/$defs/Bytes32", "description": "SHA-256 of the exact canonical sorted-key offer JSON bytes; immutable attempt identity." }
+      }
+    },
+    "TrustAdmissionResponseEnvelopeV1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "offerDigest", "response"],
+      "properties": {
+        "kind": { "const": "account.trust-admission-response.v1" },
+        "offerDigest": { "$ref": "#/$defs/Bytes32" },
+        "response": { "$ref": "#/$defs/TrustHandshakeResponseEvidenceV1" }
+      }
+    },
+    "TrustAdmissionCancelEnvelopeV1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "offerDigest"],
+      "properties": {
+        "kind": { "const": "account.trust-admission-cancel.v1" },
+        "offerDigest": { "$ref": "#/$defs/Bytes32" }
+      }
+    },
+    "TrustAdmissionEvidenceV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "pendingDevice", "response"],
+      "properties": {
+        "kind": { "const": "account.trust-admission-evidence.v1" },
+        "pendingDevice": { "$ref": "#/$defs/PendingDeviceV1" },
+        "response": { "$ref": "#/$defs/TrustHandshakeResponseEvidenceV1" }
+      },
+      "description": "Complete public admission authority: the exact central pending authorization and complete peer offer/response. No private or ephemeral private key material is present."
+    },
+    "TrustRecoveryEvidenceV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "authorization", "historicalManifest"],
+      "properties": {
+        "kind": { "const": "account.trust-recovery-evidence.v1" },
+        "authorization": { "$ref": "#/$defs/RecoveryAuthorizationV1" },
+        "historicalManifest": { "$ref": "#/$defs/CentralBootstrapKeyManifestV1" }
+      },
+      "description": "Complete public recovery authority. The historical manifest is reverified under the pinned offline root and selects the purpose-scoped key at authorization.issuedAt, independent of current time and current manifest overlap."
+    },
+    "TrustTransitionEvidenceV1": {
+      "oneOf": [
+        { "$ref": "#/$defs/TrustAdmissionEvidenceV1" },
+        { "$ref": "#/$defs/TrustRecoveryEvidenceV1" }
+      ]
+    },
+    "TrustCommitSubmissionV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "commit", "evidence"],
+      "properties": {
+        "kind": { "const": "account.trust-commit-submission.v1" },
+        "commit": { "$ref": "#/$defs/TrustStateCommitV1" },
+        "evidence": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/TrustTransitionEvidenceV1" }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "commit": { "properties": { "state": { "properties": { "transition": { "properties": { "kind": { "const": "admission" } }, "required": ["kind"] } }, "required": ["transition"] } }, "required": ["state"] } }, "required": ["commit"] },
+          "then": { "properties": { "evidence": { "$ref": "#/$defs/TrustAdmissionEvidenceV1" } } }
+        },
+        {
+	          "if": { "properties": { "commit": { "properties": { "state": { "properties": { "transition": { "properties": { "kind": { "const": "recovery" } }, "required": ["kind"] } }, "required": ["transition"] } }, "required": ["state"] } }, "required": ["commit"] },
+          "then": { "properties": { "evidence": { "$ref": "#/$defs/TrustRecoveryEvidenceV1" } } }
+        },
+        {
+          "if": { "properties": { "commit": { "properties": { "state": { "properties": { "transition": { "properties": { "kind": { "enum": ["genesis", "revocation", "suspension"] } }, "required": ["kind"] } }, "required": ["transition"] } }, "required": ["state"] } }, "required": ["commit"] },
+          "then": { "properties": { "evidence": { "type": "null" } } }
+        }
+      ],
+      "description": "Closed atomic trust mutation body. The commit and its exact transition evidence are validated and persisted in one transaction; retries require byte-identical commit and evidence."
+    },
+    "TrustHistoryEntryV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "commit", "evidence"],
+      "properties": {
+        "kind": { "const": "account.trust-history-entry.v1" },
+        "commit": { "$ref": "#/$defs/TrustStateCommitV1" },
+        "evidence": {
+          "oneOf": [
+            { "type": "null" },
+            { "$ref": "#/$defs/TrustTransitionEvidenceV1" }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "commit": { "properties": { "state": { "properties": { "transition": { "properties": { "kind": { "const": "admission" } }, "required": ["kind"] } }, "required": ["transition"] } }, "required": ["state"] } }, "required": ["commit"] },
+          "then": { "properties": { "evidence": { "$ref": "#/$defs/TrustAdmissionEvidenceV1" } } }
+        },
+        {
+          "if": { "properties": { "commit": { "properties": { "state": { "properties": { "transition": { "properties": { "kind": { "const": "recovery" } }, "required": ["kind"] } }, "required": ["transition"] } }, "required": ["state"] } }, "required": ["commit"] },
+          "then": { "properties": { "evidence": { "$ref": "#/$defs/TrustRecoveryEvidenceV1" } } }
+        },
+        {
+          "if": { "properties": { "commit": { "properties": { "state": { "properties": { "transition": { "properties": { "kind": { "enum": ["genesis", "revocation", "suspension"] } }, "required": ["kind"] } }, "required": ["transition"] } }, "required": ["state"] } }, "required": ["commit"] },
+          "then": { "properties": { "evidence": { "type": "null" } } }
+        }
+      ]
+    },
+    "AccountGroupKeyPackageV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "epoch", "stateRevision", "keyGeneration", "stateDigest", "keyCommitment", "recipientDeviceID", "senderDeviceID", "senderEphemeralPublicKey", "nonce", "encryptedKeyMaterial", "signature"],
+      "properties": {
+        "kind": { "const": "account.group-key-package.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "epoch": { "$ref": "#/$defs/TrustEpoch" },
+        "stateRevision": { "$ref": "#/$defs/PositiveUInt64" },
+        "keyGeneration": { "$ref": "#/$defs/PositiveUInt64" },
+        "stateDigest": { "$ref": "#/$defs/Bytes32" },
+        "keyCommitment": { "$ref": "#/$defs/Bytes32" },
+        "recipientDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "senderDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "senderEphemeralPublicKey": { "$ref": "#/$defs/P256PublicKey" },
+        "nonce": { "$ref": "#/$defs/Bytes12" },
+        "encryptedKeyMaterial": {
+          "allOf": [
+            { "$ref": "#/$defs/Base64URL" },
+            { "minLength": 107, "maxLength": 107, "description": "Exactly 80 decoded bytes: 64-byte ciphertext followed by 16-byte GCM tag." }
+          ]
+        },
+        "signature": { "$ref": "#/$defs/P256Signature" }
+      }
+    },
+    "TrustStateCommitV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Atomic signed-state plus complete package set. Its canonical commitDigest, together with accountID/epoch/revision, is the high-water, compare-and-swap, idempotency, predecessor-link, and page-authority identity. Every non-genesis state signs the exact immediately prior commitDigest; equal coordinates with different commit bytes are equivocation even when stateDigest matches.",
+      "required": ["kind", "state", "keyPackages"],
+      "properties": {
+        "kind": { "const": "account.trust-state-commit.v1" },
+        "state": { "$ref": "#/$defs/TrustStateV1" },
+        "keyPackages": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 11,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/AccountGroupKeyPackageV1" },
+          "description": "Strictly sorted by unique recipientDeviceID, exactly one package for every resulting state member and no other recipient."
+        }
+      }
+    },
+    "AccountRecordInventoryEntryV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recordID", "epoch", "keyGeneration", "trustRevision", "recordRevision", "envelopeDigest", "signatureDigest"],
+      "properties": {
+        "recordID": { "$ref": "#/$defs/RecordID" },
+        "epoch": { "$ref": "#/$defs/TrustEpoch" },
+        "keyGeneration": { "$ref": "#/$defs/PositiveUInt64" },
+        "trustRevision": { "$ref": "#/$defs/PositiveUInt64" },
+        "recordRevision": { "$ref": "#/$defs/PositiveUInt64" },
+        "envelopeDigest": { "$ref": "#/$defs/Bytes32" },
+        "signatureDigest": { "$ref": "#/$defs/Bytes32" }
+      }
+    },
+    "AccountRecordInventoryRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "trustCommitDigest", "epoch", "keyGeneration"],
+      "properties": {
+        "kind": { "const": "account.record-inventory-request.v1" },
+        "trustCommitDigest": { "$ref": "#/$defs/Bytes32" },
+        "epoch": { "$ref": "#/$defs/TrustEpoch" },
+        "keyGeneration": { "$ref": "#/$defs/PositiveUInt64" }
+      },
+      "description": "Authenticated request to atomically freeze and sign the complete inventory at an exact trust head and key generation."
+    },
+    "AccountRecordInventoryProofV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "trustCommitDigest", "epoch", "keyGeneration", "entries", "issuedAt", "expiresAt", "serverKeyID", "serverSignature"],
+      "properties": {
+        "kind": { "const": "account.record-inventory-proof.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "trustCommitDigest": { "$ref": "#/$defs/Bytes32" },
+        "epoch": { "$ref": "#/$defs/TrustEpoch" },
+        "keyGeneration": { "$ref": "#/$defs/PositiveUInt64" },
+        "entries": {
+          "type": "array",
+          "maxItems": 4096,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/AccountRecordInventoryEntryV1" },
+          "description": "Complete inventory sorted by unique recordID for the exact frozen trust head and generation. Empty is valid only as this signed zero-count array."
+        },
+        "issuedAt": { "$ref": "#/$defs/UTCDateTime" },
+        "expiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "serverKeyID": { "$ref": "#/$defs/KeyID" },
+        "serverSignature": { "$ref": "#/$defs/P256Signature" }
+      },
+      "description": "Short-lived trust_pagination-purpose signature over an atomic central freeze of all encrypted account-record coordinates and digests."
+    },
+    "AccountStepUpAuthorizationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "authorizationID", "accountID", "actorDeviceID", "targetDeviceID", "action", "currentCommitDigest", "requestDigest", "issuedAt", "expiresAt", "serverKeyID", "serverSignature"],
+      "properties": {
+        "kind": { "const": "account.step-up-authorization.v1" },
+        "authorizationID": { "$ref": "#/$defs/AuthorizationID" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "actorDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "targetDeviceID": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/DeviceID" }] },
+        "action": { "type": "string", "enum": ["add_device", "revoke_device", "suspend_device", "delete_account", "enroll_sync_node", "replace_sync_node"] },
+        "currentCommitDigest": { "$ref": "#/$defs/Bytes32" },
+        "requestDigest": { "$ref": "#/$defs/Bytes32" },
+        "issuedAt": { "$ref": "#/$defs/UTCDateTime" },
+        "expiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "serverKeyID": { "$ref": "#/$defs/KeyID" },
+        "serverSignature": { "$ref": "#/$defs/P256Signature" }
+      },
+      "description": "Single-use, at-most-five-minute server authorization bound to one exact action, actor, optional target, and current trust commit. It contains no Apple identity token or biometric assertion."
+    },
+    "AccountRecoveryRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "identityToken", "appleNonce", "publicBundle", "deviceProof"],
+      "properties": {
+        "kind": { "const": "account.recovery-request.v1" },
+        "identityToken": { "type": "string", "minLength": 1, "maxLength": 16384 },
+        "appleNonce": { "$ref": "#/$defs/Bytes32" },
+        "publicBundle": { "$ref": "#/$defs/PublicKeyBundleV1" },
+        "deviceProof": { "$ref": "#/$defs/P256Signature" }
+      },
+      "description": "Fresh-Apple last-resort recovery request. The token is verified method-locally and is never persisted or returned. Device proof uses the existing AccountExchangeProof transcript."
+    },
+    "AccountLifecycleSubmissionV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "authorization", "submission"],
+      "properties": {
+        "kind": { "const": "account.lifecycle-submission.v1" },
+        "authorization": { "$ref": "#/$defs/AccountStepUpAuthorizationV1" },
+        "submission": { "$ref": "#/$defs/TrustCommitSubmissionV1" }
+      },
+      "description": "Indivisible add-device, revocation, or suspension submission. Semantic validation binds the single-use step-up action, actor, target and current head to the exact signed admission/removal commit before transactional consumption."
+    },
+    "AccountRecoveryPreparationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "authorization", "historicalManifest", "priorHistory"],
+      "properties": {
+        "kind": { "const": "account.recovery-preparation.v1" },
+        "authorization": { "$ref": "#/$defs/RecoveryAuthorizationV1" },
+        "historicalManifest": { "$ref": "#/$defs/CentralBootstrapKeyManifestV1" },
+        "priorHistory": { "type": "array", "minItems": 1, "maxItems": 352, "items": { "$ref": "#/$defs/TrustHistoryEntryV1" } }
+      },
+      "description": "One-time recovery authorization, the exact historical offline-root-signed manifest, and the bounded complete trust history through the authorized prior head. A fresh replacement verifies every transition and recipient package before constructing the epoch reset; no session is granted before acceptance."
+    },
+    "AccountRecoveryCommitRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "authorizationID", "requestNonce", "submission", "deviceProof"],
+      "properties": {
+        "kind": { "const": "account.recovery-commit-request.v1" },
+        "authorizationID": { "$ref": "#/$defs/AuthorizationID" },
+        "requestNonce": { "$ref": "#/$defs/Bytes32" },
+        "submission": { "$ref": "#/$defs/TrustCommitSubmissionV1" },
+        "deviceProof": { "$ref": "#/$defs/P256Signature" }
+      },
+      "description": "Fresh replacement-device proof over one exact recovery submission and outer replay nonce. Semantic validation requires the embedded recovery evidence authorization ID to match."
+    },
+    "AccountRecoveryActivationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "acceptedEntry", "accessToken", "accessExpiresAt", "refreshCredential", "offlineLease", "offlineLeaseExpiresAt"],
+      "properties": {
+        "kind": { "const": "account.recovery-activation.v1" },
+        "acceptedEntry": { "$ref": "#/$defs/TrustHistoryEntryV1" },
+        "accessToken": { "type": "string", "minLength": 1, "maxLength": 16384 },
+        "accessExpiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "refreshCredential": { "$ref": "#/$defs/Bytes32" },
+        "offlineLease": { "type": "string", "minLength": 1, "maxLength": 32768 },
+        "offlineLeaseExpiresAt": { "$ref": "#/$defs/UTCDateTime" }
+      },
+      "description": "Returned only after the exact recovery commit, evidence, prior-session suspension, replacement activation, security event, head, and replacement session commit atomically."
+    },
+    "AccountStepUpRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "actorDeviceID", "targetDeviceID", "action", "currentCommitDigest", "requestNonce", "appleNonce", "identityToken"],
+      "properties": {
+        "kind": { "const": "account.step-up-request.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "actorDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "targetDeviceID": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/DeviceID" }] },
+        "action": { "type": "string", "enum": ["add_device", "revoke_device", "suspend_device", "delete_account", "enroll_sync_node", "replace_sync_node"] },
+        "currentCommitDigest": { "$ref": "#/$defs/Bytes32" },
+        "requestNonce": { "$ref": "#/$defs/Bytes32" },
+        "appleNonce": { "$ref": "#/$defs/Bytes32" },
+        "identityToken": { "type": "string", "minLength": 1, "maxLength": 16384 }
+      },
+      "description": "Method-local recent-Apple proof request. The token is verified and discarded; only its request digest may be persisted. Local biometric confirmation is required immediately before the resulting authorization is submitted but is not encoded as a server-verifiable claim."
+    },
+    "AccountSecurityEventV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "handle", "category", "actorHandle", "targetHandle", "platform", "status", "occurredAt"],
+      "properties": {
+        "kind": { "const": "account.security-event.v1" },
+        "handle": { "$ref": "#/$defs/Bytes32" },
+        "category": { "type": "string", "enum": ["device_added", "device_revoked", "device_suspended", "account_recovered", "account_deleted", "cleanup_acknowledged"] },
+        "actorHandle": { "$ref": "#/$defs/Bytes32" },
+        "targetHandle": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Bytes32" }] },
+        "platform": { "type": "string", "enum": ["", "macos", "ios", "sync_node"] },
+        "status": { "type": "string", "enum": ["pending", "active", "suspended", "revoked", "deleted", "erasure_pending", "erased", "operator_action_required"] },
+        "occurredAt": { "$ref": "#/$defs/UTCDateTime" }
+      },
+      "description": "Privacy-minimized security history item. Handles are opaque and labels remain encrypted client metadata."
+    },
+    "AccountSecurityEventPageV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "events", "nextCursor"],
+      "properties": {
+        "kind": { "const": "account.security-event-page.v1" },
+        "events": { "type": "array", "maxItems": 32, "items": { "$ref": "#/$defs/AccountSecurityEventV1" } },
+        "nextCursor": { "oneOf": [{ "type": "null" }, { "allOf": [{ "$ref": "#/$defs/Base64URL" }, { "minLength": 11, "maxLength": 11 }] }] }
+      },
+      "description": "Stable newest-first account-isolated security history retained for at most 90 days."
+    },
+    "AccountDeletionRequestV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "headCommitDigest", "authorization"],
+      "properties": {
+        "kind": { "const": "account.deletion-request.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "headCommitDigest": { "$ref": "#/$defs/Bytes32" },
+        "authorization": { "$ref": "#/$defs/AccountStepUpAuthorizationV1" }
+      },
+      "description": "Account-wide deletion request. Semantic validation requires delete_account action, null target, matching account, and exact current head digest."
+    },
+    "AccountCleanupTargetStatusV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["handle", "kind", "status"],
+      "properties": {
+        "handle": { "$ref": "#/$defs/Bytes32" },
+        "kind": { "type": "string", "enum": ["macos", "ios", "sync_node", "managed_backup", "operator_storage"] },
+        "status": { "type": "string", "enum": ["erasure_pending", "erased", "operator_action_required"] }
+      }
+    },
+    "AccountDeletionResultV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "deletionGeneration", "centralStatus", "centralBackupExpiresAt", "targets", "deletedAt"],
+      "properties": {
+        "kind": { "const": "account.deletion-result.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "deletionGeneration": { "$ref": "#/$defs/PositiveUInt64" },
+        "centralStatus": { "const": "deleted" },
+        "centralBackupExpiresAt": { "$ref": "#/$defs/UTCDateTime" },
+        "targets": {
+          "type": "array",
+          "maxItems": 16,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/AccountCleanupTargetStatusV1" },
+          "description": "Strictly sorted by unique opaque handle. Offline targets remain erasure_pending; independently controlled storage is operator_action_required."
+        },
+        "deletedAt": { "$ref": "#/$defs/UTCDateTime" }
+      }
+    },
+    "AccountCleanupRegistrationV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "targetHandle", "targetKind", "cleanupCredentialDigest"],
+      "properties": {
+        "kind": { "const": "account.cleanup-registration.v1" },
+        "targetHandle": { "$ref": "#/$defs/Bytes32" },
+        "targetKind": { "type": "string", "enum": ["macos", "ios", "sync_node"] },
+        "cleanupCredentialDigest": { "$ref": "#/$defs/Bytes32" }
+      },
+      "description": "Authenticated registration of a client-controlled post-revocation cleanup capability. The raw cleanup credential never leaves the registering client."
+    },
+    "AccountCleanupRegistrationReceiptV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "targetHandle", "nextDeletionGeneration"],
+      "properties": {
+        "kind": { "const": "account.cleanup-registration-receipt.v1" },
+        "targetHandle": { "$ref": "#/$defs/Bytes32" },
+        "nextDeletionGeneration": { "$ref": "#/$defs/PositiveUInt64" }
+      },
+      "description": "Exact idempotent registration receipt used to journal the next deletion generation before an account-wide delete request can revoke normal account authorization."
+    },
+    "AccountCleanupCheckV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "targetHandle", "deletionGeneration", "cleanupCredential"],
+      "properties": {
+        "kind": { "const": "account.cleanup-check.v1" },
+        "targetHandle": { "$ref": "#/$defs/Bytes32" },
+        "deletionGeneration": { "$ref": "#/$defs/PositiveUInt64" },
+        "cleanupCredential": { "$ref": "#/$defs/Bytes32" }
+      },
+      "description": "Post-revocation credential usable only to retrieve the exact target-bound wipe decision."
+    },
+    "AccountCleanupAckV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "targetHandle", "deletionGeneration", "resultDigest"],
+      "properties": {
+        "kind": { "const": "account.cleanup-ack.v1" },
+        "targetHandle": { "$ref": "#/$defs/Bytes32" },
+        "deletionGeneration": { "$ref": "#/$defs/PositiveUInt64" },
+        "resultDigest": { "$ref": "#/$defs/Bytes32" }
+      },
+      "description": "Idempotent acknowledgement that one target completed its local purge. It cannot authorize account access or recovery."
+    },
+    "AccountCleanupDirectiveV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "targetHandle", "deletionGeneration", "targetKind", "status", "centralBackupExpiresAt"],
+      "properties": {
+        "kind": { "const": "account.cleanup-directive.v1" },
+        "targetHandle": { "$ref": "#/$defs/Bytes32" },
+        "deletionGeneration": { "$ref": "#/$defs/PositiveUInt64" },
+        "targetKind": { "type": "string", "enum": ["macos", "ios", "sync_node", "managed_backup", "operator_storage"] },
+        "status": { "type": "string", "enum": ["erasure_pending", "erased", "operator_action_required"] },
+        "centralBackupExpiresAt": { "$ref": "#/$defs/UTCDateTime" }
+      },
+      "description": "Post-revocation target-bound wipe directive. It contains no account identifier, mailbox data, provider identity, or reusable account authorization."
+    },
+    "EncryptedAccountRecordPageV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "records", "nextCursor", "terminal"],
+      "properties": {
+        "kind": { "const": "account.encrypted-record-page.v1" },
+        "records": { "type": "array", "maxItems": 32, "items": { "$ref": "#/$defs/EncryptedAccountRecordV1" } },
+        "nextCursor": { "oneOf": [{ "type": "null" }, { "allOf": [{ "$ref": "#/$defs/Base64URL" }, { "minLength": 11, "maxLength": 11 }] }] },
+        "terminal": { "type": "boolean" }
+      },
+      "description": "Stable server-sequence pagination of each logical record high-water; cursor is opaque to clients."
+    },
+    "EncryptedAccountRecordV1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "accountID", "recordID", "epoch", "keyGeneration", "trustRevision", "recordRevision", "envelope", "signerDeviceID", "signature"],
+      "properties": {
+        "kind": { "const": "account.encrypted-record.v1" },
+        "accountID": { "$ref": "#/$defs/AccountID" },
+        "recordID": { "$ref": "#/$defs/RecordID" },
+        "epoch": { "$ref": "#/$defs/TrustEpoch" },
+        "keyGeneration": { "$ref": "#/$defs/PositiveUInt64" },
+        "trustRevision": { "$ref": "#/$defs/PositiveUInt64" },
+        "recordRevision": { "$ref": "#/$defs/PositiveUInt64" },
+        "envelope": {
+          "allOf": [
+            { "$ref": "#/$defs/Base64URL" },
+            { "minLength": 39, "maxLength": 87382, "description": "29..65536 decoded bytes: nonce(12) || uncompressed AES-256-GCM ciphertext(1..65508) || tag(16)." }
+          ]
+        },
+        "signerDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "signature": { "$ref": "#/$defs/P256Signature" }
+      }
+    },
+    "SyncNodeEnrollmentClaimPublicV1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "claimID", "nodeDeviceID", "signingPublicKey", "agreementPublicKey", "noiseStaticPublicKey", "endpointDigest", "createdAt", "expiresAt"],
+      "properties": {
+        "kind": { "const": "account.sync-node-claim-public.v1" }, "claimID": { "$ref": "#/$defs/ClaimID" }, "nodeDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "signingPublicKey": { "$ref": "#/$defs/P256PublicKey" }, "agreementPublicKey": { "$ref": "#/$defs/P256PublicKey" },
+        "noiseStaticPublicKey": { "$ref": "#/$defs/Bytes32" }, "endpointDigest": { "$ref": "#/$defs/Bytes32" }, "createdAt": { "$ref": "#/$defs/UTCDateTime" }, "expiresAt": { "$ref": "#/$defs/UTCDateTime" }
+      }, "description": "Public claim projection. It deliberately excludes endpoint ciphertext, setup verifier material, matching strings, and private keys."
+    },
+    "SyncNodeAdmissionEvidenceV1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "accountID", "trustEpoch", "approverDeviceID", "claimID", "nodeDeviceID", "action", "replacedNodeID", "signingPublicKey", "agreementPublicKey", "noiseStaticPublicKey", "endpointDigest", "matchingTranscriptDigest", "stepUp"],
+      "properties": {
+        "kind": { "const": "account.sync-node-admission-evidence.v1" }, "accountID": { "$ref": "#/$defs/AccountID" }, "trustEpoch": { "$ref": "#/$defs/TrustEpoch" }, "approverDeviceID": { "$ref": "#/$defs/DeviceID" }, "claimID": { "$ref": "#/$defs/ClaimID" }, "nodeDeviceID": { "$ref": "#/$defs/DeviceID" },
+        "action": { "type": "string", "enum": ["enroll", "replace"] }, "replacedNodeID": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/DeviceID" }] }, "signingPublicKey": { "$ref": "#/$defs/P256PublicKey" }, "agreementPublicKey": { "$ref": "#/$defs/P256PublicKey" }, "noiseStaticPublicKey": { "$ref": "#/$defs/Bytes32" }, "endpointDigest": { "$ref": "#/$defs/Bytes32" }, "matchingTranscriptDigest": { "$ref": "#/$defs/Bytes32" }, "stepUp": { "$ref": "#/$defs/AccountStepUpAuthorizationV1" }
+      },
+      "allOf": [
+        { "if": { "properties": { "action": { "const": "enroll" } } }, "then": { "properties": { "replacedNodeID": { "type": "null" } } } },
+        { "if": { "properties": { "action": { "const": "replace" } } }, "then": { "properties": { "replacedNodeID": { "$ref": "#/$defs/DeviceID" } } } }
+      ],
+      "description": "Closed evidence. Enroll requires null replacedNodeID; replace requires an exact non-null old node ID."
+    },
+    "SyncNodeEnrollmentResultV1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "accountID", "trustEpoch", "claimID", "nodeDeviceID", "centralAudience", "action", "replacedNodeID", "replacementRevocationDigest", "admissionEvidenceDigest", "issuanceDigest", "committedAt"],
+      "properties": { "kind": { "const": "account.sync-node-enrollment-result.v1" }, "accountID": { "$ref": "#/$defs/AccountID" }, "trustEpoch": { "$ref": "#/$defs/TrustEpoch" }, "claimID": { "$ref": "#/$defs/ClaimID" }, "nodeDeviceID": { "$ref": "#/$defs/DeviceID" }, "centralAudience": { "$ref": "#/$defs/CentralAudience" }, "action": { "type": "string", "enum": ["enroll", "replace"] }, "replacedNodeID": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/DeviceID" }] }, "replacementRevocationDigest": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Bytes32" }] }, "admissionEvidenceDigest": { "$ref": "#/$defs/Bytes32" }, "issuanceDigest": { "$ref": "#/$defs/Bytes32" }, "committedAt": { "$ref": "#/$defs/UTCDateTime" } },
+      "allOf": [
+        { "if": { "properties": { "action": { "const": "enroll" } } }, "then": { "properties": { "replacedNodeID": { "type": "null" }, "replacementRevocationDigest": { "type": "null" } } } },
+        { "if": { "properties": { "action": { "const": "replace" } } }, "then": { "properties": { "replacedNodeID": { "$ref": "#/$defs/DeviceID" }, "replacementRevocationDigest": { "$ref": "#/$defs/Bytes32" } } } }
+      ]
+    },
+    "SyncNodeOfflineLeaseV1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "accountID", "trustEpoch", "claimID", "nodeDeviceID", "centralAudience", "action", "replacedNodeID", "replacementRevocationDigest", "admissionEvidenceDigest", "issuanceDigest", "leaseID", "issuedAt", "expiresAt", "serverKeyID", "signature"],
+      "properties": { "kind": { "const": "account.sync-node-offline-lease.v1" }, "accountID": { "$ref": "#/$defs/AccountID" }, "trustEpoch": { "$ref": "#/$defs/TrustEpoch" }, "claimID": { "$ref": "#/$defs/ClaimID" }, "nodeDeviceID": { "$ref": "#/$defs/DeviceID" }, "centralAudience": { "$ref": "#/$defs/CentralAudience" }, "action": { "type": "string", "enum": ["enroll", "replace"] }, "replacedNodeID": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/DeviceID" }] }, "replacementRevocationDigest": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Bytes32" }] }, "admissionEvidenceDigest": { "$ref": "#/$defs/Bytes32" }, "issuanceDigest": { "$ref": "#/$defs/Bytes32" }, "leaseID": { "$ref": "#/$defs/UUID" }, "issuedAt": { "$ref": "#/$defs/UTCDateTime" }, "expiresAt": { "$ref": "#/$defs/UTCDateTime" }, "serverKeyID": { "$ref": "#/$defs/KeyID" }, "signature": { "$ref": "#/$defs/P256Signature" } },
+      "allOf": [
+        { "if": { "properties": { "action": { "const": "enroll" } } }, "then": { "properties": { "replacedNodeID": { "type": "null" }, "replacementRevocationDigest": { "type": "null" } } } },
+        { "if": { "properties": { "action": { "const": "replace" } } }, "then": { "properties": { "replacedNodeID": { "$ref": "#/$defs/DeviceID" }, "replacementRevocationDigest": { "$ref": "#/$defs/Bytes32" } } } }
+      ]
+    },
+    "SyncNodeRefreshCredentialV1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "accountID", "trustEpoch", "claimID", "nodeDeviceID", "centralAudience", "action", "replacedNodeID", "replacementRevocationDigest", "admissionEvidenceDigest", "issuanceDigest", "credentialID", "issuedAt", "expiresAt", "credential"],
+      "properties": { "kind": { "const": "account.sync-node-refresh-credential.v1" }, "accountID": { "$ref": "#/$defs/AccountID" }, "trustEpoch": { "$ref": "#/$defs/TrustEpoch" }, "claimID": { "$ref": "#/$defs/ClaimID" }, "nodeDeviceID": { "$ref": "#/$defs/DeviceID" }, "centralAudience": { "$ref": "#/$defs/CentralAudience" }, "action": { "type": "string", "enum": ["enroll", "replace"] }, "replacedNodeID": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/DeviceID" }] }, "replacementRevocationDigest": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Bytes32" }] }, "admissionEvidenceDigest": { "$ref": "#/$defs/Bytes32" }, "issuanceDigest": { "$ref": "#/$defs/Bytes32" }, "credentialID": { "$ref": "#/$defs/UUID" }, "issuedAt": { "$ref": "#/$defs/UTCDateTime" }, "expiresAt": { "$ref": "#/$defs/UTCDateTime" }, "credential": { "$ref": "#/$defs/Bytes32" } },
+      "allOf": [
+        { "if": { "properties": { "action": { "const": "enroll" } } }, "then": { "properties": { "replacedNodeID": { "type": "null" }, "replacementRevocationDigest": { "type": "null" } } } },
+        { "if": { "properties": { "action": { "const": "replace" } } }, "then": { "properties": { "replacedNodeID": { "$ref": "#/$defs/DeviceID" }, "replacementRevocationDigest": { "$ref": "#/$defs/Bytes32" } } } }
+      ],
+      "description": "Bounded opaque refresh document linked to the exact admitted claim and atomic issuance; plaintext sessions and endpoint data are excluded."
+    },
+    "SyncNodeCleanupCapabilityV1": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "accountID", "claimID", "nodeDeviceID", "targetHandle", "cleanupCredential", "deletionGeneration", "issuedAt"],
+      "properties": { "kind": { "const": "account.sync-node-cleanup-capability.v1" }, "accountID": { "$ref": "#/$defs/AccountID" }, "claimID": { "$ref": "#/$defs/ClaimID" }, "nodeDeviceID": { "$ref": "#/$defs/DeviceID" }, "targetHandle": { "$ref": "#/$defs/Bytes32" }, "cleanupCredential": { "$ref": "#/$defs/Bytes32" }, "deletionGeneration": { "$ref": "#/$defs/PositiveUInt64" }, "issuedAt": { "$ref": "#/$defs/UTCDateTime" } },
+      "description": "Node-only recoverable deletion capability. targetHandle and cleanupCredential are distinct nonzero 32-byte values; semantic validation also binds account, claim, node, and issuedAt to the committed admission."
+    },
+    "SyncNodeOperationBindingV2": {
+      "type": "object",
+      "required": ["accountID", "trustEpoch", "claimID", "nodeDeviceID", "centralAudience", "action", "replacedNodeID", "replacementRevocationDigest", "admissionEvidenceDigest", "issuanceDigest", "cleanupCapabilityDigest"],
+      "properties": { "accountID": { "$ref": "#/$defs/AccountID" }, "trustEpoch": { "$ref": "#/$defs/TrustEpoch" }, "claimID": { "$ref": "#/$defs/ClaimID" }, "nodeDeviceID": { "$ref": "#/$defs/DeviceID" }, "centralAudience": { "$ref": "#/$defs/CentralAudience" }, "action": { "type": "string", "enum": ["enroll", "replace"] }, "replacedNodeID": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/DeviceID" }] }, "replacementRevocationDigest": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/Bytes32" }] }, "admissionEvidenceDigest": { "$ref": "#/$defs/Bytes32" }, "issuanceDigest": { "$ref": "#/$defs/Bytes32" }, "cleanupCapabilityDigest": { "$ref": "#/$defs/Bytes32" } },
+      "allOf": [{ "if": { "properties": { "action": { "const": "enroll" } } }, "then": { "properties": { "replacedNodeID": { "type": "null" }, "replacementRevocationDigest": { "type": "null" } } } }, { "if": { "properties": { "action": { "const": "replace" } } }, "then": { "properties": { "replacedNodeID": { "$ref": "#/$defs/DeviceID" }, "replacementRevocationDigest": { "$ref": "#/$defs/Bytes32" } } } }]
+    },
+    "SyncNodeEnrollmentResultV2": {
+      "allOf": [{ "$ref": "#/$defs/SyncNodeOperationBindingV2" }, { "type": "object", "properties": { "kind": { "const": "account.sync-node-enrollment-result.v2" }, "committedAt": { "$ref": "#/$defs/UTCDateTime" } }, "required": ["kind", "committedAt"] }], "unevaluatedProperties": false
+    },
+    "SyncNodeOfflineLeaseV2": {
+      "allOf": [{ "$ref": "#/$defs/SyncNodeOperationBindingV2" }, { "type": "object", "properties": { "kind": { "const": "account.sync-node-offline-lease.v2" }, "leaseID": { "$ref": "#/$defs/UUID" }, "issuedAt": { "$ref": "#/$defs/UTCDateTime" }, "expiresAt": { "$ref": "#/$defs/UTCDateTime" }, "serverKeyID": { "$ref": "#/$defs/KeyID" }, "signature": { "$ref": "#/$defs/P256Signature" } }, "required": ["kind", "leaseID", "issuedAt", "expiresAt", "serverKeyID", "signature"] }], "unevaluatedProperties": false
+    },
+    "SyncNodeRefreshCredentialV2": {
+      "allOf": [{ "$ref": "#/$defs/SyncNodeOperationBindingV2" }, { "type": "object", "properties": { "kind": { "const": "account.sync-node-refresh-credential.v2" }, "credentialID": { "$ref": "#/$defs/UUID" }, "issuedAt": { "$ref": "#/$defs/UTCDateTime" }, "expiresAt": { "$ref": "#/$defs/UTCDateTime" }, "credential": { "$ref": "#/$defs/Bytes32" } }, "required": ["kind", "credentialID", "issuedAt", "expiresAt", "credential"] }], "unevaluatedProperties": false
+    },
+    "SyncNodeAdmissionResponseV2": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "result", "refreshCredential", "offlineLease", "cleanupCapability"],
+      "properties": {
+        "kind": { "const": "account.sync-node-admission-response.v2" },
+        "result": { "$ref": "#/$defs/SyncNodeEnrollmentResultV2" },
+        "refreshCredential": { "$ref": "#/$defs/SyncNodeRefreshCredentialV2" },
+        "offlineLease": { "$ref": "#/$defs/SyncNodeOfflineLeaseV2" },
+        "cleanupCapability": { "$ref": "#/$defs/SyncNodeCleanupCapabilityV1" }
+      },
+      "description": "Closed canonical Central response. Semantic validation binds all four documents to one admission."
+    },
+    "AccountCleanupCheckV2": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "targetHandle", "deletionGeneration"],
+      "properties": { "kind": { "const": "account.cleanup-check.v2" }, "targetHandle": { "$ref": "#/$defs/Bytes32" }, "deletionGeneration": { "$ref": "#/$defs/PositiveUInt64" } }
+    },
+    "AccountCleanupCheckResultV2": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "targetHandle", "deletionGeneration", "targetKind", "status", "centralBackupExpiresAt"],
+      "properties": { "kind": { "const": "account.cleanup-check-result.v2" }, "targetHandle": { "$ref": "#/$defs/Bytes32" }, "deletionGeneration": { "$ref": "#/$defs/PositiveUInt64" }, "targetKind": { "const": "sync_node" }, "status": { "enum": ["clean", "erasure_pending", "erased"] }, "centralBackupExpiresAt": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/UTCDateTime" }] } },
+      "allOf": [{ "if": { "properties": { "status": { "const": "clean" } } }, "then": { "properties": { "centralBackupExpiresAt": { "type": "null" } } } }, { "if": { "properties": { "status": { "enum": ["erasure_pending", "erased"] } } }, "then": { "properties": { "centralBackupExpiresAt": { "$ref": "#/$defs/UTCDateTime" } } } }]
+    }
+  }
+}

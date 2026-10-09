@@ -1,0 +1,161 @@
+<style>
+  .phones { display:flex; gap:22px; flex-wrap:wrap; justify-content:center; }
+  .phone { width:280px; height:610px; border-radius:44px; background:#000; position:relative; overflow:hidden; color:#fff;
+           box-shadow:0 0 0 8px #2c2c2e, 0 18px 40px rgba(0,0,0,.5); font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif; font-size:13px; }
+  .phone *, .tablet *, .mac * { box-sizing:border-box; }
+  .status { height:40px; display:flex; justify-content:space-between; align-items:center; padding:0 26px; font-size:12px; font-weight:600; }
+  .g { background:rgba(58,58,60,.72); border:0.5px solid rgba(255,255,255,.10); border-radius:999px; color:#fff; }
+  .c { width:34px; height:34px; display:flex; align-items:center; justify-content:center; font-size:15px; flex:none; }
+  .nav { display:flex; align-items:center; gap:8px; padding:2px 12px 0; height:42px; }
+  .sp { flex:1; }
+  .subj { font-size:18px; font-weight:700; padding:10px 14px 4px; opacity:.35; }
+  .body { padding:4px 14px; color:#e5e5ea; line-height:1.45; }
+  .ai { color:#bf5af2; }
+  .sheet { position:absolute; left:0; right:0; bottom:0; background:#1c1c1e; border-radius:24px 24px 44px 44px; padding:8px 13px 20px; }
+  .grab { width:36px; height:5px; border-radius:3px; background:#48484a; margin:0 auto 9px; }
+  .sh-t { display:flex; align-items:center; gap:6px; font-weight:700; font-size:15px; margin-bottom:9px; }
+  .sh-t span { margin-left:auto; color:#8e8e93; font-weight:400; font-size:11.5px; }
+  .card { background:#2c2c2e; border-radius:13px; padding:9px 11px; line-height:1.4; margin-bottom:9px; }
+  .card b.h { display:block; font-size:10.5px; letter-spacing:.4px; text-transform:uppercase; color:#bf5af2; margin-bottom:4px; }
+  .card ul { margin:0; padding-left:16px; }
+  .row { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:9px; }
+  .btn { background:#2c2c2e; border-radius:999px; padding:7px 11px; font-weight:600; font-size:12.5px; }
+  .btn.on { background:#bf5af2; color:#fff; }
+  .btn.blue { background:#0a84ff; }
+  .ask { background:#2c2c2e; border-radius:999px; height:36px; display:flex; align-items:center; padding:0 13px; color:#8e8e93; gap:8px; }
+  .you { align-self:flex-end; background:#0a84ff; border-radius:16px 16px 4px 16px; padding:7px 11px; margin:0 0 8px auto; max-width:80%; width:fit-content; }
+  .pill { position:absolute; left:50%; transform:translateX(-50%); top:92px; background:#2c2c2e; border-radius:999px; padding:5px 11px; font-size:11.5px; white-space:nowrap; }
+  .bottombar { position:absolute; left:12px; right:12px; bottom:20px; display:flex; gap:8px; align-items:center; }
+  .bb { height:44px; display:flex; align-items:center; gap:18px; padding:0 16px; font-size:16px; }
+  .caption { width:280px; margin-top:18px; font-size:12px; line-height:1.45; color:#d1d1d6; }
+  .caption b { color:#fff; }
+  .col { display:flex; flex-direction:column; align-items:center; }
+  .tag { font-size:11px; font-weight:700; letter-spacing:.5px; color:#8e8e93; margin-bottom:8px; }
+  .wide { display:flex; gap:22px; flex-wrap:wrap; justify-content:center; margin-top:36px; }
+  .tablet { width:560px; height:380px; border-radius:22px; background:#000; box-shadow:0 0 0 8px #2c2c2e; position:relative; overflow:hidden; color:#fff; font-family:-apple-system,sans-serif; font-size:12.5px; display:flex; }
+  .list { width:190px; border-right:0.5px solid #38383a; padding:12px 10px; color:#8e8e93; }
+  .list div { padding:8px 6px; border-radius:8px; }
+  .list .sel { background:#0a84ff; color:#fff; }
+  .reader { flex:1; padding:12px 16px; position:relative; }
+  .tb { display:flex; gap:8px; justify-content:flex-end; margin-bottom:10px; }
+  .pop { position:absolute; right:14px; top:52px; width:270px; background:#1c1c1e; border-radius:16px; padding:11px; box-shadow:0 14px 40px rgba(0,0,0,.7); border:0.5px solid #3a3a3c; }
+  .pop:before { content:""; position:absolute; top:-7px; right:22px; border:7px solid transparent; border-top:0; border-bottom-color:#1c1c1e; }
+  .mac { width:640px; height:380px; border-radius:12px; background:#1e1e1e; box-shadow:0 0 0 1px #3a3a3c, 0 18px 40px rgba(0,0,0,.5); overflow:hidden; color:#fff; font-family:-apple-system,sans-serif; font-size:12.5px; display:flex; flex-direction:column; }
+  .mtb { height:38px; display:flex; align-items:center; gap:8px; padding:0 12px; border-bottom:0.5px solid #3a3a3c; background:#2a2a2a; }
+  .dots span { display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:6px; }
+  .mbody { flex:1; display:flex; }
+  .insp { width:240px; border-left:0.5px solid #3a3a3c; background:#232323; padding:12px; }
+  .tool { padding:4px 9px; border-radius:6px; background:#3a3a3c; }
+  .tool.on { background:#bf5af2; }
+</style>
+
+<h2>A in detail: the ✦ pane on iPhone, iPad and Mac</h2>
+<p class="subtitle">One shared pane, shown three ways. Your picks are in: Translate works in place, Draft reply previews before Compose, detected actions, and Ask about this thread.</p>
+
+<div class="phones">
+  <div class="col">
+    <div class="tag">1 · OPEN (summary ready)</div>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>●●●</span></div>
+      <div class="nav"><div class="g c">‹</div><div class="sp"></div><div class="g c">⌃</div><div class="g c">⌄</div></div>
+      <div class="subj">Steuererklärung 2025 – Frist</div>
+      <div class="sheet">
+        <div class="grab"></div>
+        <div class="sh-t"><span class="ai">✦</span> This conversation <span>On-device 🔒</span></div>
+        <div class="card"><b class="h">Summary</b><ul><li>Tax return 2025 due <b>31 March</b></li><li>Submit via ZHprivateTax</li><li>Extension possible until 30 Sept</li></ul></div>
+        <div class="row"><div class="btn">📅 Add “Tax deadline” 31 Mar</div><div class="btn">⏰ Remind me</div></div>
+        <div class="row"><div class="btn">文A Translate to English</div><div class="btn ai">✦ Draft reply</div></div>
+        <div class="ask">✦ Ask about this conversation…</div>
+      </div>
+    </div>
+    <div class="caption"><b>✦ in the bottom bar</b> opens the sheet at medium height. The summary starts loading when the conversation opens, so it's usually ready. Detected actions sit under it as chips. Swipe down to close.</div>
+  </div>
+
+  <div class="col">
+    <div class="tag">2 · TRANSLATE (in place)</div>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>●●●</span></div>
+      <div class="nav"><div class="g c">‹</div><div class="sp"></div><div class="g c">⌃</div><div class="g c">⌄</div></div>
+      <div class="pill">文A Translated from German · <span style="color:#0a84ff">Show original</span></div>
+      <div style="height:30px"></div>
+      <div class="subj" style="opacity:1">Tax return 2025 – deadline</div>
+      <div class="body">Dear Mr Vdovenko, the deadline for submitting your 2025 tax return is 31 March. Please submit your documents via ZHprivateTax. If you need more time, you can request an extension until 30 September …</div>
+      <div class="bottombar"><div class="g bb">🗄 &nbsp; ↩</div><div class="sp"></div><div class="g c ai" style="width:44px;height:44px">✦</div><div class="g c" style="width:44px;height:44px">✎</div></div>
+    </div>
+    <div class="caption"><b>Translate closes the sheet</b> and swaps the bodies. A pill at the top says what happened and offers <b>Show original</b>. In the sheet, the button then reads “Show original”.</div>
+  </div>
+
+  <div class="col">
+    <div class="tag">3 · DRAFT REPLY (preview)</div>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>●●●</span></div>
+      <div class="nav"><div class="g c">‹</div><div class="sp"></div><div class="g c">⌃</div><div class="g c">⌄</div></div>
+      <div class="subj">Steuererklärung 2025 – Frist</div>
+      <div class="sheet">
+        <div class="grab"></div>
+        <div class="sh-t"><span class="ai">‹ ✦</span> Draft reply <span>German · matches the mail</span></div>
+        <div class="row"><div class="btn on">Short</div><div class="btn">Polite</div><div class="btn">Ask for extension</div><div class="btn">✎ Custom…</div></div>
+        <div class="card">Sehr geehrte Damen und Herren,<br><br>vielen Dank für die Erinnerung. Ich reiche die Unterlagen bis zum 31. März über ZHprivateTax ein.<br><br>Freundliche Grüsse<br>Oleh Vdovenko</div>
+        <div class="row"><div class="btn">↻ Regenerate</div><div class="sp"></div><div class="btn blue">Edit in Compose</div></div>
+      </div>
+    </div>
+    <div class="caption"><b>Tone chips, then the draft streams in</b> inside the sheet. It writes in the mail's language. <b>Edit in Compose</b> opens the composer already filled in; nothing is sent from the sheet.</div>
+  </div>
+
+  <div class="col">
+    <div class="tag">4 · ASK ABOUT THIS THREAD</div>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>●●●</span></div>
+      <div class="nav"><div class="g c">‹</div><div class="sp"></div><div class="g c">⌃</div><div class="g c">⌄</div></div>
+      <div class="subj">Steuererklärung 2025 – Frist</div>
+      <div class="sheet" style="top:120px">
+        <div class="grab"></div>
+        <div class="sh-t"><span class="ai">‹ ✦</span> Ask <span>This conversation only</span></div>
+        <div class="you">What documents do they need?</div>
+        <div class="card">They ask for your <b>salary certificate</b>, <b>bank statements as of 31 Dec</b> and <b>3a pillar receipts</b>. Upload them as PDFs in ZHprivateTax.
+          <div style="margin-top:7px;color:#8e8e93;font-size:11.5px">From: Kanton Zürich · 08:12 ›</div></div>
+        <div class="row"><div class="btn">⏰ Remind me to gather them</div></div>
+        <div style="position:absolute;left:13px;right:13px;bottom:20px" class="ask">Ask a follow-up…</div>
+      </div>
+    </div>
+    <div class="caption"><b>Answers stay in the sheet</b>, which grows to full height. It uses Ask Mail's answer blocks (text, quotes, action buttons) but only reads this conversation. Each answer links to the message it came from.</div>
+  </div>
+</div>
+
+<div class="wide">
+  <div class="col">
+    <div class="tag">iPAD · ✦ IN THE READER TOOLBAR → POPOVER</div>
+    <div class="tablet">
+      <div class="list"><div>Inbox</div><div class="sel">Kanton Zürich<br><span style="font-size:11px">Steuererklärung 2025…</span></div><div>Galaxus<br><span style="font-size:11px">Ihre Bestellung…</span></div></div>
+      <div class="reader">
+        <div class="tb"><div class="tool">🗄</div><div class="tool">↩</div><div class="tool on">✦</div></div>
+        <div style="font-size:16px;font-weight:700;opacity:.5">Steuererklärung 2025 – Frist</div>
+        <div class="pop">
+          <div class="sh-t" style="font-size:13.5px"><span class="ai">✦</span> This conversation <span>On-device 🔒</span></div>
+          <div class="card" style="font-size:12px"><b class="h">Summary</b>Tax return due <b>31 March</b>; submit via ZHprivateTax; extension to 30 Sept.</div>
+          <div class="row"><div class="btn">📅 Add deadline</div><div class="btn">文A Translate</div><div class="btn ai">✦ Draft reply</div></div>
+          <div class="ask">✦ Ask about this conversation…</div>
+        </div>
+      </div>
+    </div>
+    <div class="caption" style="width:560px">The same pane as a <b>popover</b> from a ✦ toolbar button. The inline AI card in today's iPad reader goes away.</div>
+  </div>
+
+  <div class="col">
+    <div class="tag">MAC · ✦ TOGGLES A READER INSPECTOR</div>
+    <div class="mac">
+      <div class="mtb"><div class="dots"><span style="background:#ff5f57"></span><span style="background:#febc2e"></span><span style="background:#28c840"></span></div><div class="sp"></div><div class="tool">🗄</div><div class="tool">↩</div><div class="tool on">✦</div></div>
+      <div class="mbody">
+        <div class="list" style="width:150px"><div class="sel">Kanton Zürich</div><div>Galaxus</div></div>
+        <div class="reader"><div style="font-size:16px;font-weight:700">Steuererklärung 2025 – Frist</div><div style="color:#d1d1d6;margin-top:8px;line-height:1.45">Sehr geehrter Herr Vdovenko, die Frist für die Einreichung Ihrer Steuererklärung 2025 endet am 31. März …</div></div>
+        <div class="insp">
+          <div class="sh-t" style="font-size:13px"><span class="ai">✦</span> This conversation</div>
+          <div class="card" style="font-size:12px"><b class="h">Summary</b>Tax return due <b>31 March</b>; submit via ZHprivateTax.</div>
+          <div class="row"><div class="btn">📅 Add deadline</div><div class="btn">文A Translate</div><div class="btn ai">✦ Draft reply</div></div>
+          <div class="ask">Ask about this…</div>
+        </div>
+      </div>
+    </div>
+    <div class="caption" style="width:640px">On the Mac, ✦ (⌥⌘A) toggles an <b>inspector beside the reader</b>, so you can read and use AI side by side. It stays open as you move between messages and follows the selection. It replaces today's inline AI card.</div>
+  </div>
+</div>

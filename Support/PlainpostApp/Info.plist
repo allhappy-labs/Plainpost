@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleDisplayName</key>
+    <string>Plainpost</string>
+    <key>CFBundleExecutable</key>
+    <string>Plainpost</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.marynavdovenko.Plainpost</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>Plainpost</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1.0</string>
+    <key>CFBundleVersion</key>
+    <string>2</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>26.0</string>
+    <key>NSContactsUsageDescription</key>
+    <string>Plainpost uses your contacts locally to suggest email recipients and show sender photos.</string>
+    <key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+    <string>Plainpost adds events you choose from Ask Mail, such as a flight or a viewing, to your calendar.</string>
+    <key>NSRemindersFullAccessUsageDescription</key>
+    <string>Plainpost adds reminders you choose from Ask Mail, such as paying an invoice.</string>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>Plainpost advertises a private local connection so your paired iPhone or iPad can reach this Mac.</string>
+    <key>NSBonjourServices</key>
+    <array>
+        <string>_plainpost._tcp</string>
+    </array>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSPrincipalClass</key>
+    <string>NSApplication</string>
+</dict>
+</plist>

@@ -1,0 +1,118 @@
+<style>
+  .phones { display:flex; gap:26px; flex-wrap:wrap; justify-content:center; }
+  .phone { width:300px; height:650px; border-radius:46px; background:#000; position:relative; overflow:hidden; color:#fff;
+           box-shadow:0 0 0 9px #2c2c2e, 0 18px 40px rgba(0,0,0,.5); font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif; }
+  .phone * { box-sizing:border-box; }
+  .status { height:42px; display:flex; justify-content:space-between; align-items:center; padding:0 28px; font-size:13px; font-weight:600; }
+  .g { background:rgba(58,58,60,.72); border:0.5px solid rgba(255,255,255,.10); box-shadow:0 6px 18px rgba(0,0,0,.45); border-radius:999px; color:#fff; }
+  .c { width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:16px; flex:none; }
+  .nav { display:flex; align-items:center; gap:8px; padding:2px 12px 0; height:44px; }
+  .navt { flex:1; text-align:center; font-weight:600; font-size:16px; margin-right:44px; }
+  .large { font-size:30px; font-weight:700; padding:4px 18px 8px; letter-spacing:-.4px; }
+  .grp { margin:0 14px 6px; background:#1c1c1e; border-radius:16px; overflow:hidden; }
+  .gr { display:flex; align-items:center; gap:11px; padding:9px 14px; font-size:15px; position:relative; min-height:42px; }
+  .gr + .gr::before { content:""; position:absolute; left:52px; right:0; top:0; border-top:0.5px solid #38383a; }
+  .sq { width:28px; height:28px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:14px; flex:none; color:#fff; }
+  .gr b { margin-left:auto; font-weight:400; color:#8e8e93; font-size:14px; white-space:nowrap; }
+  .gr .two { display:flex; flex-direction:column; font-size:15px; min-width:0; }
+  .gr .two span { font-size:12px; color:#8e8e93; }
+  .tog { margin-left:auto; width:44px; height:26px; border-radius:999px; background:#30d158; position:relative; flex:none; }
+  .tog::after { content:""; position:absolute; right:2px; top:2px; width:22px; height:22px; border-radius:50%; background:#fff; }
+  .tog.off { background:#39393d; } .tog.off::after { right:auto; left:2px; }
+  .h { font-size:12px; color:#8e8e93; padding:12px 30px 5px; text-transform:uppercase; letter-spacing:.2px; }
+  .f { font-size:12px; color:#8e8e93; padding:4px 30px 6px; line-height:1.35; }
+  .av { width:38px; height:38px; border-radius:50%; background:#0a84ff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; flex:none; }
+  .seg { margin-left:auto; display:flex; background:#2c2c2e; border-radius:9px; padding:2px; font-size:12px; }
+  .seg span { padding:4px 10px; border-radius:7px; color:#aeaeb2; }
+  .seg span.on { background:#636366; color:#fff; font-weight:600; }
+  .blue { color:#0a84ff; }
+  .red { color:#ff453a; justify-content:center; }
+  .caption { width:300px; margin-top:22px; font-size:12.5px; line-height:1.45; color:#d1d1d6; }
+  .caption b { color:#fff; }
+  .col { display:flex; flex-direction:column; align-items:center; }
+  .scroll { position:absolute; top:86px; bottom:0; left:0; right:0; overflow:hidden; }
+</style>
+
+<h2>Settings, rebuilt like iOS Settings</h2>
+<p class="subtitle">Opens from the Settings row in Mailboxes and always starts on this list. Standard inset-grouped rows, toggles and pickers; no custom headers, no mailbox toolbar, no nested scroll areas.</p>
+
+<div class="phones">
+
+<!-- SETTINGS ROOT -->
+<div class="col">
+<div class="phone">
+  <div class="status"><span>21:10</span><span>▮▮▮ ◠ 13</span></div>
+  <div class="nav"><div class="g c">‹</div></div>
+  <div class="scroll">
+  <div class="large">Settings</div>
+  <div class="h">Accounts</div>
+  <div class="grp">
+    <div class="gr"><div class="av">OV</div><div class="two">Oleh<span>oleg.olhapi@gmail.com · Synced 2 min ago</span></div><b>›</b></div>
+    <div class="gr blue"><div class="sq" style="background:none;color:#0a84ff;font-size:20px">＋</div>Add Account</div>
+  </div>
+  <div class="h">Mail</div>
+  <div class="grp">
+    <div class="gr"><div class="sq" style="background:#5e5ce6">✦</div>Smart Inbox<b>On ›</b></div>
+    <div class="gr"><div class="sq" style="background:#ff3b30">🔔</div>Notifications<b>›</b></div>
+    <div class="gr"><div class="sq" style="background:#0a84ff">≡</div>Rules<b>2 ›</b></div>
+    <div class="gr"><div class="sq" style="background:#30b0c7">⌂</div>Labels<b>›</b></div>
+  </div>
+  <div class="h">Privacy</div>
+  <div class="grp">
+    <div class="gr"><div class="sq" style="background:#5856d6">⊘</div>Block Remote Images<div class="tog"></div></div>
+    <div class="gr"><div class="sq" style="background:#8e8e93">◎</div>Sender Icons<div class="tog"></div></div>
+    <div class="gr"><div class="sq" style="background:#ff9500">☺</div>Contacts<b>Allowed ›</b></div>
+  </div>
+  <div class="h">Intelligence</div>
+  <div class="grp">
+    <div class="gr"><div class="sq" style="background:linear-gradient(135deg,#ff9f0a,#bf5af2)">✦</div>Apple Intelligence<b>Ready ›</b></div>
+    <div class="gr"><div class="sq" style="background:#34c759">A</div>Translate To<b>English ›</b></div>
+  </div>
+  </div>
+</div>
+<div class="caption"><b>Settings list</b> (scrolls on)<br>
+• Accounts first: one row per account with its sync status, then Add Account.<br>
+• <b>Mail</b>: Smart Inbox (on/off, re-sort), Notifications, Rules, Labels.<br>
+• <b>Privacy</b>: plain toggles, no "Enabled" pills.<br>
+• <b>Intelligence</b>: model status and translation language.<br>
+• Further down: <b>Sync Node &amp; Plainpost Account</b>, <b>Agent Safety</b> (approvals, authentication), <b>Storage</b>, and <b>About</b> (version, and Diagnostics tucked inside).</div>
+</div>
+
+<!-- ACCOUNT DETAIL -->
+<div class="col">
+<div class="phone">
+  <div class="status"><span>21:10</span><span>▮▮▮ ◠ 13</span></div>
+  <div class="nav"><div class="g c">‹</div><div class="navt">oleg.olhapi@gmail.com</div></div>
+  <div class="scroll" style="top:92px">
+  <div class="grp">
+    <div class="gr">Name<b style="color:#fff">Oleh</b></div>
+    <div class="gr">Email<b>oleg.olhapi@gmail.com</b></div>
+    <div class="gr">Connection<b>Gmail · Direct ›</b></div>
+  </div>
+  <div class="f">Signed in with Google. Passwords and tokens stay in this iPhone's Keychain.</div>
+  <div class="h">Mail</div>
+  <div class="grp">
+    <div class="gr">Swipe &amp; Delete<div class="seg"><span class="on">Archive</span><span>Trash</span></div></div>
+    <div class="gr">Mailboxes to Sync<b>5 ›</b></div>
+    <div class="gr">Keep on iPhone<b>Last 30 days ›</b></div>
+    <div class="gr blue">Download Complete History</div>
+  </div>
+  <div class="f">Last synced 2 minutes ago · 2,122 messages on this iPhone.</div>
+  <div class="h">Sync Node</div>
+  <div class="grp">
+    <div class="gr">Use Sync Node<div class="tog off"></div></div>
+  </div>
+  <div class="f">Let your Plainpost Sync Node fetch and send this account's mail.</div>
+  <div class="grp" style="margin-top:14px">
+    <div class="gr red">Remove Account</div>
+  </div>
+  </div>
+</div>
+<div class="caption"><b>Account</b> (pushed from Settings)<br>
+• Gmail/iCloud/Microsoft show sign-in state, not server fields. Manual IMAP accounts get a "Server Settings ›" row with the host/port/password form.<br>
+• Per-account <b>Archive vs Trash</b> decides the toolbar and swipe action.<br>
+• History download, sync scope and Sync Node are ordinary rows; no pinned header.<br>
+• No internal IDs or "approval-gated" jargon.</div>
+</div>
+
+</div>

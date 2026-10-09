@@ -1,0 +1,40 @@
+{
+  "kind": "node-sync-v1.protocol-vectors",
+  "schemaVersion": 1,
+  "families": {
+    "attachmentRequest": "{\"attachmentID\":\"attachment-001\",\"kind\":\"node-sync.attachment-request.v1\"}",
+    "attachmentResult": "{\"attachment\":{\"contentDigest\":null,\"contentID\":null,\"disposition\":\"attachment\",\"filename\":\"invoice.pdf\",\"id\":\"attachment-001\",\"mime\":\"application/pdf\",\"size\":\"12\"},\"kind\":\"node-sync.attachment-result.v1\"}",
+    "deltaPage": "{\"changes\":[{\"kind\":\"upsert\",\"logicalMailboxID\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"messageID\":\"message-001\",\"threadID\":\"thread-001\"},{\"kind\":\"membership_removed\",\"logicalMailboxID\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"messageID\":null,\"threadID\":null},{\"kind\":\"tombstoned\",\"logicalMailboxID\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"messageID\":\"message-002\",\"threadID\":null},{\"kind\":\"epoch_reset\",\"logicalMailboxID\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"messageID\":null,\"threadID\":null},{\"kind\":\"baseline_complete\",\"logicalMailboxID\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"messageID\":null,\"threadID\":null}],\"kind\":\"node-sync.delta-page.v1\",\"nextCursor\":\"opaque-delta-tail-002\",\"revision\":\"2\"}",
+    "deltaRequest": "{\"after\":\"opaque-delta-tail-001\",\"kind\":\"node-sync.delta-request.v1\",\"limit\":1}",
+    "googleProvisionRequest": "{\"authorizationCode\":\"code\",\"clientID\":\"client-001\",\"codeVerifier\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"kind\":\"node-sync.google-provision-request.v1\",\"redirectURI\":\"https://app.example/callback\"}",
+    "googleProvisionResult": "{\"discoveredMailboxes\":[{\"displayName\":\"Inbox\",\"logicalMailboxID\":null,\"mailboxHandle\":\"handle-001\",\"role\":\"inbox\"}],\"kind\":\"node-sync.google-provision-result.v1\",\"providerIdentity\":\"identity-001\"}",
+    "mailboxAssignmentsRequest": "{\"assignments\":[{\"logicalMailboxID\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"mailboxHandle\":\"handle-001\"}],\"kind\":\"node-sync.mailbox-assignments-request.v1\"}",
+    "mailboxAssignmentsResult": "{\"assignments\":[{\"displayName\":\"Inbox\",\"logicalMailboxID\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"mailboxHandle\":\"handle-001\",\"role\":\"inbox\"}],\"kind\":\"node-sync.mailbox-assignments-result.v1\"}",
+    "messageRequest": "{\"kind\":\"node-sync.message-request.v1\",\"messageID\":\"message-001\"}",
+    "messageResult": "{\"kind\":\"node-sync.message-result.v1\",\"message\":{\"attachments\":[],\"bcc\":[],\"cc\":[],\"flags\":[],\"from\":[],\"htmlBody\":{\"state\":\"absent\",\"value\":null},\"id\":\"message-001\",\"inReplyTo\":[],\"labels\":[],\"receivedAt\":\"0001-01-01T00:00:00Z\",\"references\":[],\"replyTo\":[],\"sentAt\":\"9999-12-31T23:59:59Z\",\"subject\":\"Line\\u2028Sep\\u2029End\",\"textBody\":{\"state\":\"complete\",\"value\":\"Done\"},\"threadID\":\"thread-001\",\"to\":[]}}",
+    "mutationResult": "{\"idempotencyKey\":\"mutation-001\",\"kind\":\"node-sync.mutation-result.v1\",\"state\":\"pending\"}",
+    "problem": "{\"category\":\"invalid_request\",\"kind\":\"node-sync.problem.v1\"}",
+    "searchPage": "{\"kind\":\"node-sync.search-page.v1\",\"messages\":[],\"nextCursor\":\"search-002\",\"revision\":\"2\"}",
+    "searchRequest": "{\"after\":\"\",\"kind\":\"node-sync.search-request.v1\",\"limit\":1,\"logicalMailboxIDs\":[\"aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"],\"query\":\"query\"}",
+    "snapshotPage": "{\"kind\":\"node-sync.snapshot-page.v1\",\"messages\":[],\"nextCursor\":\"snapshot-002\",\"revision\":\"2\"}",
+    "snapshotRequest": "{\"after\":\"\",\"kind\":\"node-sync.snapshot-request.v1\",\"limit\":1}",
+    "statusRequest": "{\"kind\":\"node-sync.status-request.v1\"}",
+    "statusResult": "{\"assignments\":[{\"authorityEpoch\":\"12\",\"displayName\":\"Inbox\",\"logicalMailboxID\":\"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8\",\"mailboxHandle\":\"handle-001\",\"role\":\"inbox\"}],\"backup\":\"not_reported\",\"endpoint\":\"session-scoped\",\"kind\":\"node-sync.status-result.v1\",\"providerIdentity\":\"identity-001\",\"reachability\":\"reachable\",\"revision\":\"2\",\"state\":\"ready\",\"storage\":\"managed\",\"syncLag\":\"2\",\"updateStatus\":\"current\",\"version\":\"node-sync-v1\"}"
+  },
+  "bounds": {
+
+    "canonicalFamily": { "acceptedBytes": 1048576, "rejectedBytes": 1048577 },
+    "cursor": { "acceptedBytes": 4096, "rejectedBytes": 4097 },
+    "messageReference": { "acceptedBytes": 998, "rejectedBytes": 999 },
+    "mutationIdentifierArray": { "acceptedItems": 200, "rejectedItems": 201 },
+    "pageLimit": { "accepted": 200, "rejected": 201 },
+    "searchQuery": { "acceptedBytes": 4096, "rejectedBytes": 4097 }
+  },
+  "problems": [
+    "{\"category\":\"invalid_request\",\"kind\":\"node-sync.problem.v1\"}",
+    "{\"category\":\"unauthorized\",\"kind\":\"node-sync.problem.v1\"}",
+    "{\"category\":\"conflict\",\"kind\":\"node-sync.problem.v1\"}",
+    "{\"category\":\"stale_cursor\",\"kind\":\"node-sync.problem.v1\"}",
+    "{\"category\":\"unavailable\",\"kind\":\"node-sync.problem.v1\"}"
+  ]
+}

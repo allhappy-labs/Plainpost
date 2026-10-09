@@ -1,0 +1,31 @@
+{
+  "kind": "node.enrollment-material.v1",
+  "setupSeed": "AQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyA",
+  "claimNonce": "ISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0-P0A",
+  "nodeID": "33333333-4444-4555-8666-777777777777",
+  "signingPublicKey": "BGsX0fLhLEJH-Lzm5WOkQPJ3A32BLeszoPShOUXYmMKWT-NC4v4af5uO5-tKfA-eFivOM1drMV7Oy7ZAaDe_UfU",
+  "agreementPublicKey": "BHzyexiNA09-ilI4AwS1GsPAiWnid_IbNaYLSPxHZpl4B3dVENuO0EApPZrGn3Qw27p9reY86YIpngS3nSJ4c9E",
+  "noiseStaticPublicKey": "L-V9o0fNYkMVKNqsX7spBzD_9oSvxM_C7ZCZX1jLO3Q",
+  "expiresAt": "2026-08-15T12:05:00Z",
+  "endpoint": "https://node.tailnet.ts.net:8443",
+  "endpointNonce": "oKGio6Slpqeoqaqr",
+  "setupCode": "mRthjU3vQNg6f1x_ZMHBf9jMwvALuUMTWI6ZHpWgsyo",
+  "setupVerifier": "f1crK2I8wJvYELiSs2U8PhxCQUK-o0J4oR7jYdfyuVE",
+  "endpointDigest": "ri9vKooKb8Ec8qfO7KizRRqc0S35wjF8KXRo9TzqJlI",
+  "endpointContext": "AAAAIFBsYWlucG9zdC5Ob2RlRW5kcG9pbnRDb250ZXh0LnYxAAAAAgABAAAAEDMzMzNEREVVhmZ3d3d3d3cAAABBBGsX0fLhLEJH-Lzm5WOkQPJ3A32BLeszoPShOUXYmMKWT-NC4v4af5uO5-tKfA-eFivOM1drMV7Oy7ZAaDe_UfUAAABBBHzyexiNA09-ilI4AwS1GsPAiWnid_IbNaYLSPxHZpl4B3dVENuO0EApPZrGn3Qw27p9reY86YIpngS3nSJ4c9EAAAAgL-V9o0fNYkMVKNqsX7spBzD_9oSvxM_C7ZCZX1jLO3QAAAAgri9vKooKb8Ec8qfO7KizRRqc0S35wjF8KXRo9TzqJlIAAAAUMjAyNi0wOC0xNVQxMjowNTowMFo",
+  "endpointSalt": "UvsanIIyMKU-1KDhoLU1H8kgVJ3WYXdS85ulKX91WqQ",
+  "endpointKey": "B7uYbAFFdxWeNwHosin_1ZOFB5Wt2sypzNXXYYlh5oE",
+  "endpointAAD": "AAAAHFBsYWlucG9zdC5Ob2RlRW5kcG9pbnRBQUQudjEAAAACAAEAAAAQMzMzM0RERVWGZnd3d3d3dwAAAEEEaxfR8uEsQkf4vOblY6RA8ncDfYEt6zOg9KE5RdiYwpZP40Li_hp_m47n60p8D54WK84zV2sxXs7LtkBoN79R9QAAAEEEfPJ7GI0DT36KUjgDBLUaw8CJaeJ38hs1pgtI_EdmmXgHd1UQ247QQCk9msafdDDbun2t5jzpgimeBLedInhz0QAAACAv5X2jR81iQxUo2qxfuykHMP_2hK_Ez8LtkJlfWMs7dAAAACCuL28qigpvwRzyp87sqLNFGpzRLfnCMXwpdGj1POomUgAAABQyMDI2LTA4LTE1VDEyOjA1OjAwWg",
+  "endpointCiphertext": "oKGio6SlpqeoqaqrmeYqLbdMkwc39Yt257saZek5M2s8ps0_yl_3B7mvsvXXcuhU3TypGMO9rTSRsSgo",
+  "claimID": "44444444-5555-4666-8777-888888888888",
+  "claimCreatedAt": "2026-08-15T12:00:00Z",
+  "displayCode": "899930",
+  "activationSubstitutionTranscripts": {
+    "result": "AAAAG1BsYWlucG9zdC5Ob2RlQWN0aXZhdGlvbi52MgAAAAIAAgAAABF6ImtpbmQiOiJyZXN1bHQifQAAAAQBAgMEAAAABQQFBgcIAAAABwkKCwwNDg8AAAATeyJraW5kIjoiZXZpZGVuY2UifQAAAEAqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq",
+    "refresh": "AAAAG1BsYWlucG9zdC5Ob2RlQWN0aXZhdGlvbi52MgAAAAIAAgAAABF7ImtpbmQiOiJyZXN1bHQifQAAAAQAAgMEAAAABQQFBgcIAAAABwkKCwwNDg8AAAATeyJraW5kIjoiZXZpZGVuY2UifQAAAEAqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq",
+    "lease": "AAAAG1BsYWlucG9zdC5Ob2RlQWN0aXZhdGlvbi52MgAAAAIAAgAAABF7ImtpbmQiOiJyZXN1bHQifQAAAAQBAgMEAAAABQUFBgcIAAAABwkKCwwNDg8AAAATeyJraW5kIjoiZXZpZGVuY2UifQAAAEAqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq",
+    "trust": "AAAAG1BsYWlucG9zdC5Ob2RlQWN0aXZhdGlvbi52MgAAAAIAAgAAABF7ImtpbmQiOiJyZXN1bHQifQAAAAQBAgMEAAAABQQFBgcIAAAABwgKCwwNDg8AAAATeyJraW5kIjoiZXZpZGVuY2UifQAAAEAqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq",
+    "evidence": "AAAAG1BsYWlucG9zdC5Ob2RlQWN0aXZhdGlvbi52MgAAAAIAAgAAABF7ImtpbmQiOiJyZXN1bHQifQAAAAQBAgMEAAAABQQFBgcIAAAABwkKCwwNDg8AAAATeiJraW5kIjoiZXZpZGVuY2UifQAAAEAqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq",
+    "proof": "AAAAG1BsYWlucG9zdC5Ob2RlQWN0aXZhdGlvbi52MgAAAAIAAgAAABF7ImtpbmQiOiJyZXN1bHQifQAAAAQBAgMEAAAABQQFBgcIAAAABwkKCwwNDg8AAAATeyJraW5kIjoiZXZpZGVuY2UifQAAAEArKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioq"
+  }
+}

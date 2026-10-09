@@ -1,0 +1,564 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://plainpost.olhapi.com/protocol/provider-fixtures/smtp-transcripts.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "operations",
+    "cases"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "operations": {
+      "type": "array",
+      "minItems": 19,
+      "items": {
+        "$ref": "#/$defs/operation"
+      }
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 19,
+      "items": {
+        "$ref": "#/$defs/case"
+      }
+    }
+  },
+  "$defs": {
+    "wire": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "direction",
+        "bytesBase64"
+      ],
+      "properties": {
+        "kind": {
+          "const": "wire"
+        },
+        "direction": {
+          "enum": [
+            "client",
+            "server"
+          ]
+        },
+        "bytesBase64": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]*={0,2}$"
+        }
+      }
+    },
+    "auth": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "direction",
+        "credentialGeneration"
+      ],
+      "properties": {
+        "kind": {
+          "const": "auth"
+        },
+        "direction": {
+          "const": "client"
+        },
+        "credentialGeneration": {
+          "const": "synthetic-v1"
+        }
+      }
+    },
+    "tls": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "direction"
+      ],
+      "properties": {
+        "kind": {
+          "const": "tls"
+        },
+        "direction": {
+          "const": "client"
+        }
+      }
+    },
+    "message": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "from",
+        "to",
+        "bytesBase64"
+      ],
+      "properties": {
+        "kind": {
+          "const": "message"
+        },
+        "from": {
+          "type": "string",
+          "minLength": 1
+        },
+        "to": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "bytesBase64": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9+/]*={0,2}$"
+        }
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "const": "data"
+        },
+        "messageSHA256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "messageSize": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        },
+        "prefixSize": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*$"
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "messageSHA256",
+            "messageSize"
+          ]
+        },
+        {
+          "required": [
+            "prefixSize"
+          ]
+        }
+      ]
+    },
+    "disconnect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "direction"
+      ],
+      "properties": {
+        "kind": {
+          "const": "disconnect"
+        },
+        "direction": {
+          "const": "server"
+        }
+      }
+    },
+    "envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "from",
+        "to"
+      ],
+      "properties": {
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "messageObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sha256",
+        "size"
+      ],
+      "properties": {
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "size": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        }
+      }
+    },
+    "normalized": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result"
+      ],
+      "properties": {
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "action": {
+          "type": "string"
+        },
+        "envelope": {
+          "$ref": "#/$defs/envelope"
+        },
+        "message": {
+          "$ref": "#/$defs/messageObservation"
+        },
+        "result": {
+          "enum": [
+            "applied",
+            "rejected",
+            "unsupported",
+            "delivery_uncertain"
+          ]
+        }
+      }
+    },
+    "semanticOutcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "code",
+        "providerReference",
+        "sentCopy",
+        "destinationRawID"
+      ],
+      "properties": {
+        "state": {
+          "enum": [
+            "applied",
+            "rejected",
+            "delivery_uncertain"
+          ]
+        },
+        "code": {
+          "enum": [
+            "accepted",
+            "provider_rejected",
+            "unsupported",
+            "acceptance_unknown"
+          ]
+        },
+        "providerReference": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "sentCopy": {
+          "enum": [
+            "not_applicable",
+            "provider_managed",
+            "appended",
+            "missing",
+            "unknown"
+          ]
+        },
+        "destinationRawID": {
+          "const": ""
+        }
+      }
+    },
+    "semanticError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tag",
+        "retry",
+        "cause"
+      ],
+      "properties": {
+        "tag": {
+          "enum": [
+            "invalid",
+            "unsupported",
+            "authentication",
+            "permission",
+            "not_found",
+            "conflict",
+            "rate_limited",
+            "unavailable",
+            "protocol",
+            "tls",
+            "resource_limit",
+            "closed"
+          ]
+        },
+        "retry": {
+          "enum": [
+            "never",
+            "safe",
+            "reconcile_first"
+          ]
+        },
+        "cause": {
+          "enum": ["", "context_canceled", "deadline_exceeded"]
+        }
+      }
+    },
+    "operationInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "provider",
+        "transport",
+        "authentication",
+        "envelopeFrom",
+        "recipients",
+        "messageID",
+        "messageBase64",
+        "scenario",
+        "capabilities",
+        "sentBehavior",
+        "cancellation",
+        "authRejections"
+      ],
+      "properties": {
+        "action": {
+          "const": "submit"
+        },
+        "provider": {
+          "enum": ["gmail", "icloud", "generic"]
+        },
+        "transport": {
+          "const": "starttls"
+        },
+        "authentication": {
+          "enum": ["oauth_bearer", "app_password", "password"]
+        },
+        "envelopeFrom": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "recipients": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 256,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 512
+          }
+        },
+        "messageID": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 998,
+          "pattern": "^<[^<>\\s]+>$"
+        },
+        "messageBase64": {
+          "type": "string",
+          "minLength": 4,
+          "pattern": "^[A-Za-z0-9+/]*={0,2}$"
+        },
+        "scenario": {
+          "enum": [
+            "pre_data_unavailable",
+            "recipient_rejected",
+            "disconnect_after_354",
+            "disconnect_while_writing_data",
+            "disconnect_before_final_reply",
+            "final_451",
+            "final_550",
+            "accepted",
+            "accepted_quit_drop",
+            "smtp_utf8_missing",
+            "oversized_response",
+            "cancel_before_data",
+            "cancel_after_data"
+          ]
+        },
+        "capabilities": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["STARTTLS", "SMTPUTF8", "AUTH PLAIN", "AUTH XOAUTH2"]
+          }
+        },
+        "sentBehavior": {
+          "enum": [
+            "not_applicable",
+            "provider_managed",
+            "append_success",
+            "append_rejected",
+            "append_unavailable"
+          ]
+        },
+        "cancellation": {
+          "enum": [
+            "none",
+            "before_data",
+            "after_data"
+          ]
+        },
+        "authRejections": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    },
+    "semanticOutcomeResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "outcome"],
+      "properties": {
+        "kind": {"const": "outcome"},
+        "outcome": {"$ref": "#/$defs/semanticOutcome"}
+      }
+    },
+    "semanticErrorResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "error"],
+      "properties": {
+        "kind": {"const": "error"},
+        "error": {"$ref": "#/$defs/semanticError"}
+      }
+    },
+    "operationExpected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "result"
+      ],
+      "properties": {
+        "result": {
+          "oneOf": [
+            {"$ref": "#/$defs/semanticOutcomeResult"},
+            {"$ref": "#/$defs/semanticErrorResult"}
+          ]
+        }
+      }
+    },
+    "operation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "input",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "input": {
+          "$ref": "#/$defs/operationInput"
+        },
+        "expected": {
+          "$ref": "#/$defs/operationExpected"
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "provider",
+        "transport",
+        "authentication",
+        "script",
+        "expected"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "provider": {
+          "enum": [
+            "gmail",
+            "icloud",
+            "generic"
+          ]
+        },
+        "transport": {
+          "enum": [
+            "implicit_tls",
+            "starttls",
+            "loopback_fixture"
+          ]
+        },
+        "authentication": {
+          "enum": [
+            "oauth_bearer",
+            "app_password",
+            "password"
+          ]
+        },
+        "script": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/wire"
+              },
+              {
+                "$ref": "#/$defs/auth"
+              },
+              {
+                "$ref": "#/$defs/tls"
+              },
+              {
+                "$ref": "#/$defs/message"
+              },
+              {
+                "$ref": "#/$defs/data"
+              },
+              {
+                "$ref": "#/$defs/disconnect"
+              }
+            ]
+          }
+        },
+        "expected": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "normalized"
+          ],
+          "properties": {
+            "normalized": {
+              "$ref": "#/$defs/normalized"
+            }
+          }
+        }
+      }
+    }
+  }
+}

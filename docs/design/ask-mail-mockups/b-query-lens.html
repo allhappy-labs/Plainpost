@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask Mail · B · Query lens</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .ask-root { display: flex; flex-direction: column; height: 100%; min-height: 0; position: relative; container-type: inline-size; background: var(--bg-mac); }
+  [data-platform="ios"].ask-root { background: var(--bg); }
+
+  /* lens bar */
+  .b-lens { flex: none; padding: 12px 16px 10px; border-bottom: 1px solid var(--sep); }
+  [data-platform="mac"] .b-lens { padding: 12px 18px 10px; }
+  .b-top { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .b-back { display: inline-flex; align-items: center; gap: 2px; color: var(--accent); font-size: 15px; }
+  [data-platform="mac"] .b-back { font-size: 13px; }
+  .b-back svg { width: 14px; height: 14px; }
+  .b-crumbs { font-size: 12px; color: var(--label-3); display: flex; gap: 5px; align-items: center; min-width: 0; white-space: nowrap; overflow: hidden; }
+  .b-crumbs b { color: var(--label-2); font-weight: 600; }
+  .b-top .sp { flex: 1; }
+  .b-local { font-size: 11px; color: var(--label-2); display: inline-flex; gap: 4px; align-items: center; padding: 3px 8px; border-radius: 10px; background: var(--fill-2); white-space: nowrap; }
+  .b-local svg { width: 9px; height: 9px; }
+
+  .b-field { display: flex; align-items: center; gap: 10px; background: var(--fill-2); border-radius: 12px; padding: 10px 12px; border: 1px solid var(--sep); }
+  .b-field:focus-within { border-color: var(--accent); }
+  .b-spark { width: 18px; height: 18px; color: var(--accent); flex: none; }
+  .ask-input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; color: var(--label); font: inherit; font-size: 17px; font-weight: 600; letter-spacing: -.01em; }
+  [data-platform="mac"] .ask-input { font-size: 18px; }
+  .ask-input::placeholder { color: var(--label-3); font-weight: 500; }
+  .b-kbd { font-size: 11px; color: var(--label-3); border: 1px solid var(--sep); border-radius: 5px; padding: 1px 5px; }
+  [data-platform="ios"] .b-kbd { display: none; }
+
+  .b-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .b-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; padding: 5px 6px 5px 10px; border-radius: 8px; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+  .b-chip .k { font-weight: 400; opacity: .75; }
+  .b-chip .x { width: 16px; height: 16px; border-radius: 50%; display: grid; place-items: center; }
+  .b-chip .x:hover { background: var(--accent-soft); }
+  .b-chip .x svg { width: 8px; height: 8px; }
+  .b-chip.add { background: none; border: 1px dashed var(--sep); color: var(--label-2); padding-right: 10px; }
+  .b-chip.pop { animation: pop .35s ease-out both; }
+  .b-chip.pop:nth-child(2) { animation-delay: .25s; } .b-chip.pop:nth-child(3) { animation-delay: .5s; }
+  @keyframes pop { from { opacity: 0; transform: translateY(4px) scale(.96); } }
+
+  /* body */
+  .b-body { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr; }
+  @container (min-width: 700px) { .b-body { grid-template-columns: 1fr 300px; } .b-aside { display: block !important; } }
+  .b-results { overflow-y: auto; min-height: 0; padding-bottom: 90px; }
+  .b-aside { display: none; border-left: 1px solid var(--sep); padding: 18px; overflow-y: auto; font-size: 13px; line-height: 1.45; color: var(--label-2); }
+  .b-aside h4 { margin: 0 0 6px; color: var(--label); font-size: 13px; }
+  .b-aside p { margin: 0 0 16px; }
+  .b-aside .kb { display: grid; grid-template-columns: auto 1fr; gap: 6px 10px; font-size: 12px; }
+  .b-aside kbd { font-family: var(--font); font-size: 11px; border: 1px solid var(--sep); border-radius: 5px; padding: 1px 6px; color: var(--label); }
+
+  .b-summary { display: flex; align-items: center; gap: 8px; padding: 12px 16px 6px; font-size: 13px; color: var(--label-2); }
+  [data-platform="mac"] .b-summary { padding: 12px 18px 6px; }
+  .b-summary b { color: var(--label); }
+  .b-summary .sp { flex: 1; }
+  .b-groupby { color: var(--accent); font-weight: 600; font-size: 13px; white-space: nowrap; }
+
+  .b-sec { margin-top: 6px; }
+  .b-sechead { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; gap: 10px; padding: 8px 16px; background: color-mix(in srgb, var(--bg-mac) 92%, transparent); backdrop-filter: blur(10px); }
+  [data-platform="ios"] .b-sechead { background: color-mix(in srgb, var(--bg) 92%, transparent); }
+  [data-platform="mac"] .b-sechead { padding: 8px 18px; }
+  .b-sechead .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .b-sechead .t { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+  .b-sechead .c { font-size: 13px; color: var(--label-3); font-variant-numeric: tabular-nums; }
+  .b-sechead .sp { flex: 1; }
+  .b-sechead .why { font-size: 12px; color: var(--label-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .b-selall { font-size: 13px; color: var(--accent); font-weight: 600; white-space: nowrap; }
+
+  .b-row { display: flex; align-items: center; gap: 12px; padding: 9px 16px; border-bottom: 1px solid var(--sep); font-size: 14px; }
+  [data-platform="mac"] .b-row { padding: 7px 18px; font-size: 13px; }
+  .b-check { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--label-3); flex: none; display: grid; place-items: center; }
+  .b-check svg { width: 10px; height: 10px; color: #fff; opacity: 0; }
+  .sel .b-check { background: var(--accent); border-color: var(--accent); }
+  .sel .b-check svg { opacity: 1; }
+  .sel .b-row { background: var(--accent-soft); }
+  .b-row .who { font-weight: 600; width: 38%; flex: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  @container (min-width: 700px) { .b-row .who { width: 180px; } }
+  .b-row .sub { flex: 1; min-width: 0; color: var(--label-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .b-row .when { color: var(--label-3); font-size: 12px; flex: none; }
+  .b-morerow { padding: 8px 16px 8px 48px; font-size: 13px; color: var(--accent); border-bottom: 1px solid var(--sep); }
+  [data-platform="mac"] .b-morerow { padding-left: 50px; }
+  .b-sec.done { opacity: .35; pointer-events: none; }
+
+  .b-refine { display: flex; gap: 6px; flex-wrap: wrap; padding: 16px; }
+  .b-refine span { font-size: 12px; color: var(--label-3); width: 100%; }
+  .b-refine button { font-size: 13px; padding: 6px 11px; border-radius: 14px; background: var(--fill-2); }
+
+  /* skeleton */
+  .b-skel { padding: 10px 16px; }
+  .b-skel .r { display: flex; gap: 12px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--sep); }
+  .b-skel .c { width: 20px; height: 20px; border-radius: 50%; }
+  .b-skel .l { height: 12px; }
+  .b-status { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--label-2); padding: 14px 16px 0; }
+
+  /* empty */
+  .b-empty { padding: 8px 16px; overflow-y: auto; }
+  [data-platform="mac"] .b-empty { padding: 8px 18px; max-width: 640px; }
+  .b-empty h5 { font-size: 12px; color: var(--label-3); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin: 18px 0 4px; }
+  .b-eg { display: flex; gap: 10px; align-items: baseline; width: 100%; text-align: left; padding: 10px 0; border-bottom: 1px solid var(--sep); font-size: 15px; }
+  [data-platform="mac"] .b-eg { font-size: 14px; }
+  .b-eg .h { color: var(--label-3); font-size: 12px; margin-left: auto; white-space: nowrap; }
+  .b-eg svg { width: 12px; height: 12px; color: var(--label-3); flex: none; }
+
+  /* action bar */
+  .b-bar { position: absolute; left: 12px; right: 12px; bottom: 14px; z-index: 5; display: flex; align-items: center; gap: 6px; padding: 8px 8px 8px 14px; border-radius: 16px; background: var(--bg-3); box-shadow: 0 10px 30px rgba(0,0,0,.4), 0 0 0 1px var(--sep); font-size: 13px; transition: transform .2s, opacity .2s; }
+  [data-theme="light"] .b-bar { background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.14), 0 0 0 1px var(--sep); }
+  [data-platform="ios"] .b-bar { bottom: 30px; }
+  @container (min-width: 700px) { .b-bar { left: 18px; right: 318px; } }
+  .b-bar .n { flex: 1; font-weight: 600; white-space: nowrap; }
+  .b-bar button { font-weight: 600; padding: 7px 11px; border-radius: 10px; background: var(--fill); white-space: nowrap; }
+  .b-bar button.pri { background: var(--accent); color: #fff; }
+  .b-bar.off { opacity: 0; pointer-events: none; transform: translateY(10px); }
+
+  .toast { position: absolute; left: 50%; transform: translateX(-50%); bottom: 80px; z-index: 6; display: flex; gap: 12px; align-items: center; padding: 9px 14px; border-radius: 12px; background: #2c2c2e; color: #fff; font-size: 13px; box-shadow: 0 8px 24px rgba(0,0,0,.35); white-space: nowrap; }
+  [data-platform="ios"] .toast { bottom: 96px; }
+  .toast button { color: #4da3ff; font-weight: 650; }
+</style>
+</head>
+<body data-state="answer" data-mac="full" data-phone="flat">
+<header class="pagebar">
+  <div>
+    <h1>B · Query lens</h1>
+    <p>No chat bubbles. Your question becomes a live, editable filter over the mail list, and the answer is the list itself, grouped and ready to act on.</p>
+  </div>
+  <nav class="nav"><a href="index.html">Overview</a><a href="a-result-blocks.html">A</a><a href="b-query-lens.html" aria-current="page">B</a><a href="c-briefing.html">C</a></nav>
+  <span class="spacer"></span>
+  <div class="seg" role="group" aria-label="State">
+    <button data-set-state="empty">Empty</button><button data-set-state="working">Working</button><button data-set-state="answer">Answer</button>
+  </div>
+  <div class="seg" role="group" aria-label="Appearance">
+    <button data-set-theme="dark" aria-pressed="true">Dark</button><button data-set-theme="light">Light</button>
+  </div>
+</header>
+
+<section class="notes">
+  <div><b>Idea</b>Ask is a mode of the mailbox, not a side chat. The question turns into filter chips (Unread · Inbox · All accounts) that you can remove or add to. The model only decides how to group and label the results.</div>
+  <div><b>Why it fits</b>Most mail questions are "find" or "clean up" tasks. Those end in a list plus a bulk action. Follow-ups refine the same lens, and the breadcrumb lets you step back.</div>
+  <div><b>Try</b>Tap a section's circle to select it and the action bar counts up. On Mac, the wide layout adds a side panel with the summary and shortcuts. Same component, container-query layout.</div>
+</section>
+
+<main class="stage" id="stage"></main>
+
+<template id="ask">
+<div class="ask-root">
+  <div class="b-lens">
+    <div class="b-top">
+      <button class="b-back" data-set-state="empty"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 2 4 7l5 5"/></svg>Inbox</button>
+      <span class="b-crumbs" data-only="answer">› <b>Group unread</b></span>
+      <span class="sp"></span>
+      <span class="b-local"><svg viewBox="0 0 10 10" fill="currentColor"><path d="M3 4V3a2 2 0 1 1 4 0v1h.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5zm1 0h2V3a1 1 0 1 0-2 0z"/></svg>On device</span>
+    </div>
+    <div class="b-field">
+      <svg class="b-spark" viewBox="0 0 18 18" fill="currentColor"><path d="M9 1.5c.4 3.6 2.4 5.6 6 6-3.6.4-5.6 2.4-6 6-.4-3.6-2.4-5.6-6-6 3.6-.4 5.6-2.4 6-6zM14.5 11.5c.2 1.5 1 2.3 2.5 2.5-1.5.2-2.3 1-2.5 2.5-.2-1.5-1-2.3-2.5-2.5 1.5-.2 2.3-1 2.5-2.5z"/></svg>
+      <input class="ask-input" value="Group my unread, I want to clean up" aria-label="Ask your mail" data-only="working answer">
+      <input class="ask-input" placeholder="Find, group or clean up mail…" aria-label="Ask your mail" data-only="empty">
+      <span class="b-kbd">⌘K</span>
+    </div>
+    <div class="b-chips" data-only="working answer">
+      <span class="b-chip pop" data-removable><span class="k">is</span> Unread<button class="x" data-act="remove" aria-label="Remove Unread"><svg viewBox="0 0 8 8" stroke="currentColor" stroke-width="1.6"><path d="m1 1 6 6M7 1 1 7"/></svg></button></span>
+      <span class="b-chip pop" data-removable><span class="k">in</span> Inbox<button class="x" data-act="remove" aria-label="Remove Inbox"><svg viewBox="0 0 8 8" stroke="currentColor" stroke-width="1.6"><path d="m1 1 6 6M7 1 1 7"/></svg></button></span>
+      <span class="b-chip pop" data-removable><span class="k">group by</span> Type<button class="x" data-act="remove" aria-label="Remove grouping"><svg viewBox="0 0 8 8" stroke="currentColor" stroke-width="1.6"><path d="m1 1 6 6M7 1 1 7"/></svg></button></span>
+      <button class="b-chip add">+ Filter</button>
+    </div>
+  </div>
+
+  <!-- EMPTY -->
+  <div class="b-empty" data-only="empty">
+    <h5>Recent</h5>
+    <button class="b-eg" data-act="ask"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/><path d="M6 3.5V6l1.5 1"/></svg>Receipts from September<span class="h">14 messages</span></button>
+    <button class="b-eg" data-act="ask"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="6" cy="6" r="4.5"/><path d="M6 3.5V6l1.5 1"/></svg>Everything from Lena about the flat<span class="h">9 messages</span></button>
+    <h5>Try</h5>
+    <button class="b-eg" data-act="ask"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9 9 3M4 3h5v5"/></svg>Group my unread so I can clean up</button>
+    <button class="b-eg" data-act="ask"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9 9 3M4 3h5v5"/></svg>Newsletters I haven't opened in a month</button>
+    <button class="b-eg" data-act="ask"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9 9 3M4 3h5v5"/></svg>Threads where I owe a reply</button>
+    <button class="b-eg" data-act="ask"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9 9 3M4 3h5v5"/></svg>Attachments bigger than 10 MB</button>
+  </div>
+
+  <!-- WORKING -->
+  <div data-only="working" style="flex:1;min-height:0">
+    <div class="b-status"><span class="spin"></span>Grouping 52 unread messages…</div>
+    <div class="b-skel">
+      <div class="r"><span class="c shimmer"></span><span class="l shimmer" style="width:30%"></span><span class="l shimmer" style="flex:1"></span></div>
+      <div class="r"><span class="c shimmer"></span><span class="l shimmer" style="width:24%"></span><span class="l shimmer" style="flex:1"></span></div>
+      <div class="r"><span class="c shimmer"></span><span class="l shimmer" style="width:34%"></span><span class="l shimmer" style="flex:1"></span></div>
+      <div class="r"><span class="c shimmer"></span><span class="l shimmer" style="width:28%"></span><span class="l shimmer" style="flex:1"></span></div>
+    </div>
+  </div>
+
+  <!-- ANSWER -->
+  <div class="b-body" data-only="answer">
+    <div class="b-results">
+      <div class="b-summary"><span><b>52 unread</b> in 4 groups · 46 are automated</span><span class="sp"></span><button class="b-groupby">Type ▾</button></div>
+
+      <section class="b-sec sel" data-scope data-group data-count="21">
+        <div class="b-sechead"><button class="b-check" data-act="select" aria-label="Select Notifications"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></button><span class="dot" style="background:var(--teal)"></span><span class="t">Notifications</span><span class="c">21</span><span class="sp"></span><span class="why">GitHub, Slack, Linear</span></div>
+        <div class="b-row"><span class="b-check"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="who">ZurichJS (Slack)</span><span class="sub">You've got 2 unread messages</span><span class="when">10:12</span></div>
+        <div class="b-row"><span class="b-check"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="who">GitHub</span><span class="sub">[plainpost] CI failed on main</span><span class="when">9:47</span></div>
+        <div class="b-row"><span class="b-check"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="who">Linear</span><span class="sub">PLN-214 moved to In Review</span><span class="when">Mon</span></div>
+        <div class="b-morerow">18 more</div>
+      </section>
+
+      <section class="b-sec" data-scope data-group data-count="19">
+        <div class="b-sechead"><button class="b-check" data-act="select" aria-label="Select Newsletters"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></button><span class="dot" style="background:var(--purple)"></span><span class="t">Newsletters</span><span class="c">19</span><span class="sp"></span><span class="why">4 never opened</span></div>
+        <div class="b-row"><span class="b-check"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="who">Pragmatic Engineer</span><span class="sub">The state of on-device AI</span><span class="when">Sun</span></div>
+        <div class="b-row"><span class="b-check"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="who">Figma</span><span class="sub">Config 2026 replays are live</span><span class="when">Yest.</span></div>
+        <div class="b-morerow">17 more</div>
+      </section>
+
+      <section class="b-sec" data-scope data-group data-count="6">
+        <div class="b-sechead"><button class="b-check" data-act="select" aria-label="Select Receipts"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></button><span class="dot" style="background:var(--green)"></span><span class="t">Receipts &amp; travel</span><span class="c">6</span><span class="sp"></span><span class="why">1 upcoming flight</span></div>
+        <div class="b-row"><span class="b-check"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="who">Swiss</span><span class="sub">Your booking LX 318 is confirmed</span><span class="when">Yest.</span></div>
+        <div class="b-morerow">5 more</div>
+      </section>
+
+      <section class="b-sec" data-scope data-group data-count="6">
+        <div class="b-sechead"><button class="b-check" data-act="select" aria-label="Select From people"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></button><span class="dot" style="background:var(--accent)"></span><span class="t">From people</span><span class="c">6</span><span class="sp"></span><span class="why">3 ask you something</span></div>
+        <div class="b-row"><span class="b-check"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="who">Lena Brandt</span><span class="sub">Re: Flat viewing on Saturday</span><span class="when">9:30</span></div>
+        <div class="b-row"><span class="b-check"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="m2 5 2 2 4-4"/></svg></span><span class="who">Marco Rossi</span><span class="sub">Invoice for September</span><span class="when">Mon</span></div>
+        <div class="b-morerow">4 more</div>
+      </section>
+
+      <div class="b-refine"><span>Refine</span>
+        <button data-act="ask">Only this week</button><button data-act="ask">Group by sender</button><button data-act="ask">Hide people</button>
+      </div>
+    </div>
+
+    <aside class="b-aside">
+      <h4>Summary</h4>
+      <p>Most of your unread mail is automated. GitHub alone sent 12 CI notices this week. Clearing Notifications and Newsletters leaves 12 messages.</p>
+      <h4>Worth a look first</h4>
+      <p>Marco Rossi's invoice is due Friday. Lena Brandt asked you to bring a signed form on Saturday.</p>
+      <h4>Shortcuts</h4>
+      <div class="kb"><kbd>Space</kbd><span>Select section</span><kbd>E</kbd><span>Archive selected</span><kbd>⇧U</kbd><span>Mark selected read</span><kbd>⌘K</kbd><span>New question</span><kbd>⌫</kbd><span>Remove last filter</span></div>
+    </aside>
+  </div>
+
+  <div class="b-bar" data-only="answer">
+    <span class="n"><span class="b-n">21</span> selected</span>
+    <button data-act="done" data-toast="Marked as read">Mark read</button>
+    <button class="pri" data-act="done" data-toast="Archived">Archive</button>
+  </div>
+  <div class="toast" hidden><span class="toast-text"></span><button data-act="undo">Undo</button></div>
+</div>
+</template>
+
+<script src="shared.js"></script>
+<script>
+  // Selection count + bar actions apply to the selected sections of that frame.
+  const sync = root => {
+    const secs = [...root.querySelectorAll(".b-sec.sel:not(.done)")];
+    const n = secs.reduce((s, el) => s + +el.dataset.count, 0);
+    root.querySelector(".b-n").textContent = n;
+    root.querySelector(".b-bar").classList.toggle("off", n === 0);
+  };
+  document.addEventListener("click", e => {
+    const root = e.target.closest(".ask-root");
+    if (!root) return;
+    const bar = e.target.closest(".b-bar [data-act='done']");
+    if (bar) {
+      // shared.js marked the button done; instead mark the selected sections
+      bar.classList.remove("done");
+      const secs = [...root.querySelectorAll(".b-sec.sel:not(.done)")];
+      const n = secs.reduce((s, el) => s + +el.dataset.count, 0);
+      secs.forEach(s => s.classList.add("done"));
+      const toast = root.querySelector(".toast");
+      toast.querySelector(".toast-text").textContent = `${bar.dataset.toast} · ${n} messages`;
+      toast._target = { classList: { remove: () => secs.forEach(s => s.classList.remove("done")) } };
+      const undo = toast.querySelector("button");
+      undo.onclick = () => setTimeout(() => sync(root));
+    }
+    setTimeout(() => document.querySelectorAll(".ask-root").forEach(sync));
+  });
+  document.querySelectorAll(".ask-root").forEach(sync);
+</script>
+</body>
+</html>

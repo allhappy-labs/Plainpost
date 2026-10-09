@@ -1,0 +1,58 @@
+{
+  "kind": "node-sync-v1.bcc-vectors",
+  "schemaVersion": 1,
+  "limits": {"maxEnvelopeRecipients": 256, "maxAddressBytes": 320},
+  "accepted": [
+    {
+      "name": "bcc-only",
+      "rfc5322": "Message-ID: <bcc-only@example.test>\r\nFrom: sender@example.test\r\nSubject: blind\r\n\r\nbody\r\n",
+      "bcc": ["blind@example.test"],
+      "envelopeRecipients": ["blind@example.test"]
+    },
+    {
+      "name": "to-cc-bcc",
+      "rfc5322": "Message-ID: <all@example.test>\r\nFrom: sender@example.test\r\nTo: User@Example.Test\r\nCc: copy@example.test\r\nSubject: all\r\n\r\nbody\r\n",
+      "bcc": ["blind@example.test"],
+      "envelopeRecipients": ["User@example.test", "copy@example.test", "blind@example.test"]
+    },
+    {
+      "name": "empty-bcc-compatibility",
+      "rfc5322": "Message-ID: <empty-bcc@example.test>\r\nFrom: sender@example.test\r\nTo: recipient@example.test\r\nSubject: ordinary\r\n\r\nbody\r\n",
+      "bcc": [],
+      "envelopeRecipients": ["recipient@example.test"]
+    },
+    {
+      "name": "address-byte-limit",
+      "rfc5322": "Message-ID: <address-byte-limit@example.test>\r\nFrom: sender@example.test\r\nSubject: boundary\r\n\r\nbody\r\n",
+      "bcc": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.test"],
+      "envelopeRecipients": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.test"]
+    }
+  ],
+  "rejected": [
+    {
+      "name": "domain-normalized-duplicate",
+      "rfc5322": "Message-ID: <duplicate@example.test>\r\nFrom: sender@example.test\r\nTo: User@Example.Test\r\nSubject: duplicate\r\n\r\nbody\r\n",
+      "bcc": ["User@example.test"]
+    },
+    {
+      "name": "no-envelope-recipients",
+      "rfc5322": "Message-ID: <empty@example.test>\r\nFrom: sender@example.test\r\nSubject: empty\r\n\r\nbody\r\n",
+      "bcc": []
+    },
+    {
+      "name": "rfc-bcc-header",
+      "rfc5322": "Message-ID: <header-bcc@example.test>\r\nFrom: sender@example.test\r\nTo: recipient@example.test\r\nBcc: blind@example.test\r\nSubject: header\r\n\r\nbody\r\n",
+      "bcc": []
+    },
+    {
+      "name": "nul-in-envelope-address",
+      "rfc5322": "Message-ID: <nul@example.test>\r\nFrom: sender@example.test\r\nTo: recipient@example.test\r\nSubject: nul\r\n\r\nbody\r\n",
+      "bcc": ["blind\u0000@example.test"]
+    },
+    {
+      "name": "address-byte-over-limit",
+      "rfc5322": "Message-ID: <address-byte-over-limit@example.test>\r\nFrom: sender@example.test\r\nSubject: boundary\r\n\r\nbody\r\n",
+      "bcc": ["aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.test"]
+    }
+  ]
+}

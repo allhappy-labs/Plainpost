@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask Mail · C · Briefing</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  .ask-root { display: flex; flex-direction: column; height: 100%; min-height: 0; position: relative; container-type: inline-size; overflow: hidden; }
+  .c-head { display: flex; align-items: center; gap: 8px; padding: 10px 12px; flex: none; }
+  [data-platform="ios"] .c-head { padding: 14px 14px 8px; }
+  .c-grab { width: 36px; height: 5px; border-radius: 3px; background: var(--fill); position: absolute; top: 6px; left: 50%; transform: translateX(-50%); }
+  [data-platform="mac"] .c-grab { display: none; }
+  .c-hist { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; padding: 6px 10px; border-radius: 9px; background: var(--fill-2); max-width: 60%; }
+  .c-hist span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .c-hist svg { width: 9px; height: 9px; flex: none; color: var(--label-2); }
+  .c-head .sp { flex: 1; }
+  .c-btn { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: var(--label-2); }
+  [data-platform="ios"] .c-btn { background: var(--fill); color: var(--label); }
+  .c-btn svg { width: 15px; height: 15px; }
+
+  .c-scroll { flex: 1; min-height: 0; overflow-y: auto; padding: 8px 18px 24px; }
+
+  /* the question is a heading, the answer reads like a short brief */
+  .c-q { font-size: 21px; font-weight: 700; letter-spacing: -.015em; line-height: 1.22; margin: 6px 0 4px; }
+  .c-q .at { color: var(--accent); }
+  .c-meta { font-size: 12px; color: var(--label-3); margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+  .c-stack { display: inline-flex; }
+  .c-stack .av { width: 18px; height: 18px; font-size: 8px; margin-left: -5px; box-shadow: 0 0 0 2px var(--bg-mac); }
+  .c-stack .av:first-child { margin-left: 0; }
+  [data-platform="ios"] .c-stack .av { box-shadow: 0 0 0 2px #0f0f10; }
+  [data-theme="light"] [data-platform="ios"] .c-stack .av { box-shadow: 0 0 0 2px #fff; }
+
+  .c-ans { font-size: 15px; line-height: 1.55; }
+  .c-ans p { margin: 0 0 12px; }
+  .c-ans h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--label-2); margin: 18px 0 6px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .c-ans h3 .n { font-variant-numeric: tabular-nums; color: var(--label-3); font-weight: 600; }
+  .nw { white-space: nowrap; }
+  .c-cite { display: inline-flex; align-items: center; gap: 4px; vertical-align: 1px; padding: 1px 7px 1px 2px; border-radius: 11px; background: var(--fill); font-size: 12px; font-weight: 600; line-height: 18px; white-space: nowrap; }
+  .c-cite:hover { background: var(--accent-soft); color: var(--accent); }
+  .c-cite .av { width: 16px; height: 16px; font-size: 7.5px; }
+
+  .c-actions { margin-top: 18px; display: grid; gap: 8px; }
+  .c-action { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 14px; border: 1px solid var(--sep); background: var(--bg-2); }
+  [data-theme="light"] .c-action { background: #fff; }
+  .c-action .t { flex: 1; min-width: 0; font-size: 14px; line-height: 1.3; }
+  .c-action .t div:last-child { font-size: 12px; color: var(--label-2); margin-top: 2px; }
+  .c-action .go { font-size: 13px; font-weight: 650; padding: 7px 13px; border-radius: 16px; background: var(--accent); color: #fff; white-space: nowrap; }
+  .c-action .go.sec { background: var(--fill); color: var(--label); }
+  .c-action.done { opacity: .45; }
+  .c-action.done .go { visibility: hidden; }
+  .c-action.done .t div:first-child::after { content: " — done"; color: var(--green); }
+
+  .c-follow { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; margin-top: 20px; border-top: 1px solid var(--sep); padding-top: 12px; }
+  .c-follow button { font-size: 14px; color: var(--accent); padding: 5px 0; display: flex; gap: 8px; align-items: center; text-align: left; }
+  .c-follow svg { width: 12px; height: 12px; flex: none; }
+
+  /* working */
+  .c-reading { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--label-2); margin: 4px 0 16px; }
+  .c-line { height: 13px; margin: 9px 0; }
+  .c-cursor { display: inline-block; width: 8px; height: 16px; background: var(--accent); vertical-align: -2px; border-radius: 2px; animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* empty */
+  .c-empty h2 { font-size: 24px; font-weight: 700; letter-spacing: -.02em; line-height: 1.15; margin: 20px 0 8px; }
+  .c-empty p { font-size: 14px; color: var(--label-2); line-height: 1.45; margin: 0 0 20px; }
+  .c-brief { border-radius: 14px; background: var(--bg-2); border: 1px solid var(--sep); padding: 4px 14px; }
+  [data-theme="light"] .c-brief { background: #fff; }
+  .c-brief button { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left; padding: 11px 0; border-top: 1px solid var(--sep); font-size: 14px; }
+  .c-brief button:first-child { border-top: 0; }
+  .c-brief .at { color: var(--accent); font-weight: 600; }
+  .c-brief .n { white-space: nowrap; margin-left: auto; font-size: 12px; color: var(--label-3); }
+
+  /* peek sheet */
+  .c-peek { position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 20; border-radius: 18px; background: var(--bg-3); box-shadow: 0 -10px 40px rgba(0,0,0,.45), 0 0 0 1px var(--sep); padding: 14px 16px 16px; transform: translateY(110%); transition: transform .28s cubic-bezier(.2,.8,.2,1); }
+  [data-theme="light"] .c-peek { background: #fff; box-shadow: 0 -10px 40px rgba(0,0,0,.15), 0 0 0 1px var(--sep); }
+  [data-platform="ios"] .c-peek { bottom: 26px; }
+  .c-peek.show { transform: none; }
+  .c-peek .hd { display: flex; gap: 10px; align-items: center; }
+  .c-peek .hd .t { flex: 1; min-width: 0; font-size: 13px; }
+  .c-peek .hd .t b { display: block; font-size: 14px; }
+  .c-peek .hd .t span { color: var(--label-2); }
+  .c-peek .subj { font-weight: 650; font-size: 15px; margin: 12px 0 6px; }
+  .c-peek blockquote { margin: 0; font-size: 14px; line-height: 1.5; color: var(--label-2); }
+  .c-peek mark { background: color-mix(in srgb, var(--orange) 30%, transparent); color: var(--label); border-radius: 3px; padding: 0 2px; }
+  .c-peek .row { display: flex; gap: 8px; margin-top: 14px; }
+  .c-peek .row button { flex: 1; font-size: 13px; font-weight: 650; padding: 9px; border-radius: 11px; background: var(--fill); }
+  .c-peek .row button.pri { background: var(--accent); color: #fff; }
+
+  /* composer with @ scopes */
+  .c-comp { flex: none; padding: 8px 12px 12px; position: relative; }
+  [data-platform="ios"] .c-comp { padding: 8px 12px 30px; }
+  .c-field { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; border-radius: 22px; padding: 5px 5px 5px 12px; background: var(--bg-3); border: 1px solid var(--sep); }
+  [data-theme="light"] .c-field { background: #fff; }
+  .c-tok { font-size: 13px; font-weight: 650; color: var(--accent); background: var(--accent-soft); padding: 3px 8px; border-radius: 8px; white-space: nowrap; }
+  .ask-input { flex: 1; min-width: 120px; border: 0; outline: 0; background: none; color: var(--label); font: inherit; font-size: 15px; padding: 6px 0; }
+  .ask-input::placeholder { color: var(--label-3); }
+  .c-send { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; flex: none; }
+  .c-send svg { width: 14px; height: 14px; }
+  .c-menu { position: absolute; left: 12px; right: 12px; bottom: calc(100% - 2px); border-radius: 14px; background: var(--bg-3); box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 0 1px var(--sep); padding: 6px; font-size: 14px; }
+  [data-theme="light"] .c-menu { background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,.14), 0 0 0 1px var(--sep); }
+  .c-menu .h { font-size: 11px; color: var(--label-3); padding: 6px 8px 4px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+  .c-menu button { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; padding: 7px 8px; border-radius: 8px; }
+  .c-menu button:hover, .c-menu button.hl { background: var(--accent-soft); }
+  .c-menu .ic { width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; background: var(--fill); font-size: 12px; flex: none; }
+  .c-menu .d { margin-left: auto; font-size: 12px; color: var(--label-3); white-space: nowrap; }
+  .c-hint { font-size: 11.5px; color: var(--label-3); text-align: center; margin-top: 7px; }
+</style>
+</head>
+<body data-state="answer" data-mac="panel">
+<header class="pagebar">
+  <div>
+    <h1>C · Briefing</h1>
+    <p>A conversation that reads like a short, well-sourced memo. The question is the headline, every claim links to its email, and actions come as suggestions you confirm.</p>
+  </div>
+  <nav class="nav"><a href="index.html">Overview</a><a href="a-result-blocks.html">A</a><a href="b-query-lens.html">B</a><a href="c-briefing.html" aria-current="page">C</a></nav>
+  <span class="spacer"></span>
+  <div class="seg" role="group" aria-label="State">
+    <button data-set-state="empty">Empty</button><button data-set-state="working">Working</button><button data-set-state="answer">Answer</button>
+  </div>
+  <div class="seg" role="group" aria-label="Appearance">
+    <button data-set-theme="dark" aria-pressed="true">Dark</button><button data-set-theme="light">Light</button>
+  </div>
+</header>
+
+<section class="notes">
+  <div><b>Idea</b>Instead of chat bubbles and a pile of source cards at the bottom, each claim has an inline sender chip. Tap it to peek at the exact sentence it came from, highlighted, without leaving the answer.</div>
+  <div><b>Scope with @</b>Type @ to point the question at something: Unread, a person, a thread, a folder, a date range. The scope sits in the question itself, so the answer's headline shows what was searched.</div>
+  <div><b>Try</b>Tap a sender chip in the answer. Press "Mark read" on a suggested action. Switch to Empty to see the @ menu and the daily brief.</div>
+</section>
+
+<main class="stage" id="stage"></main>
+
+<template id="ask">
+<div class="ask-root">
+  <div class="c-grab"></div>
+  <div class="c-head">
+    <button class="c-hist" aria-label="Past conversations"><span data-only="answer working">Unread clean-up</span><span data-only="empty">New question</span><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m2 3.5 3 3 3-3"/></svg></button>
+    <span class="sp"></span>
+    <button class="c-btn" aria-label="New conversation" data-set-state="empty"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3H3v10h10V8M12 2l2 2-6 6H6V8z"/></svg></button>
+    <button class="c-btn" aria-label="Close"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m4 4 8 8M12 4l-8 8"/></svg></button>
+  </div>
+
+  <div class="c-scroll">
+    <!-- EMPTY -->
+    <div class="c-empty" data-only="empty">
+      <h2>Good morning, Oleh.</h2>
+      <p>Ask anything about your mail. Type @ to point at unread mail, a person, a thread or a date.</p>
+      <div class="c-brief">
+        <button data-act="ask"><span>Clean up <span class="at">@Unread</span></span><span class="n">52</span></button>
+        <button data-act="ask"><span>What does <span class="at">@Lena Brandt</span> need from me?</span><span class="n">3 threads</span></button>
+        <button data-act="ask"><span>Summarize <span class="at">@This week</span></span><span class="n">148</span></button>
+        <button data-act="ask">When is my next flight?</button>
+      </div>
+    </div>
+
+    <!-- QUESTION HEADLINE -->
+    <div data-only="working answer">
+      <div class="c-q">Group my <span class="at">@Unread</span> mail — I want to clean some of it</div>
+      <div class="c-meta">
+        <span class="c-stack"><span class="av" style="background:#24292f">G</span><span class="av" style="background:#4a154b">Z</span><span class="av" style="background:#6d28d9">P</span><span class="av" style="background:#0f766e">M</span></span>
+        <span data-only="answer">Read 52 messages on this device</span>
+        <span data-only="working">Reading 52 unread messages…</span>
+      </div>
+    </div>
+
+    <div data-only="working">
+      <div class="c-ans"><p>52 unread, and most of them can go<span class="c-cursor"></span></p></div>
+      <div class="c-line shimmer" style="width:92%"></div>
+      <div class="c-line shimmer" style="width:78%"></div>
+      <div class="c-line shimmer" style="width:85%"></div>
+    </div>
+
+    <div class="c-ans" data-only="answer">
+      <p>52 unread, and most of them can go.</p>
+
+      <h3>Safe to clear <span class="n">46</span></h3>
+      <p>21 are notifications. The bulk are CI alerts from
+        <span class="nw"><button class="c-cite" data-peek="gh"><span class="av" style="background:#24292f">GH</span>GitHub ×12</button></span> and digests from
+        <span class="nw"><button class="c-cite" data-peek="z"><span class="av" style="background:#4a154b">Z</span>ZurichJS</button>.</span> 
+        19 are newsletters, and you haven't opened 4 of them since June, including
+        <span class="nw"><button class="c-cite" data-peek="pe"><span class="av" style="background:#6d28d9">PE</span>Pragmatic Engineer</button>.</span> 
+        The other 6 are receipts and one flight confirmation.</p>
+
+      <h3>Keep <span class="n">6</span></h3>
+      <p>Marco's September invoice is due Friday
+        <span class="nw"><button class="c-cite" data-peek="mr"><span class="av" style="background:#0f766e">MR</span>Marco</button>.</span> 
+        Lena needs the signed form on Saturday
+        <span class="nw"><button class="c-cite" data-peek="lb"><span class="av" style="background:#c2410c">LB</span>Lena</button>.</span> 
+        Anna wants comments on the Q4 doc by Wednesday
+        <span class="nw"><button class="c-cite" data-peek="ak"><span class="av" style="background:#9333ea">AK</span>Anna</button>.</span> </p>
+
+      <div class="c-actions">
+        <div class="c-action">
+          <div class="t"><div>Mark 46 automated messages as read</div><div>Notifications, newsletters, receipts</div></div>
+          <button class="go" data-act="done" data-toast="">Mark read</button>
+        </div>
+        <div class="c-action">
+          <div class="t"><div>Unsubscribe from 4 newsletters</div><div>Not opened since June</div></div>
+          <button class="go sec" data-act="done">Review</button>
+        </div>
+      </div>
+
+      <div class="c-follow">
+        <button data-act="ask"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h8M7 3l3 3-3 3"/></svg>Draft a reply to Lena</button>
+        <button data-act="ask"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6h8M7 3l3 3-3 3"/></svg>Show the 46 before I clear them</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="c-peek" role="dialog" aria-label="Source email">
+    <div class="hd"><span class="av c-pav"></span><div class="t"><b class="c-pwho"></b><span class="c-pwhen"></span></div>
+      <button class="c-btn c-pclose" aria-label="Close preview"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="m4 4 8 8M12 4l-8 8"/></svg></button></div>
+    <div class="subj c-psubj"></div>
+    <blockquote class="c-pquote"></blockquote>
+    <div class="row"><button class="pri">Open email</button><button>Mark read</button></div>
+  </div>
+
+  <div class="c-comp">
+    <div class="c-menu" data-only="empty">
+      <div class="h">Point your question at</div>
+      <button class="hl"><span class="ic">●</span>Unread<span class="d">52</span></button>
+      <button><span class="ic">✉</span>This thread<span class="d">Re: Flat viewing</span></button>
+      <button><span class="ic">☺</span>A person…</button>
+      <button><span class="ic">▤</span>A folder…</button>
+      <button><span class="ic">◷</span>A date range…</button>
+    </div>
+    <div class="c-field">
+      <span class="c-tok" data-only="empty">@</span>
+      <input class="ask-input" placeholder="Ask a follow-up · @ to focus" aria-label="Ask Mail">
+      <button class="c-send" data-act="ask" aria-label="Send"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 12V2M3 6l4-4 4 4"/></svg></button>
+    </div>
+  </div>
+</div>
+</template>
+
+<script src="shared.js"></script>
+<script>
+  const sources = {
+    gh: ["GH", "#24292f", "GitHub", "Today 9:47", "[plainpost] CI failed on main", "Run #4821 <mark>failed: ios-unit (macos-15)</mark>. This is the 12th CI notification this week."],
+    z:  ["Z", "#4a154b", "ZurichJS (via Slack)", "Today 10:12", "You've got 2 unread messages", "ZurichJS · 111 members. <mark>Your team has sent 50 messages recently.</mark> View all unread messages."],
+    pe: ["PE", "#6d28d9", "The Pragmatic Engineer", "Sunday", "The state of on-device AI", "Last opened: <mark>14 June</mark>. This week: what shipping local models actually looks like…"],
+    mr: ["MR", "#0f766e", "Marco Rossi", "Monday", "Invoice for September", "Hi Oleh, attached is the invoice for the September sprint. <mark>Payment is due this Friday</mark>, 3 October."],
+    lb: ["LB", "#c2410c", "Lena Brandt", "Today 9:30", "Re: Flat viewing on Saturday", "Works for me — <mark>can you bring the signed form?</mark> I'll print a copy of the lease."],
+    ak: ["AK", "#9333ea", "Anna Keller", "Yesterday", "Q4 planning doc", "Would love your comments on the roadmap section, <mark>ideally by Wednesday</mark> so I can fold them in."],
+  };
+  document.addEventListener("click", e => {
+    const root = e.target.closest(".ask-root");
+    if (!root) return;
+    const peek = root.querySelector(".c-peek");
+    const cite = e.target.closest(".c-cite");
+    if (cite) {
+      const [ini, color, who, when, subj, quote] = sources[cite.dataset.peek];
+      const av = peek.querySelector(".c-pav");
+      av.textContent = ini; av.style.background = color;
+      peek.querySelector(".c-pwho").textContent = who;
+      peek.querySelector(".c-pwhen").textContent = when;
+      peek.querySelector(".c-psubj").textContent = subj;
+      peek.querySelector(".c-pquote").innerHTML = quote;
+      peek.classList.add("show");
+    } else if (e.target.closest(".c-pclose") || !e.target.closest(".c-peek")) {
+      peek.classList.remove("show");
+    }
+    const done = e.target.closest(".c-action [data-act='done']");
+    if (done) done.closest(".c-action").classList.add("done");
+  });
+  document.querySelectorAll("[data-set-state]").forEach(b => b.addEventListener("click", () =>
+    document.querySelectorAll(".c-action.done").forEach(a => a.classList.remove("done"))));
+</script>
+</body>
+</html>

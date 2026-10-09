@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://plainpost.app/protocol/node-sync-v1/node-sync-mail-mode.schema.json",
+  "title": "Plainpost closed node-sync-v1 mail-mode wire object",
+  "$comment": "Additive sibling of node-sync.schema.json; existing families are unchanged. x-plainpost-maxUtf8Bytes and x-plainpost-maxCanonicalBytes are byte ceilings (see validate-max-utf8-bytes.cjs); maxLength remains conservative compatibility protection. Ordering, uniqueness and cross-field rules that JSON Schema cannot express are listed in mail-mode.md and pinned by fixtures/mail-mode-v1.json.",
+  "x-plainpost-maxCanonicalBytes": 1048576,
+  "oneOf": [
+    { "$ref": "#/$defs/mailCapabilities" }, { "$ref": "#/$defs/mailAccountsResult" },
+    { "$ref": "#/$defs/googleTokenImportRequest" }, { "$ref": "#/$defs/imapProviderImportRequest" },
+    { "$ref": "#/$defs/providerImportResult" }, { "$ref": "#/$defs/providerRemoveRequest" },
+    { "$ref": "#/$defs/providerRemoveResult" }, { "$ref": "#/$defs/accountSnapshotRequest" },
+    { "$ref": "#/$defs/mirrorCoordinatesRequest" }, { "$ref": "#/$defs/mirrorCoordinatesResult" },
+    { "$ref": "#/$defs/mailDeltaPage" }
+  ],
+  "$defs": {
+    "identifier": { "type": "string", "minLength": 1, "maxLength": 512, "x-plainpost-maxUtf8Bytes": 512, "pattern": "^[^\\u0000]*$" },
+    "messageReference": { "type": "string", "minLength": 1, "maxLength": 998, "x-plainpost-maxUtf8Bytes": 998, "pattern": "^[^\\u0000]*$" },
+    "cursor": { "type": "string", "maxLength": 4096, "x-plainpost-maxUtf8Bytes": 4096, "pattern": "^[^\\u0000]*$" },
+    "displayName": { "type": "string", "maxLength": 4096, "x-plainpost-maxUtf8Bytes": 4096, "pattern": "^[^\\u0000]*$" },
+    "positiveDecimal": { "type": "string", "maxLength": 20, "x-plainpost-maxUtf8Bytes": 20, "pattern": "^(?:[1-9][0-9]{0,18}|(?:1[0-7][0-9]{18}|18[0-3][0-9]{17}|184[0-3][0-9]{16}|1844[0-5][0-9]{15}|18446[0-6][0-9]{14}|184467[0-3][0-9]{13}|1844674[0-3][0-9]{12}|184467440[0-6][0-9]{10}|1844674407[0-2][0-9]{9}|18446744073[0-6][0-9]{8}|1844674407370[0-8][0-9]{6}|18446744073709[0-4][0-9]{5}|184467440737095[0-4][0-9]{4}|18446744073709550[0-9]{3}|18446744073709551[0-5][0-9]{2}|1844674407370955160[0-9]|1844674407370955161[0-5]))$" },
+    "logicalMailboxID": { "type": "string", "minLength": 43, "maxLength": 43, "x-plainpost-maxUtf8Bytes": 43, "pattern": "^[A-Za-z0-9_-]{42}[AEIMQUYcgkosw048]$", "not": { "const": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" } },
+    "pageLimit": { "type": "integer", "minimum": 1, "maximum": 200 },
+    "providerIdentity": { "type": "string", "minLength": 3, "maxLength": 320, "x-plainpost-maxUtf8Bytes": 320, "pattern": "^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9.-]+$" },
+    "providerKind": { "enum": ["gmail", "generic"] },
+    "mailAccountState": { "enum": ["ready", "degraded", "authentication_required"] },
+    "mailPrimaryState": { "enum": ["available", "unavailable", "none"] },
+    "credentialSecret": { "type": "string", "minLength": 1, "maxLength": 16384, "x-plainpost-maxUtf8Bytes": 16384, "pattern": "^[^\\r\\n\\u0000]+$" },
+    "username": { "type": "string", "minLength": 1, "maxLength": 512, "x-plainpost-maxUtf8Bytes": 512, "pattern": "^[^\\r\\n\\u0000]+$" },
+    "host": { "type": "string", "minLength": 1, "maxLength": 253, "x-plainpost-maxUtf8Bytes": 253, "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$" },
+    "port": { "type": "string", "minLength": 1, "maxLength": 5, "x-plainpost-maxUtf8Bytes": 5, "pattern": "^(?:[1-9][0-9]{0,3}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])$" },
+    "security": { "enum": ["implicit_tls", "starttls"] },
+    "mailboxPath": { "type": "string", "minLength": 1, "maxLength": 512, "x-plainpost-maxUtf8Bytes": 512, "pattern": "^[^\\u0000]*$" },
+    "uint32Decimal": { "type": "string", "minLength": 1, "maxLength": 10, "x-plainpost-maxUtf8Bytes": 10, "pattern": "^(?:[1-9][0-9]{0,8}|[1-3][0-9]{9}|4[01][0-9]{8}|42[0-8][0-9]{7}|429[0-3][0-9]{6}|4294[0-8][0-9]{5}|42949[0-5][0-9]{4}|429496[0-6][0-9]{3}|4294967[01][0-9]{2}|42949672[0-8][0-9]|429496729[0-5])$" },
+    "flag": { "enum": ["answered", "deleted", "draft", "flagged", "seen"] },
+    "change": {
+      "oneOf": [
+        { "type": "object", "additionalProperties": false, "required": ["kind", "logicalMailboxID", "messageID", "threadID"], "properties": { "kind": { "const": "upsert" }, "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" }, "messageID": { "$ref": "#/$defs/identifier" }, "threadID": { "$ref": "#/$defs/identifier" } } },
+        { "type": "object", "additionalProperties": false, "required": ["kind", "logicalMailboxID", "messageID", "threadID"], "properties": { "kind": { "const": "membership_removed" }, "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" }, "messageID": { "type": "null" }, "threadID": { "type": "null" } } },
+        { "type": "object", "additionalProperties": false, "required": ["kind", "logicalMailboxID", "messageID", "threadID"], "properties": { "kind": { "const": "tombstoned" }, "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" }, "messageID": { "$ref": "#/$defs/identifier" }, "threadID": { "type": "null" } } },
+        { "type": "object", "additionalProperties": false, "required": ["kind", "logicalMailboxID", "messageID", "threadID"], "properties": { "kind": { "enum": ["epoch_reset", "baseline_complete"] }, "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" }, "messageID": { "type": "null" }, "threadID": { "type": "null" } } }
+      ]
+    },
+    "discoveredMailbox": {
+      "type": "object", "additionalProperties": false, "required": ["displayName", "logicalMailboxID", "mailboxHandle", "role"],
+      "properties": {
+        "authorityEpoch": { "$ref": "#/$defs/positiveDecimal" },
+        "displayName": { "$ref": "#/$defs/displayName" },
+        "logicalMailboxID": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/logicalMailboxID" }] },
+        "mailboxHandle": { "$ref": "#/$defs/identifier" },
+        "role": { "enum": ["inbox", "sent", "drafts", "trash", "junk", "archive", "all", "other"] }
+      }
+    },
+    "mailAccount": {
+      "type": "object", "additionalProperties": false, "required": ["assignments", "logicalMailboxID", "primary", "providerIdentity", "providerKind", "state"],
+      "properties": {
+        "assignments": { "type": "array", "maxItems": 200, "items": { "$ref": "#/$defs/discoveredMailbox" } },
+        "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" },
+        "primary": { "type": "boolean" },
+        "providerIdentity": { "$ref": "#/$defs/providerIdentity" },
+        "providerKind": { "$ref": "#/$defs/providerKind" },
+        "state": { "$ref": "#/$defs/mailAccountState" }
+      }
+    },
+    "mailEndpoint": {
+      "type": "object", "additionalProperties": false, "required": ["host", "port", "security"],
+      "properties": {
+        "host": { "$ref": "#/$defs/host" },
+        "port": { "$ref": "#/$defs/port" },
+        "security": { "$ref": "#/$defs/security" }
+      }
+    },
+    "mailboxRolePaths": {
+      "type": "object", "additionalProperties": false, "required": ["drafts", "inbox", "sent", "trash"],
+      "properties": {
+        "archive": { "$ref": "#/$defs/mailboxPath" },
+        "drafts": { "$ref": "#/$defs/mailboxPath" },
+        "inbox": { "$ref": "#/$defs/mailboxPath" },
+        "sent": { "$ref": "#/$defs/mailboxPath" },
+        "trash": { "$ref": "#/$defs/mailboxPath" }
+      }
+    },
+    "mirrorMembership": {
+      "type": "object", "additionalProperties": false, "required": ["flags", "logicalMailboxID", "mailboxPath", "uid", "uidValidity"],
+      "properties": {
+        "flags": { "type": "array", "maxItems": 5, "uniqueItems": true, "items": { "$ref": "#/$defs/flag" } },
+        "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" },
+        "mailboxPath": { "$ref": "#/$defs/mailboxPath" },
+        "uid": { "$ref": "#/$defs/uint32Decimal" },
+        "uidValidity": { "$ref": "#/$defs/uint32Decimal" }
+      }
+    },
+    "mirrorCoordinate": {
+      "type": "object", "additionalProperties": false, "required": ["memberships", "messageID", "rfcMessageID"],
+      "properties": {
+        "memberships": { "type": "array", "maxItems": 200, "items": { "$ref": "#/$defs/mirrorMembership" } },
+        "messageID": { "$ref": "#/$defs/identifier" },
+        "rfcMessageID": { "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/messageReference" }] }
+      }
+    },
+    "mailCapabilities": {
+      "type": "object", "additionalProperties": false, "required": ["googleImport", "imapImport", "kind", "mirrorCoordinates", "multiAccount", "version"],
+      "properties": {
+        "googleImport": { "type": "boolean" },
+        "imapImport": { "type": "boolean" },
+        "kind": { "const": "node-sync.mail-capabilities.v1" },
+        "mirrorCoordinates": { "type": "boolean" },
+        "multiAccount": { "type": "boolean" },
+        "version": { "const": "1" }
+      }
+    },
+    "mailAccountsResult": {
+      "type": "object", "additionalProperties": false, "required": ["accounts", "kind", "primaryState"],
+      "properties": {
+        "accounts": { "type": "array", "maxItems": 200, "items": { "$ref": "#/$defs/mailAccount" } },
+        "kind": { "const": "node-sync.mail-accounts-result.v1" },
+        "primaryState": { "$ref": "#/$defs/mailPrimaryState" }
+      }
+    },
+    "googleTokenImportRequest": {
+      "type": "object", "additionalProperties": false, "required": ["expectedProviderIdentity", "kind", "logicalMailboxID", "refreshToken"],
+      "properties": {
+        "expectedProviderIdentity": { "$ref": "#/$defs/providerIdentity" },
+        "kind": { "const": "node-sync.google-token-import-request.v1" },
+        "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" },
+        "refreshToken": { "$ref": "#/$defs/credentialSecret" }
+      }
+    },
+    "imapProviderImportRequest": {
+      "type": "object", "additionalProperties": false, "required": ["expectedProviderIdentity", "imap", "kind", "logicalMailboxID", "password", "roles", "smtp", "username"],
+      "properties": {
+        "expectedProviderIdentity": { "$ref": "#/$defs/providerIdentity" },
+        "imap": { "$ref": "#/$defs/mailEndpoint" },
+        "kind": { "const": "node-sync.imap-provider-import-request.v1" },
+        "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" },
+        "password": { "$ref": "#/$defs/credentialSecret" },
+        "roles": { "$ref": "#/$defs/mailboxRolePaths" },
+        "smtp": { "$ref": "#/$defs/mailEndpoint" },
+        "username": { "$ref": "#/$defs/username" }
+      }
+    },
+    "providerImportResult": {
+      "type": "object", "additionalProperties": false, "required": ["assignments", "kind", "logicalMailboxID", "providerIdentity", "state"],
+      "properties": {
+        "assignments": { "type": "array", "maxItems": 200, "items": { "$ref": "#/$defs/discoveredMailbox" } },
+        "kind": { "const": "node-sync.provider-import-result.v1" },
+        "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" },
+        "providerIdentity": { "$ref": "#/$defs/providerIdentity" },
+        "state": { "enum": ["created", "unchanged", "replaced"] }
+      }
+    },
+    "providerRemoveRequest": {
+      "type": "object", "additionalProperties": false, "required": ["expectedProviderIdentity", "kind", "logicalMailboxID"],
+      "properties": {
+        "expectedProviderIdentity": { "$ref": "#/$defs/providerIdentity" },
+        "kind": { "const": "node-sync.provider-remove-request.v1" },
+        "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" }
+      }
+    },
+    "providerRemoveResult": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "logicalMailboxID", "state"],
+      "properties": {
+        "kind": { "const": "node-sync.provider-remove-result.v1" },
+        "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" },
+        "state": { "enum": ["removed", "absent"] }
+      }
+    },
+    "accountSnapshotRequest": {
+      "type": "object", "additionalProperties": false, "required": ["after", "kind", "limit", "logicalMailboxID"],
+      "properties": {
+        "after": { "$ref": "#/$defs/cursor" },
+        "kind": { "const": "node-sync.account-snapshot-request.v1" },
+        "limit": { "$ref": "#/$defs/pageLimit" },
+        "logicalMailboxID": { "$ref": "#/$defs/logicalMailboxID" }
+      }
+    },
+    "mirrorCoordinatesRequest": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "messageIDs"],
+      "properties": {
+        "kind": { "const": "node-sync.mirror-coordinates-request.v1" },
+        "messageIDs": { "type": "array", "minItems": 1, "maxItems": 200, "uniqueItems": true, "items": { "$ref": "#/$defs/identifier" } }
+      }
+    },
+    "mirrorCoordinatesResult": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "records"],
+      "properties": {
+        "kind": { "const": "node-sync.mirror-coordinates-result.v1" },
+        "records": { "type": "array", "maxItems": 200, "items": { "$ref": "#/$defs/mirrorCoordinate" } }
+      }
+    },
+    "mailDeltaPage": {
+      "type": "object", "additionalProperties": false, "required": ["changes", "kind", "nextCursor", "revision", "waitingAccounts"],
+      "properties": {
+        "changes": { "type": "array", "maxItems": 200, "items": { "$ref": "#/$defs/change" } },
+        "kind": { "const": "node-sync.mail-delta-page.v1" },
+        "nextCursor": { "$ref": "#/$defs/cursor" },
+        "revision": { "$ref": "#/$defs/positiveDecimal" },
+        "waitingAccounts": { "type": "array", "maxItems": 200, "uniqueItems": true, "items": { "$ref": "#/$defs/logicalMailboxID" } }
+      }
+    }
+  }
+}

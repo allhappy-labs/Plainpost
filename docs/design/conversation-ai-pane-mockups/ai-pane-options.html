@@ -1,0 +1,134 @@
+<style>
+  .phones { display:flex; gap:26px; flex-wrap:wrap; justify-content:center; }
+  .phone { width:300px; height:650px; border-radius:46px; background:#000; position:relative; overflow:hidden; color:#fff;
+           box-shadow:0 0 0 9px #2c2c2e, 0 18px 40px rgba(0,0,0,.5); font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif; }
+  .phone * { box-sizing:border-box; }
+  .status { height:42px; display:flex; justify-content:space-between; align-items:center; padding:0 28px; font-size:13px; font-weight:600; }
+  .g { background:rgba(58,58,60,.72); backdrop-filter:blur(20px); border:0.5px solid rgba(255,255,255,.10); box-shadow:0 1px 0 rgba(255,255,255,.08) inset, 0 6px 18px rgba(0,0,0,.45); border-radius:999px; color:#fff; }
+  .c { width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:16px; flex:none; }
+  .nav { display:flex; align-items:center; gap:8px; padding:2px 12px 0; height:44px; }
+  .sp { flex:1; }
+  .hdr { display:flex; gap:10px; padding:10px 14px; border-bottom:0.5px solid #38383a; }
+  .av { width:36px; height:36px; border-radius:50%; background:#5e5ce6; display:flex; align-items:center; justify-content:center; font-weight:700; flex:none; }
+  .who { flex:1; min-width:0; font-size:15px; font-weight:600; }
+  .who div { font-size:12px; color:#8e8e93; font-weight:400; margin-top:2px; }
+  .subj { font-size:20px; font-weight:700; padding:12px 14px 6px; line-height:1.2; }
+  .body { font-size:13.5px; line-height:1.45; padding:4px 14px; color:#e5e5ea; }
+  .dim { opacity:.35; }
+  .link { color:#bf5af2; font-size:13px; font-weight:600; padding:6px 14px 2px; }
+  .bottombar { position:absolute; left:12px; right:12px; bottom:22px; display:flex; gap:8px; align-items:center; }
+  .pill { height:46px; display:flex; align-items:center; gap:20px; padding:0 18px; font-size:17px; }
+  .ai { color:#bf5af2; }
+  .menu { position:absolute; right:58px; bottom:78px; width:200px; background:rgba(44,44,46,.96); border-radius:14px; overflow:hidden; font-size:14px; box-shadow:0 10px 30px rgba(0,0,0,.6); }
+  .menu div { padding:10px 14px; border-top:0.5px solid #48484a; display:flex; justify-content:space-between; }
+  .menu div:first-child { border-top:0; }
+  .sheet { position:absolute; left:0; right:0; bottom:0; background:#1c1c1e; border-radius:26px 26px 46px 46px; padding:8px 14px 22px; box-shadow:0 -10px 30px rgba(0,0,0,.6); }
+  .grab { width:36px; height:5px; border-radius:3px; background:#48484a; margin:0 auto 10px; }
+  .sh-t { display:flex; align-items:center; gap:8px; font-weight:700; font-size:16px; margin-bottom:10px; }
+  .sh-t span { margin-left:auto; color:#8e8e93; font-weight:400; font-size:13px; }
+  .card { background:#2c2c2e; border-radius:14px; padding:10px 12px; font-size:13px; line-height:1.4; margin-bottom:10px; }
+  .card b { display:block; font-size:11px; letter-spacing:.4px; text-transform:uppercase; color:#bf5af2; margin-bottom:4px; }
+  .card li { margin-left:16px; }
+  .acts { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+  .act { background:#2c2c2e; border-radius:12px; padding:10px; font-size:13px; font-weight:600; display:flex; gap:8px; align-items:center; }
+  .act small { display:block; font-weight:400; color:#8e8e93; font-size:11px; }
+  .ask { background:#2c2c2e; border-radius:999px; height:38px; display:flex; align-items:center; padding:0 14px; color:#8e8e93; font-size:13px; gap:8px; }
+  .tabs { display:flex; background:#2c2c2e; border-radius:10px; padding:2px; margin:8px 14px 0; font-size:12.5px; }
+  .tabs div { flex:1; text-align:center; padding:6px 0; border-radius:8px; color:#aeaeb2; }
+  .tabs .on { background:#636366; color:#fff; font-weight:600; }
+  .inline { margin:0 14px 6px; background:#1c1c1e; border:0.5px solid #3a3a3c; border-radius:0 0 14px 14px; padding:10px 12px; font-size:12.5px; line-height:1.4; }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .chip { background:#3a3a3c; border-radius:999px; padding:5px 10px; font-size:12px; }
+  .fab { position:absolute; right:16px; bottom:84px; width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:22px; color:#bf5af2; }
+  .radial { position:absolute; right:16px; bottom:146px; display:flex; flex-direction:column; gap:8px; align-items:flex-end; }
+  .radial div { padding:9px 14px; font-size:13.5px; display:flex; gap:8px; align-items:center; }
+  .caption { width:300px; margin-top:22px; font-size:12.5px; line-height:1.45; color:#d1d1d6; }
+  .caption b { color:#fff; }
+  .col { display:flex; flex-direction:column; align-items:center; }
+  .tag { font-size:11px; font-weight:700; letter-spacing:.5px; color:#8e8e93; margin-bottom:8px; }
+</style>
+
+<h2>One place for AI in a conversation</h2>
+<p class="subtitle">Today Summarize is a link at the top and Draft with AI / Translate hide in the Reply menu. Three ways to gather them. Click the one you like (or tell me what to mix).</p>
+
+<div class="phones">
+
+  <!-- CURRENT -->
+  <div class="col">
+    <div class="tag">TODAY</div>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>●●●</span></div>
+      <div class="nav"><div class="g c">‹</div><div class="sp"></div><div class="g c">⌃</div><div class="g c">⌄</div></div>
+      <div class="hdr"><div class="av">K</div><div class="who">Kanton Zürich<div>To me · 08:12</div></div></div>
+      <div class="subj">Steuererklärung 2025 – Frist</div>
+      <div class="link">✦ Summarize</div>
+      <div class="body">Sehr geehrter Herr Vdovenko, die Frist für die Einreichung Ihrer Steuererklärung 2025 endet am 31. März. Bitte reichen Sie die Unterlagen über ZHprivateTax ein …</div>
+      <div class="menu">
+        <div>Reply <span>↩</span></div><div>Reply All <span>↩↩</span></div><div>Forward <span>↪</span></div>
+        <div class="ai">Draft with AI <span>✦</span></div><div>Translate <span>文A</span></div>
+      </div>
+      <div class="bottombar"><div class="g pill">🗄 &nbsp; ↩</div><div class="sp"></div><div class="g c" style="width:46px;height:46px">✎</div></div>
+    </div>
+    <div class="caption">AI is split in two places: <b>Summarize</b> up top, <b>Draft with AI</b> and <b>Translate</b> buried in Reply. Nothing asks about <i>this</i> conversation.</div>
+  </div>
+
+  <!-- A: SHEET -->
+  <div class="col option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="tag">A · ✦ BUTTON → AI SHEET (recommended)</div>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>●●●</span></div>
+      <div class="nav"><div class="g c">‹</div><div class="sp"></div><div class="g c">⌃</div><div class="g c">⌄</div></div>
+      <div class="hdr dim"><div class="av">K</div><div class="who">Kanton Zürich<div>To me · 08:12</div></div></div>
+      <div class="subj dim">Steuererklärung 2025 – Frist</div>
+      <div class="sheet">
+        <div class="grab"></div>
+        <div class="sh-t"><span class="ai">✦</span> This conversation <span>On-device 🔒</span></div>
+        <div class="card"><b>Summary</b><ul><li>Tax return 2025 is due <b style="display:inline;color:#fff;text-transform:none;letter-spacing:0;font-size:13px">31 March</b></li><li>Submit via ZHprivateTax</li><li>Extension possible until 30 Sept</li></ul></div>
+        <div class="acts">
+          <div class="act">文A<div>Translate<small>to English</small></div></div>
+          <div class="act ai">✦<div style="color:#fff">Draft reply<small>Short · Polite</small></div></div>
+          <div class="act">📅<div>Add deadline<small>31 Mar</small></div></div>
+          <div class="act">⏰<div>Remind me<small>Tomorrow 9:00</small></div></div>
+        </div>
+        <div class="ask">✦ Ask about this conversation…</div>
+      </div>
+    </div>
+    <div class="caption"><b>One ✦ in the bottom bar</b> (next to Archive and Reply) opens a sheet. The summary is ready when it opens. Below it: Translate, Draft reply, and actions found in the mail (deadline, reminder). The field at the bottom asks Ask Mail about just this thread. The Reply menu goes back to Reply / Reply All / Forward.</div>
+  </div>
+
+  <!-- B: INLINE CARD -->
+  <div class="col option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="tag">B · INLINE AI CARD WITH TABS</div>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>●●●</span></div>
+      <div class="nav"><div class="g c">‹</div><div class="sp"></div><div class="g c">⌃</div><div class="g c">⌄</div></div>
+      <div class="hdr"><div class="av">K</div><div class="who">Kanton Zürich<div>To me · 08:12</div></div></div>
+      <div class="subj">Steuererklärung 2025 – Frist</div>
+      <div class="tabs"><div class="on">✦ Summary</div><div>文A Translate</div><div>✦ Reply</div><div>Ask</div></div>
+      <div class="inline">Tax return 2025 due <b>31 March</b>; submit via ZHprivateTax; extension possible to 30 Sept.
+        <div class="chips"><div class="chip">📅 Add deadline</div><div class="chip">⏰ Remind me</div></div></div>
+      <div class="body">Sehr geehrter Herr Vdovenko, die Frist für die Einreichung Ihrer Steuererklärung 2025 endet am 31. März …</div>
+      <div class="bottombar"><div class="g pill">🗄 &nbsp; ↩</div><div class="sp"></div><div class="g c" style="width:46px;height:46px">✎</div></div>
+    </div>
+    <div class="caption"><b>A collapsible card under the subject</b> with tabs: Summary, Translate, Reply, Ask. Everything stays in the reading flow, with no extra tap to reach it. But it pushes the message down and gets cramped on long answers or drafts.</div>
+  </div>
+
+  <!-- C: FLOATING -->
+  <div class="col option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="tag">C · FLOATING ✦ WITH QUICK ACTIONS</div>
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>●●●</span></div>
+      <div class="nav"><div class="g c">‹</div><div class="sp"></div><div class="g c">⌃</div><div class="g c">⌄</div></div>
+      <div class="hdr"><div class="av">K</div><div class="who">Kanton Zürich<div>To me · 08:12</div></div></div>
+      <div class="subj">Steuererklärung 2025 – Frist</div>
+      <div class="body dim">Sehr geehrter Herr Vdovenko, die Frist für die Einreichung Ihrer Steuererklärung 2025 endet am 31. März. Bitte reichen Sie die Unterlagen über ZHprivateTax ein …</div>
+      <div class="radial">
+        <div class="g">✦ Summarize</div><div class="g">文A Translate</div><div class="g">✦ Draft reply</div><div class="g">💬 Ask…</div>
+      </div>
+      <div class="g fab">✕</div>
+      <div class="bottombar"><div class="g pill">🗄 &nbsp; ↩</div><div class="sp"></div><div class="g c" style="width:46px;height:46px">✎</div></div>
+    </div>
+    <div class="caption"><b>A floating ✦ above the bar</b> fans out quick actions, like Writing Tools. Each one opens its own result. It's always within reach, but it covers the text, and results end up in separate places again.</div>
+  </div>
+
+</div>

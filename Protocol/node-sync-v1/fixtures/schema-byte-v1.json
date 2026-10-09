@@ -1,0 +1,6 @@
+{
+  "kind": "node-sync-v1.schema-byte-vectors",
+  "negative": { "character": "é", "repeat": 257 },
+  "positive": { "character": "é", "repeat": 256 },
+  "schemaVersion": 1
+}

@@ -1,0 +1,18 @@
+{
+  "admissionHistoryEntryDigest": "FyjjgYNsiFinhyJ3cqjso7mU1lzh6ETNkkC2tlgRoNk",
+  "kind": "account.current-authority-transition-matrix.v1",
+  "negativeCategories": [
+    "gap",
+    "reorder",
+    "duplicate",
+    "wrong-transition-action-class",
+    "missing-extra-package",
+    "package-recipient-commitment",
+    "signer-retained-removed-record",
+    "prior-digest-target",
+    "recovery-auth-manifest-root-key-window",
+    "epoch-revision-digest-links"
+  ],
+  "recoveryHistoryEntryDigest": "0LPcAl7bCPCHfghEoEhguLuzqx2qSkEM63qKw5bp_3w",
+  "source": "crypto-vectors-v1.json#/trustPagination/page/entries"
+}

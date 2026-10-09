@@ -1,0 +1,10 @@
+{
+  "kind": "account.exchange.v1",
+  "appleIdentityToken": "eyJhbGciOiJFUzI1NiIsImtpZCI6InN5bnRoZXRpYyJ9.eyJhdWQiOiJjb20ub2xoYXBpLlBsYWlucG9zdC5NYWMifQ.c3ludGhldGljLXNpZ25hdHVyZQ",
+  "nonce": "oKGio6SlpqeoqaqrrK2ur7CxsrO0tba3uLm6u7y9vr8",
+  "deviceBundle": {
+    "signingKey": "BFTnegAcOGK5enZkf0M23zzxJqy-egacXlcJJ3Mk0pIL9Znxuyn0MXVCEh-MBaLnw3Fx6ndzUJAIG6fIL2DQs3U",
+    "agreementKey": "BPBFTcaXGrrnrfs3iZmIgmWuA6-S3joO8WNmjGPlm51ftbk-41kuLR9OZZTlH5ZD5io7Ic51tfo_R-Wc3g0DTzY"
+  },
+  "deviceProof": "7r6K0ceOTkce90sFH7xFUcUtm0iukmKqB7l-Jg8rQ39zQwjW_BScrv22F9UibE3LU2nP80hee4e9HQ1x85-Udg"
+}

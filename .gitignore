@@ -1,0 +1,34 @@
+.build/
+.swiftpm/
+/.pnpm-store/
+.worktrees/
+DerivedData/
+xcuserdata/
+*.xcodeproj
+!Plainpost.xcodeproj/
+!Plainpost.xcodeproj/project.pbxproj
+!Plainpost.xcodeproj/xcshareddata/
+!Plainpost.xcodeproj/xcshareddata/xcschemes/
+!Plainpost.xcodeproj/xcshareddata/xcschemes/Plainpost.xcscheme
+!Apps/PlainpostiOS/Plainpost.xcodeproj/
+!Apps/PlainpostiOS/Plainpost.xcodeproj/project.pbxproj
+!Apps/PlainpostiOS/Plainpost.xcodeproj/xcshareddata/
+!Apps/PlainpostiOS/Plainpost.xcodeproj/xcshareddata/xcschemes/
+!Apps/PlainpostiOS/Plainpost.xcodeproj/xcshareddata/xcschemes/Plainpost.xcscheme
+/output/
+.DS_Store
+__pycache__/
+*.py[cod]
+
+# Signing material must remain outside Git.
+.signing/
+*.p12
+*.provisionprofile
+*.mobileprovision
+/Apps/PlainpostiOS/Config/LocalOAuth.xcconfig
+
+# Sync Node operator state and mounted-file credentials must remain local.
+/Deploy/sync-node/.env
+/Deploy/sync-node/data/
+/Deploy/sync-node/secrets/
+.superpowers/sdd/2026-08-26-sync-node-private-beta-integration/task-4-report.md

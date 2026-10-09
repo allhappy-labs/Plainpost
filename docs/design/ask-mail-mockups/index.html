@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask Mail redesign · mockups</title>
+<link rel="stylesheet" href="shared.css">
+<style>
+  main { max-width: 1120px; margin: 0 auto; padding: 40px 28px 80px; }
+  h2 { font-size: 30px; letter-spacing: -.02em; margin: 0 0 8px; }
+  .lede { color: var(--label-2); font-size: 15px; line-height: 1.5; max-width: 720px; margin: 0 0 32px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .card { display: block; text-decoration: none; color: inherit; background: var(--bg-2); border: 1px solid var(--sep); border-radius: 16px; padding: 20px; transition: border-color .15s; }
+  .card:hover { border-color: var(--accent); }
+  .card .l { font-size: 13px; font-weight: 700; color: var(--accent); }
+  .card h3 { margin: 6px 0 8px; font-size: 19px; }
+  .card p { margin: 0 0 12px; color: var(--label-2); font-size: 14px; line-height: 1.45; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--label-2); font-size: 13px; line-height: 1.6; }
+  .card .fit { margin-top: 12px; font-size: 12.5px; color: var(--label); }
+  h4 { margin: 40px 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--label-2); }
+  .cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; font-size: 14px; line-height: 1.5; color: var(--label-2); }
+  .cols ul { margin: 0; padding-left: 18px; }
+  .cols b { color: var(--label); }
+</style>
+</head>
+<body>
+<header class="pagebar">
+  <div><h1>Ask Mail redesign</h1><p>Three directions for one shared SwiftUI component on iOS and macOS.</p></div>
+  <nav class="nav"><a href="index.html" aria-current="page">Overview</a><a href="a-result-blocks.html">A</a><a href="b-query-lens.html">B</a><a href="c-briefing.html">C</a></nav>
+</header>
+<main>
+  <h2>Pick a direction</h2>
+  <p class="lede">Each page shows the same markup rendered in a Mac window and on an iPhone, with Empty, Working and Answer states and light and dark modes. All three use the question from the current screenshot, "Group my unread emails, I want to clean some of them", so you can compare them directly.</p>
+
+  <div class="cards">
+    <a class="card" href="a-result-blocks.html">
+      <div class="l">A</div><h3>Result blocks</h3>
+      <p>The familiar chat, but answers are structured, actionable blocks instead of paragraphs.</p>
+      <ul><li>Groups with counts, expandable previews and per-group buttons</li><li>"Searched: Unread · Inbox · 2 accounts" line you can edit</li><li>Visible working steps, Undo toast</li></ul>
+      <div class="fit">Smallest change from today. Mac: inspector column.</div>
+    </a>
+    <a class="card" href="b-query-lens.html">
+      <div class="l">B</div><h3>Query lens</h3>
+      <p>No chat. The question becomes editable filter chips over the mail list, and the answer is the grouped list itself.</p>
+      <ul><li>Multi-select sections with a floating action bar</li><li>Refinements replace the lens, with a breadcrumb back</li><li>Wide layout adds a summary and shortcuts panel</li></ul>
+      <div class="fit">Best for finding and cleaning up mail. Mac: takes over the list area.</div>
+    </a>
+    <a class="card" href="c-briefing.html">
+      <div class="l">C</div><h3>Briefing</h3>
+      <p>Reads like a short, well-sourced memo. The question is the headline and each claim links to its email.</p>
+      <ul><li>Inline sender chips open a peek with the highlighted sentence</li><li>@ scopes: Unread, a person, a thread, a date</li><li>Suggested actions you confirm</li></ul>
+      <div class="fit">Best for questions and catching up. Mac: inspector column.</div>
+    </a>
+  </div>
+
+  <h4>What all three fix from today's screen</h4>
+  <div class="cols">
+    <ul>
+      <li><b>Wrong answer shape.</b> "Group my unread" was treated as a text search for the word "unread". All three turn it into structured filters (unread, folder, account) before the model writes anything.</li>
+      <li><b>No way to act.</b> Cleaning up needs Mark read, Archive and Unsubscribe right in the answer, with Undo.</li>
+    </ul>
+    <ul>
+      <li><b>Unclear chrome.</b> The Apple and lock icons become one readable line: "On this device · Apple Intelligence".</li>
+      <li><b>Sources as an afterthought.</b> The "S2" cards at the bottom become groups, rows or inline chips tied to the claim they support.</li>
+    </ul>
+  </div>
+
+  <h4>Shared-code note</h4>
+  <div class="cols"><p>Each mockup is one template cloned into both frames. Layout differences come from the available width (container queries here, <code>ViewThatFits</code> or size classes in SwiftUI), not from separate platform views. That maps to one <code>AskMailView</code> in PlainpostUI, with thin iOS sheet and macOS inspector hosts.</p></div>
+</main>
+</body>
+</html>

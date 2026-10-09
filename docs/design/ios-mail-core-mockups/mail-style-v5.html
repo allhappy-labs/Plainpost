@@ -1,0 +1,163 @@
+<style>
+  .phones { display:flex; gap:26px; flex-wrap:wrap; justify-content:center; }
+  .phone { width:300px; height:650px; border-radius:46px; background:#000; position:relative; overflow:hidden; color:#fff;
+           box-shadow:0 0 0 9px #2c2c2e, 0 18px 40px rgba(0,0,0,.5); font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",sans-serif; }
+  .phone * { box-sizing:border-box; }
+  .status { height:42px; display:flex; justify-content:space-between; align-items:center; padding:0 28px; font-size:13px; font-weight:600; color:#fff; }
+  .g { background:rgba(58,58,60,.72); backdrop-filter:blur(20px); border:0.5px solid rgba(255,255,255,.10); box-shadow:0 1px 0 rgba(255,255,255,.08) inset, 0 6px 18px rgba(0,0,0,.45); border-radius:999px; color:#fff; }
+  .c { width:36px; height:36px; display:flex; align-items:center; justify-content:center; font-size:16px; flex:none; }
+  .p { height:36px; padding:0 14px; display:flex; align-items:center; gap:18px; font-size:15px; font-weight:500; }
+  .nav { display:flex; align-items:center; gap:8px; padding:2px 12px 0; height:44px; }
+  .ttl { flex:1; min-width:0; }
+  .ttl b { display:block; font-size:16px; }
+  .ttl span { font-size:11px; color:#8e8e93; white-space:nowrap; display:block; }
+  .ttl b { white-space:nowrap; line-height:1.15; }
+  .chip { white-space:nowrap; }
+  .status::before, .status::after { display:none !important; }
+  .banner span:nth-child(2) { line-height:1.25; }
+  .chips { display:flex; gap:6px; padding:10px 12px 6px; }
+  .chip { height:34px; min-width:44px; border-radius:999px; background:#1c1c1e; display:flex; align-items:center; justify-content:center; font-size:14px; color:#aeaeb2; padding:0 10px; }
+  .chip.on { background:#f2f2f7; color:#000; font-weight:600; gap:6px; padding:0 14px; }
+  .mrow { display:flex; gap:10px; padding:9px 14px 9px 12px; position:relative; }
+  .mrow::after { content:""; position:absolute; left:58px; right:12px; bottom:0; border-bottom:0.5px solid #38383a; }
+  .ic { width:36px; height:36px; border-radius:9px; flex:none; display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:700; color:#fff; }
+  .unread::before { content:""; position:absolute; left:3px; top:22px; width:7px; height:7px; border-radius:50%; background:#0a84ff; }
+  .rt { flex:1; min-width:0; }
+  .l1 { display:flex; justify-content:space-between; align-items:baseline; font-size:15px; font-weight:600; }
+  .l1 span:last-child { font-weight:400; color:#8e8e93; font-size:12px; white-space:nowrap; }
+  .l2 { font-size:13px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .l3 { font-size:13px; color:#8e8e93; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .bottombar { position:absolute; left:12px; right:12px; bottom:22px; display:flex; gap:8px; align-items:center; }
+  .search { flex:1; height:46px; display:flex; align-items:center; gap:8px; padding:0 14px; font-size:15px; color:#8e8e93; }
+  .large { font-size:30px; font-weight:700; padding:4px 18px 0; letter-spacing:-.4px; }
+  .upd { font-size:13px; color:#8e8e93; padding:0 18px 10px; }
+  .grp { margin:0 14px 16px; background:#1c1c1e; border-radius:16px; overflow:hidden; }
+  .gr { display:flex; align-items:center; gap:12px; padding:10px 14px; font-size:15px; position:relative; }
+  .gr + .gr::before { content:""; position:absolute; left:48px; right:0; top:0; border-top:0.5px solid #38383a; }
+  .gr i { font-style:normal; width:22px; text-align:center; color:#0a84ff; font-size:16px; }
+  .gr b { margin-left:auto; font-weight:400; color:#8e8e93; font-size:14px; }
+  .gr em { font-style:normal; color:#5a5a5e; margin-left:8px; }
+  .sec { display:flex; justify-content:space-between; padding:4px 22px 6px; font-size:17px; font-weight:700; }
+  .sec span { color:#0a84ff; font-size:13px; font-weight:400; }
+  .note { font-size:11px; color:#8e8e93; padding:0 22px 8px; margin-top:-8px; }
+  .reader { background:#1c1c1e; }
+  .banner { margin:8px 12px; background:#2c2c2e; border-radius:16px; padding:10px 12px; display:flex; align-items:center; gap:10px; font-size:13px; }
+  .btnt { background:rgba(10,132,255,.18); color:#0a84ff; border-radius:999px; padding:6px 12px; font-size:13px; font-weight:600; white-space:nowrap; }
+  .hdr { display:flex; gap:10px; padding:10px 14px; border-bottom:0.5px solid #38383a; margin:0 0 0; }
+  .hdr .who { flex:1; min-width:0; font-size:15px; font-weight:600; }
+  .hdr .who div { font-size:12px; color:#8e8e93; font-weight:400; margin-top:2px; }
+  .subj { font-size:21px; font-weight:700; padding:12px 14px 6px; line-height:1.2; }
+  .body { font-size:14px; line-height:1.45; padding:4px 14px; color:#e5e5ea; }
+  .meta { display:flex; justify-content:space-between; font-size:13px; color:#8e8e93; padding:8px 16px 4px; }
+  .meta span:last-child { color:#aeaeb2; }
+  .caption { width:300px; margin-top:22px; font-size:12.5px; line-height:1.45; color:#d1d1d6; }
+  .caption b { color:#fff; }
+  .col { display:flex; flex-direction:column; align-items:center; }
+</style>
+
+<h2>Final: compact Mailboxes, Activity at the bottom, Search + Ask Mail bars</h2>
+<p class="subtitle">Your three reference screens, rebuilt with Plainpost's features. Blue notes under each phone call out what's Plainpost-specific. Tell me what to change.</p>
+
+<div class="phones">
+
+<!-- INBOX -->
+<div class="col">
+<div class="phone">
+  <div class="status"><span>21:04</span><span>▮▮▮ ◠ 13</span></div>
+  <div class="nav">
+    <div class="g c">‹</div>
+    <div class="ttl"><b>Smart Inbox</b><span>All accounts · 3 unread</span></div>
+        <div class="g c">⋯</div>
+  </div>
+  <div class="chips">
+    <div class="chip on">👤&nbsp;Personal</div>
+    <div class="chip">🔔</div>
+    <div class="chip">↻</div>
+    <div class="chip">📰</div>
+    <div class="chip">✉︎</div>
+  </div>
+  <div class="mrow unread"><div class="ic" style="background:#5e5ce6">MC</div><div class="rt"><div class="l1"><span>Maria Chen</span><span>16:27 ›</span></div><div class="l2">Re: Quarterly planning — draft agenda</div><div class="l3">Good catch — updated. See you Thursday at 10:00 in the Harbour room.</div></div></div>
+  <div class="mrow unread"><div class="ic" style="background:#ff9f0a">TO</div><div class="rt"><div class="l1"><span>Tom Okafor</span><span>14:27 ›</span></div><div class="l2">Dinner on Saturday?</div><div class="l3">Hey! Are you free Saturday evening? Thinking of the new Georgian place.</div></div></div>
+  <div class="mrow"><div class="ic" style="background:#bf5af2">ER</div><div class="rt"><div class="l1"><span>Dr. Elena Rossi</span><span>Yesterday ›</span></div><div class="l2">Your appointment is confirmed</div><div class="l3">Your appointment on Tuesday 6 October at 09:30 is confirmed.</div></div></div>
+  <div class="mrow"><div class="ic" style="background:#30d158">PN</div><div class="rt"><div class="l1"><span>Peter Novak</span><span>Yesterday ›</span></div><div class="l2">Boiler service next week</div><div class="l3">The engineer will come on Wednesday between 8 and 12.</div></div></div>
+  <div class="bottombar">
+    <div class="g c" style="width:46px;height:46px">≡</div>
+    <div class="g search">🔍 Search</div>
+    <div class="g c" style="width:46px;height:46px;color:#bf5af2">✦</div>
+    <div class="g c" style="width:46px;height:46px">✎</div>
+  </div>
+</div>
+<div class="caption"><b>Inbox</b><br>
+• Smart Inbox categories become Mail's chips: <b>Personal · Notifications · Updates · Newsletters · All</b>. The selected chip shows its name.<br>
+• Rows: avatar or site icon, sender, date ›, subject, two-line preview. Real display names, no raw <code>Name &lt;address&gt;</code>.<br>
+• Swipe right: read/unread. Swipe left: Archive (or Delete), Flag, More. Long-press: preview and actions.<br>
+• Bottom glass bar: filter (unread/flagged), Search, <b>✦ Ask Mail</b> (opens the Ask Mail sheet), Compose.</div>
+</div>
+
+<!-- MAILBOXES -->
+<div class="col">
+<div class="phone">
+  <div class="status"><span>21:04</span><span>▮▮▮ ◠ 13</span></div>
+  <div class="large" style="padding-top:2px">Mailboxes</div>
+  <div style="height:10px"></div>
+  <div class="grp">
+    <div class="gr"><i>✦</i>Smart Inbox<b>3 ›</b></div>
+    <div class="gr"><i>▭</i>All Inboxes<b>3 ›</b></div>
+    <div class="gr"><i>✉︎</i>Unread<b>3 ›</b></div>
+    <div class="gr"><i>✓</i>Agent Approvals<b>1 ›</b></div>
+    <div class="gr"><i>⚙︎</i>Settings<b>›</b></div>
+  </div>
+  <div class="sec">oleg.olhapi@gmail.com <span>⌄</span></div>
+  <div class="grp">
+    <div class="gr"><i>▭</i>Inbox<b>3 ›</b></div>
+    <div class="gr"><i>▯</i>Drafts<b>›</b></div>
+    <div class="gr"><i>➤</i>Sent<b>›</b></div>
+    <div class="gr"><i>▤</i>Archive<b>›</b></div>
+    <div class="gr"><i>🗑</i>Trash<b>›</b></div>
+  </div>
+  <div class="sec">Activity</div>
+  <div class="grp">
+    <div class="gr"><i>↻</i>Sorting Smart Inbox<b>1,995 left</b></div>
+  </div>
+  <div class="bottombar">
+    <div class="g search">🔍 Search <span style="margin-left:auto">🎙</span></div>
+    <div class="g c" style="width:46px;height:46px;color:#bf5af2">✦</div>
+    <div class="g c" style="width:46px;height:46px">✎</div>
+  </div>
+</div>
+<div class="caption"><b>Mailboxes</b> (Back from the Inbox)<br>• Compact: the large title sits right under the status bar; no empty navigation row.<br>• Same bottom bar: Search (all mailboxes), ✦ Ask Mail, Compose.<br>
+• Smart Inbox, All Inboxes, Unread, and Agent Approvals sit on top. Each account is a collapsible section with its real folders.<br>
+• Live activity (sync, Smart Inbox sorting) is an <b>Activity</b> section at the bottom of the list, below all mailboxes; it scrolls and only appears while work runs.<br>
+• <b>Settings</b> row after Agent Approvals opens the Settings list. Accounts, Add Account and Sync Node live there. No Edit button.</div>
+</div>
+
+<!-- READER -->
+<div class="col">
+<div class="phone reader">
+  <div class="status"><span>21:05</span><span>▮▮▮ ◠ 13</span></div>
+  <div class="nav">
+    <div class="g c">‹</div>
+    <div class="ttl" style="text-align:center"><b>3 Messages</b></div>
+    <div class="g p" style="gap:22px;padding:0 14px">⌃ <span>⌄</span></div>
+  </div>
+  <div class="meta"><span>3 Messages</span><span>✦ Summarize</span></div>
+  <div class="banner"><span style="font-size:18px">✉︎</span><span style="flex:1">From a mailing list.</span><span class="btnt">Unsubscribe</span><span style="color:#8e8e93">✕</span></div>
+  <div class="hdr"><div class="ic" style="background:#5e5ce6;border-radius:9px">MC</div><div class="who">Maria Chen <span style="float:right;font-weight:400;font-size:12px;color:#8e8e93">16:27</span><div>To: Reader &amp; 2 more ›</div></div></div>
+  <div class="subj">Re: Quarterly planning — draft agenda</div>
+  <div class="body">Good catch — updated. See you Thursday at 10:00 in the Harbour room.<br><br>Maria</div>
+  <div class="body" style="color:#8e8e93;font-size:13px;margin-top:10px">▸ 2 earlier messages</div>
+  <div class="bottombar" style="left:18px;right:18px">
+    <div class="g p" style="height:50px;gap:26px;padding:0 20px;font-size:18px">🗑 <span>▭</span> <span>↩︎</span></div>
+    <div style="flex:1"></div>
+    <div class="g c" style="width:50px;height:50px">✎</div>
+  </div>
+</div>
+<div class="caption"><b>Conversation</b><br>
+• The newest message comes first and is expanded; earlier ones fold into "2 earlier messages".<br>
+• The <b>✦ Summarize</b> link replaces the big AI card. Tapping it expands a short on-device summary in place.<br>
+• The header shows the From display name, not the envelope sender. Tap "To: … ›" for details.<br>
+• Bottom glass bar: Delete (or Archive), Move, and Reply. Reply opens a menu: Reply, Reply All, Forward, Draft with AI, Translate. Compose sits alone on the right.<br>
+• ⌃⌄ go to the previous and next conversation.</div>
+</div>
+
+</div>

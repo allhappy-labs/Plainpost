@@ -1,0 +1,2340 @@
+{
+  "schemaVersion": 1,
+  "operations": [
+    {
+      "id": "gmail-special-use-and-labels",
+      "input": {
+        "action": "sync",
+        "provider": "gmail",
+        "transport": "loopback_fixture",
+        "authentication": "oauth_bearer",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "AUTH=XOAUTH2",
+            "SASL-IR",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE",
+            "QRESYNC",
+            "X-GM-EXT-1"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "pageSize": 1,
+        "syncMode": "baseline"
+      },
+      "expected": {
+        "result": {
+          "kind": "page",
+          "page": {
+            "mailbox": {
+              "id": "INBOX",
+              "epoch": 1
+            },
+            "changes": [
+              {
+                "kind": "upsert",
+                "ref": {
+                  "mailbox": {
+                    "id": "INBOX",
+                    "epoch": 1
+                  },
+                  "rawID": "1"
+                },
+                "message": {
+                  "rfcMessageID": "<semantic@example.invalid>",
+                  "providerStableID": "111",
+                  "providerThreadID": "222",
+                  "inReplyTo": [],
+                  "references": [],
+                  "from": [
+                    {
+                      "displayName": "Semantic",
+                      "mailbox": "Live@example.invalid"
+                    }
+                  ],
+                  "sender": null,
+                  "replyTo": [],
+                  "to": [],
+                  "cc": [],
+                  "bcc": [],
+                  "subject": "semantic",
+                  "receivedAt": "2026-08-10T12:34:56Z",
+                  "sentAt": "2026-08-10T12:34:56Z",
+                  "flags": [
+                    "seen"
+                  ],
+                  "labels": [
+                    {
+                      "id": "Work",
+                      "displayName": "Work"
+                    },
+                    {
+                      "id": "\\Inbox",
+                      "displayName": "\\Inbox"
+                    }
+                  ],
+                  "textBody": {
+                    "state": "complete",
+                    "value": "abc"
+                  },
+                  "htmlBody": {
+                    "state": "absent",
+                    "value": ""
+                  },
+                  "parts": [
+                    {
+                      "path": "2",
+                      "filename": "file.bin",
+                      "mimeType": "application/octet-stream",
+                      "disposition": "attachment",
+                      "contentID": "",
+                      "declaredSize": 8
+                    }
+                  ]
+                }
+              }
+            ],
+            "nextCursor": {
+              "provider": "gmail",
+              "mailboxID": "INBOX",
+              "epoch": 1,
+              "uidValidity": 17,
+              "lastUID": 1,
+              "scanUID": 1
+            },
+            "hasMore": true,
+            "observedUIDValidity": 17,
+            "epochReset": false
+          }
+        }
+      }
+    },
+    {
+      "id": "gmail-archive-removes-inbox-label-only",
+      "input": {
+        "action": "move",
+        "provider": "gmail",
+        "transport": "loopback_fixture",
+        "authentication": "oauth_bearer",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "AUTH=XOAUTH2",
+            "SASL-IR",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE",
+            "QRESYNC",
+            "X-GM-EXT-1"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "rawID": "1",
+        "destination": "Archive"
+      },
+      "expected": {
+        "result": {
+          "kind": "mutation",
+          "mutation": {
+            "outcomes": [
+              {
+                "state": "applied",
+                "code": "applied",
+                "providerReference": "",
+                "destinationRawID": "",
+                "sentCopy": "not_applicable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "gmail-delete-adds-trash-without-expunge",
+      "input": {
+        "action": "delete",
+        "provider": "gmail",
+        "transport": "loopback_fixture",
+        "authentication": "oauth_bearer",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "AUTH=XOAUTH2",
+            "SASL-IR",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE",
+            "QRESYNC",
+            "X-GM-EXT-1"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "rawID": "1"
+      },
+      "expected": {
+        "result": {
+          "kind": "mutation",
+          "mutation": {
+            "outcomes": [
+              {
+                "state": "applied",
+                "code": "applied",
+                "providerReference": "",
+                "destinationRawID": "",
+                "sentCopy": "not_applicable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "gmail-provider-managed-sent-no-append",
+      "input": {
+        "action": "append",
+        "provider": "gmail",
+        "transport": "loopback_fixture",
+        "authentication": "oauth_bearer",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "AUTH=XOAUTH2",
+            "SASL-IR",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE",
+            "QRESYNC",
+            "X-GM-EXT-1"
+          ],
+          "mailboxes": [
+            {
+              "id": "Sent",
+              "displayName": "Sent",
+              "selectable": true,
+              "specialUse": "sent"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "Sent",
+        "destination": "Sent",
+        "flags": [],
+        "messageID": "<semantic@example.invalid>",
+        "appendPurpose": "sent_copy",
+        "appendAttempts": 1
+      },
+      "expected": {
+        "result": {
+          "kind": "mutation",
+          "mutation": {
+            "outcomes": [
+              {
+                "state": "applied",
+                "code": "applied",
+                "providerReference": "",
+                "destinationRawID": "",
+                "sentCopy": "not_applicable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "icloud-discovered-sent-append",
+      "input": {
+        "action": "append",
+        "provider": "icloud",
+        "transport": "loopback_fixture",
+        "authentication": "app_password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "IDLE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            },
+            {
+              "id": "Sent",
+              "displayName": "Sent",
+              "selectable": true,
+              "specialUse": "sent"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "destination": null,
+        "flags": [
+          "seen"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "appendPurpose": "draft",
+        "appendAttempts": 1
+      },
+      "expected": {
+        "result": {
+          "kind": "mutation",
+          "mutation": {
+            "outcomes": [
+              {
+                "state": "applied",
+                "code": "applied",
+                "providerReference": "",
+                "destinationRawID": "1001",
+                "sentCopy": "not_applicable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "generic-uidvalidity-reset-is-empty",
+      "input": {
+        "action": "sync",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE",
+            "QRESYNC"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 8,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "pageSize": 1,
+        "syncMode": "incremental",
+        "cursor": "eyJ2IjoxLCJwIjoiZ2VuZXJpYyIsIm0iOiJnLXkxSWI4eUQyZHloLWk1STRDYnMwMTB1dGxpajNFLTBPRE9UUDRFOHZnIiwiZSI6MSwidSI6NywibCI6MX0"
+      },
+      "expected": {
+        "result": {
+          "kind": "page",
+          "page": {
+            "mailbox": {
+              "id": "INBOX",
+              "epoch": 1
+            },
+            "changes": [],
+            "nextCursor": null,
+            "hasMore": false,
+            "observedUIDValidity": 8,
+            "epochReset": true
+          }
+        }
+      }
+    },
+    {
+      "id": "generic-incremental-cursor-page",
+      "input": {
+        "action": "sync",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE",
+            "QRESYNC"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 7,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "pageSize": 1,
+        "syncMode": "incremental",
+        "cursor": "eyJ2IjoxLCJwIjoiZ2VuZXJpYyIsIm0iOiJnLXkxSWI4eUQyZHloLWk1STRDYnMwMTB1dGxpajNFLTBPRE9UUDRFOHZnIiwiZSI6MSwidSI6NywibCI6MX0"
+      },
+      "expected": {
+        "result": {
+          "kind": "page",
+          "page": {
+            "mailbox": {
+              "id": "INBOX",
+              "epoch": 1
+            },
+            "changes": [
+              {
+                "kind": "upsert",
+                "ref": {
+                  "mailbox": {
+                    "id": "INBOX",
+                    "epoch": 1
+                  },
+                  "rawID": "1"
+                },
+                "message": {
+                  "rfcMessageID": "<semantic@example.invalid>",
+                  "providerStableID": "661416998ef040d30243bfcf4f033f3d48c310390985f7560913cf0554831b3d",
+                  "providerThreadID": "661416998ef040d30243bfcf4f033f3d48c310390985f7560913cf0554831b3d",
+                  "inReplyTo": [],
+                  "references": [],
+                  "from": [
+                    {
+                      "displayName": "Semantic",
+                      "mailbox": "Live@example.invalid"
+                    }
+                  ],
+                  "sender": null,
+                  "replyTo": [],
+                  "to": [],
+                  "cc": [],
+                  "bcc": [],
+                  "subject": "semantic",
+                  "receivedAt": "2026-08-10T12:34:56Z",
+                  "sentAt": "2026-08-10T12:34:56Z",
+                  "flags": [
+                    "seen"
+                  ],
+                  "labels": [],
+                  "textBody": {
+                    "state": "complete",
+                    "value": "abc"
+                  },
+                  "htmlBody": {
+                    "state": "absent",
+                    "value": ""
+                  },
+                  "parts": [
+                    {
+                      "path": "2",
+                      "filename": "file.bin",
+                      "mimeType": "application/octet-stream",
+                      "disposition": "attachment",
+                      "contentID": "",
+                      "declaredSize": 8
+                    }
+                  ]
+                }
+              }
+            ],
+            "nextCursor": {
+              "provider": "generic",
+              "mailboxID": "INBOX",
+              "epoch": 1,
+              "uidValidity": 7,
+              "lastUID": 1,
+              "scanUID": 1
+            },
+            "hasMore": true,
+            "observedUIDValidity": 7,
+            "epochReset": false
+          }
+        }
+      }
+    },
+    {
+      "id": "idle-change-and-done-handshake",
+      "input": {
+        "action": "wait",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "changed",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "maximumWaitMilliseconds": 20
+      },
+      "expected": {
+        "result": {
+          "kind": "wait",
+          "wait": {
+            "mailbox": {
+              "id": "INBOX",
+              "epoch": 1
+            },
+            "kind": "provider_change"
+          }
+        }
+      }
+    },
+    {
+      "id": "idle-renewal-and-poll-fallback",
+      "input": {
+        "action": "wait",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "renew",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "maximumWaitMilliseconds": 20
+      },
+      "expected": {
+        "result": {
+          "kind": "wait",
+          "wait": {
+            "mailbox": {
+              "id": "INBOX",
+              "epoch": 1
+            },
+            "kind": "poll_due"
+          }
+        }
+      }
+    },
+    {
+      "id": "safe-copy-uid-expunge-fallback",
+      "input": {
+        "action": "move",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "UIDPLUS",
+            "UIDEXPUNGE"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "disabled",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "rawID": "1",
+        "destination": "Archive"
+      },
+      "expected": {
+        "result": {
+          "kind": "mutation",
+          "mutation": {
+            "outcomes": [
+              {
+                "state": "applied",
+                "code": "applied",
+                "providerReference": "",
+                "destinationRawID": "",
+                "sentCopy": "not_applicable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "move-without-safe-expunge-is-unsupported",
+      "input": {
+        "action": "move",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "disabled",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "rawID": "1",
+        "destination": "Archive"
+      },
+      "expected": {
+        "result": {
+          "kind": "mutation",
+          "mutation": {
+            "outcomes": [
+              {
+                "state": "rejected",
+                "code": "unsupported",
+                "providerReference": "",
+                "destinationRawID": "",
+                "sentCopy": "not_applicable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "append-with-and-without-appenduid",
+      "input": {
+        "action": "append",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "UIDPLUS"
+          ],
+          "mailboxes": [
+            {
+              "id": "Archive",
+              "displayName": "Archive",
+              "selectable": true,
+              "specialUse": "archive"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "disabled",
+          "appendResponses": [
+            "append_uid",
+            "append_without_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "Archive",
+        "destination": "Archive",
+        "flags": [
+          "seen"
+        ],
+        "messageID": "<semantic@example.invalid>",
+        "appendPurpose": "draft",
+        "appendAttempts": 2
+      },
+      "expected": {
+        "result": {
+          "kind": "mutation",
+          "mutation": {
+            "outcomes": [
+              {
+                "state": "applied",
+                "code": "applied",
+                "providerReference": "",
+                "destinationRawID": "1001",
+                "sentCopy": "not_applicable"
+              },
+              {
+                "state": "applied",
+                "code": "applied",
+                "providerReference": "",
+                "destinationRawID": "",
+                "sentCopy": "not_applicable"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "connection-loss-discards-partial-page",
+      "input": {
+        "action": "sync",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "metadata",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        },
+        "mailbox": "INBOX",
+        "pageSize": 1,
+        "syncMode": "baseline"
+      },
+      "expected": {
+        "result": {
+          "kind": "error",
+          "error": {
+            "tag": "unavailable",
+            "retry": "safe",
+            "cause": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "gmail-oauth-refresh-rotation-symbolic",
+      "input": {
+        "action": "discover",
+        "provider": "gmail",
+        "transport": "loopback_fixture",
+        "authentication": "oauth_bearer",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "AUTH=XOAUTH2",
+            "SASL-IR",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE",
+            "QRESYNC",
+            "X-GM-EXT-1"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "refresh_before_connect",
+          "metadataBehavior": "normal"
+        }
+      },
+      "expected": {
+        "result": {
+          "kind": "catalog",
+          "catalog": {
+            "mailboxes": [
+              {
+                "id": "INBOX",
+                "displayName": "INBOX",
+                "selectable": true,
+                "specialUse": "inbox"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "app-password-over-tls-only",
+      "input": {
+        "action": "discover",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "app_password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "verified",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        }
+      },
+      "expected": {
+        "result": {
+          "kind": "catalog",
+          "catalog": {
+            "mailboxes": [
+              {
+                "id": "INBOX",
+                "displayName": "INBOX",
+                "selectable": true,
+                "specialUse": "inbox"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "invalid-certificate-rejected",
+      "input": {
+        "action": "discover",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "disabled",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "invalid_certificate",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        }
+      },
+      "expected": {
+        "result": {
+          "kind": "error",
+          "error": {
+            "tag": "tls",
+            "retry": "never",
+            "cause": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "cleartext-nonloopback-rejected",
+      "input": {
+        "action": "discover",
+        "provider": "generic",
+        "transport": "loopback_fixture",
+        "authentication": "password",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "disabled",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "normal",
+          "security": "cleartext_nonloopback",
+          "oauthBehavior": "none",
+          "metadataBehavior": "normal"
+        }
+      },
+      "expected": {
+        "result": {
+          "kind": "error",
+          "error": {
+            "tag": "invalid",
+            "retry": "never",
+            "cause": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "oversized-line-literal-catalog-and-labels",
+      "input": {
+        "action": "sync",
+        "provider": "gmail",
+        "transport": "loopback_fixture",
+        "authentication": "oauth_bearer",
+        "mailbox": "INBOX",
+        "pageSize": 1,
+        "syncMode": "baseline",
+        "peer": {
+          "capabilities": [
+            "IMAP4REV1",
+            "AUTH=PLAIN",
+            "AUTH=XOAUTH2",
+            "SASL-IR",
+            "IDLE",
+            "MOVE",
+            "UIDPLUS",
+            "UIDEXPUNGE",
+            "CONDSTORE",
+            "QRESYNC",
+            "X-GM-EXT-1"
+          ],
+          "mailboxes": [
+            {
+              "id": "INBOX",
+              "displayName": "INBOX",
+              "selectable": true,
+              "specialUse": "inbox"
+            }
+          ],
+          "uidValidity": 17,
+          "idleBehavior": "poll",
+          "appendResponses": [
+            "append_uid"
+          ],
+          "disconnect": "none",
+          "catalogBehavior": "oversized",
+          "metadataBehavior": "oversized_gmail_labels_literal",
+          "security": "verified",
+          "oauthBehavior": "none"
+        }
+      },
+      "expected": {
+        "result": {
+          "kind": "error",
+          "error": {
+            "tag": "resource_limit",
+            "retry": "never",
+            "cause": ""
+          }
+        }
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "gmail-special-use-and-labels",
+      "provider": "gmail",
+      "transport": "loopback_fixture",
+      "authentication": "oauth_bearer",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIEFVVEg9WE9BVVRIMiBTVEFSVFRMUw0KQTAwMDEgT0sgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUgWC1HTS1FWFQtMQ0KQTAwMDMgT0sgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgRElTQ09WRVINCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS",
+            "X-GM-EXT-1"
+          ],
+          "action": "discover",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "gmail-archive-removes-inbox-label-only",
+      "provider": "gmail",
+      "transport": "loopback_fixture",
+      "authentication": "oauth_bearer",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIEFVVEg9WE9BVVRIMiBTVEFSVFRMUw0KQTAwMDEgT0sgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUgWC1HTS1FWFQtMQ0KQTAwMDMgT0sgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgTU9WRQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS",
+            "X-GM-EXT-1"
+          ],
+          "action": "move",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "gmail-delete-adds-trash-without-expunge",
+      "provider": "gmail",
+      "transport": "loopback_fixture",
+      "authentication": "oauth_bearer",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIEFVVEg9WE9BVVRIMiBTVEFSVFRMUw0KQTAwMDEgT0sgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUgWC1HTS1FWFQtMQ0KQTAwMDMgT0sgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgREVMRVRFDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS",
+            "X-GM-EXT-1"
+          ],
+          "action": "delete",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "gmail-provider-managed-sent-no-append",
+      "provider": "gmail",
+      "transport": "loopback_fixture",
+      "authentication": "oauth_bearer",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIEFVVEg9WE9BVVRIMiBTVEFSVFRMUw0KQTAwMDEgT0sgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUgWC1HTS1FWFQtMQ0KQTAwMDMgT0sgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgQVBQRU5EDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS",
+            "X-GM-EXT-1"
+          ],
+          "action": "append",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "icloud-discovered-sent-append",
+      "provider": "icloud",
+      "transport": "loopback_fixture",
+      "authentication": "app_password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgQVBQRU5EDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "append",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "generic-uidvalidity-reset-is-empty",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgRElTQ09WRVINCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "discover",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "generic-incremental-cursor-page",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgU1lOQw0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "sync",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "idle-change-and-done-handshake",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgV0FJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "wait",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "idle-renewal-and-poll-fallback",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgV0FJVA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "wait",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "safe-copy-uid-expunge-fallback",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgRElTQ09WRVINCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "discover",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "move-without-safe-expunge-is-unsupported",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgTU9WRQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgTk8gcmVqZWN0ZWQNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "move",
+          "result": "rejected"
+        }
+      }
+    },
+    {
+      "id": "append-with-and-without-appenduid",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgQVBQRU5EDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "append",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "connection-loss-discards-partial-page",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgU1lOQw0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "sync",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "gmail-oauth-refresh-rotation-symbolic",
+      "provider": "gmail",
+      "transport": "loopback_fixture",
+      "authentication": "oauth_bearer",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIEFVVEg9WE9BVVRIMiBTVEFSVFRMUw0KQTAwMDEgT0sgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUgWC1HTS1FWFQtMQ0KQTAwMDMgT0sgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgRElTQ09WRVINCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS",
+            "X-GM-EXT-1"
+          ],
+          "action": "discover",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "app-password-over-tls-only",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "app_password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgRElTQ09WRVINCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgT0sgY29tcGxldGUNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "discover",
+          "result": "applied"
+        }
+      }
+    },
+    {
+      "id": "invalid-certificate-rejected",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgVExTDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgTk8gcmVqZWN0ZWQNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "tls",
+          "result": "rejected"
+        }
+      }
+    },
+    {
+      "id": "cleartext-nonloopback-rejected",
+      "provider": "generic",
+      "transport": "loopback_fixture",
+      "authentication": "password",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgVExTDQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgTk8gcmVqZWN0ZWQNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "tls",
+          "result": "rejected"
+        }
+      }
+    },
+    {
+      "id": "oversized-line-literal-catalog-and-labels",
+      "provider": "gmail",
+      "transport": "loopback_fixture",
+      "authentication": "oauth_bearer",
+      "script": [
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBPSyBmaXh0dXJlIHJlYWR5DQo="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDEgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBBVVRIPVBMQUlOIFNUQVJUVExTDQpBMDAwMSBPSyBDQVBBQklMSVRZDQo="
+        },
+        {
+          "kind": "auth",
+          "direction": "client",
+          "credentialGeneration": "synthetic-v1"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDIgT0sgYXV0aGVudGljYXRlZA0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDMgQ0FQQUJJTElUWQ0K"
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "KiBDQVBBQklMSVRZIElNQVA0cmV2MSBJRExFIFVJRFBMVVMgVUlERVhQVU5HRSBDT05EU1RPUkUNCkEwMDAzIE9LIENBUEFCSUxJVFkNCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "client",
+          "bytesBase64": "QTAwMDQgRElTQ09WRVINCg=="
+        },
+        {
+          "kind": "wire",
+          "direction": "server",
+          "bytesBase64": "QTAwMDQgTk8gcmVqZWN0ZWQNCg=="
+        }
+      ],
+      "expected": {
+        "normalized": {
+          "capabilities": [
+            "CONDSTORE",
+            "IDLE",
+            "IMAP4REV1",
+            "UIDEXPUNGE",
+            "UIDPLUS"
+          ],
+          "action": "sync",
+          "result": "rejected"
+        }
+      }
+    }
+  ]
+}

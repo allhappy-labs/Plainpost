@@ -1,0 +1,1355 @@
+{
+  "accountRequestProof" : {
+    "accessTokenDigest" : "sEUtSXkfpFP3wZ2TW9OCIqzzYxVr0J-XsBeWSlcr_jw",
+    "accessTokenUTF8" : "plainpost-dpop-vector-access-token",
+    "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+    "bodyDigest" : "KmM-Nj5zFesIMnR9mO5O9xhzp5FK_yZdNqRwKDGIPdU",
+    "bodyUTF8" : "plainpost-dpop-vector-body",
+    "deviceID" : "11111111-2222-3333-4444-555555555555",
+    "method" : "PUT",
+    "mutationCases" : [
+      {
+        "expected" : "reject",
+        "field" : "method",
+        "replacement" : "POST"
+      },
+      {
+        "expected" : "reject",
+        "field" : "target",
+        "replacement" : "/v1/account-records/22222222-2222-2222-2222-222222222222?mode=append"
+      },
+      {
+        "expected" : "reject",
+        "field" : "bodyDigest",
+        "replacement" : "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      },
+      {
+        "expected" : "reject",
+        "field" : "accessTokenDigest",
+        "replacement" : "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      },
+      {
+        "expected" : "reject",
+        "field" : "accountID",
+        "replacement" : "10112233-4455-6677-8899-aabbccddeeff"
+      },
+      {
+        "expected" : "reject",
+        "field" : "deviceID",
+        "replacement" : "21111111-2222-3333-4444-555555555555"
+      },
+      {
+        "expected" : "reject",
+        "field" : "nonce",
+        "replacement" : "AQECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8"
+      },
+      {
+        "expected" : "reject",
+        "field" : "replay",
+        "replacement" : "same-proof-twice"
+      }
+    ],
+    "nonce" : "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8",
+    "signature" : "HSYqhKG4hKfj8qCy38E6JOPhIX02z95QJoO4jmg60eF2JrZK_LJsgr4jRASxWUmFC9Ku2vWEJSxqa-io0cZyvg",
+    "signingRole" : "deviceSigning",
+    "target" : "/v1/account-records/22222222-2222-2222-2222-222222222222?mode=replace",
+    "timestamp" : "2026-08-03T10:08:00Z",
+    "transcriptHex" : "00000026506c61696e706f73742e4465766963654163636f756e745265717565737450726f6f662e763100000002000100000003505554000000452f76312f6163636f756e742d7265636f7264732f32323232323232322d323232322d323232322d323232322d3232323232323232323232323f6d6f64653d7265706c616365000000202a633e363e7315eb0832747d98ee4ef71873a7914aff265d36a4702831883dd500000020b0452d49791fa453f7c19d935bd38222acf363156bd09f97b017964a572bfe3c00000008000000006a70688000000020000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f0000001000112233445566778899aabbccddeeff0000001011111111222233334444555555555555"
+  },
+  "accountLifecycle" : {
+    "stepUpAuthorization" : {
+      "canonicalJSON" : "{\"accountID\":\"00112233-4455-6677-8899-aabbccddeeff\",\"action\":\"add_device\",\"actorDeviceID\":\"11111111-2222-3333-4444-555555555555\",\"authorizationID\":\"aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee\",\"currentCommitDigest\":\"ERERERERERERERERERERERERERERERERERERERERERE\",\"expiresAt\":\"2026-08-09T12:05:00Z\",\"issuedAt\":\"2026-08-09T12:00:00Z\",\"kind\":\"account.step-up-authorization.v1\",\"requestDigest\":\"l_9S3AX_Mkx9SsyrMTbAUumv3stF19tFeiKFcZJ_Dg8\",\"serverKeyID\":\"recovery-authorization-test-1\",\"serverSignature\":\"fwMSbUbSwBDF2KymMh8aihgkOYnxAJY_d6WVP-iqT35OW1SWIgX0nMegQ-cseYyeDg8t1ZwdVlj-OhKvfPw8tg\",\"targetDeviceID\":\"44444444-5555-4666-8777-888888888888\"}",
+      "message" : {
+        "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+        "action" : "add_device",
+        "actorDeviceID" : "11111111-2222-3333-4444-555555555555",
+        "authorizationID" : "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+        "currentCommitDigest" : "ERERERERERERERERERERERERERERERERERERERERERE",
+        "expiresAt" : "2026-08-09T12:05:00Z",
+        "issuedAt" : "2026-08-09T12:00:00Z",
+        "kind" : "account.step-up-authorization.v1",
+        "requestDigest" : "l_9S3AX_Mkx9SsyrMTbAUumv3stF19tFeiKFcZJ_Dg8",
+        "serverKeyID" : "recovery-authorization-test-1",
+        "serverSignature" : "fwMSbUbSwBDF2KymMh8aihgkOYnxAJY_d6WVP-iqT35OW1SWIgX0nMegQ-cseYyeDg8t1ZwdVlj-OhKvfPw8tg",
+        "targetDeviceID" : "44444444-5555-4666-8777-888888888888"
+      },
+      "signingRole" : "recoveryAuthorization",
+      "transcriptHex" : "00000027506c61696e706f73742e4163636f756e74537465705570417574686f72697a6174696f6e2e763100000002000100000010aaaaaaaabbbb4ccc8dddeeeeeeeeeeee0000001000112233445566778899aabbccddeeff000000101111111122223333444455555555555500000010444444445555466687778888888888880000000a6164645f6465766963650000002011111111111111111111111111111111111111111111111111111111111111110000002097ff52dc05ff324c7d4accab3136c052e9afdecb45d7db457a228571927f0e0f00000014323032362d30382d30395431323a30303a30305a00000014323032362d30382d30395431323a30353a30305a0000001d7265636f766572792d617574686f72697a6174696f6e2d746573742d31"
+    },
+    "stepUpRequest" : {
+      "canonicalJSON" : "{\"accountID\":\"00112233-4455-6677-8899-aabbccddeeff\",\"action\":\"add_device\",\"actorDeviceID\":\"11111111-2222-3333-4444-555555555555\",\"appleNonce\":\"MzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzM\",\"currentCommitDigest\":\"ERERERERERERERERERERERERERERERERERERERERERE\",\"identityToken\":\"synthetic.apple.token\",\"kind\":\"account.step-up-request.v1\",\"requestNonce\":\"IiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiI\",\"targetDeviceID\":\"44444444-5555-4666-8777-888888888888\"}",
+      "requestDigest" : "l_9S3AX_Mkx9SsyrMTbAUumv3stF19tFeiKFcZJ_Dg8",
+      "transcriptHex" : "00000021506c61696e706f73742e4163636f756e74537465705570526571756573742e76310000000200010000001000112233445566778899aabbccddeeff000000101111111122223333444455555555555500000010444444445555466687778888888888880000000a6164645f646576696365000000201111111111111111111111111111111111111111111111111111111111111111000000202222222222222222222222222222222222222222222222222222222222222222000000203333333333333333333333333333333333333333333333333333333333333333000000200235829f5aee401112cd54b93b9a53994ecaa8e8361b9762aa4689dbeb657b24"
+    }
+  },
+  "bootstrapChallenge" : {
+    "canonicalTranscriptHex" : "00000026506c61696e706f73742e4163636f756e74426f6f7473747261704368616c6c656e67652e7631000000020001000000103333333344444555866677777777777700000020202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f00000020647d53ce3f90f2f5d53bd747e698ddcf9baa564c1e4209beaee87bee97e766c10000001000112233445566778899aabbccddeeff00000010444444445555466687778888888888880000000770656e64696e67000000056d61636f730000004104e2534a3532d08fbba02dde659ee62bd0031fe2db785596ef509302446b030852e0f1575a4c633cc719dfee5fda862d764efc96c3f30ee0055c42c23f184ed8c6000000410451590b7a515140d2d784c85608668fdfef8c82fd1f5be52421554a0dc3d033ede0c17da8904a727d8ae1bf36bf8a79260d012f00d4d80888d1d0bb44fda16da400000014323032362d30382d30335431303a30303a30305a00000014323032362d30382d30335431303a30353a30305a00000011626f6f7473747261702d323032362d3031",
+    "challengeDigest" : "KZeJKAjx2BAPxUXyqlrw-iidoRiIKLA2E2BWsjCc5-8",
+    "expectedSignerRole" : "bootstrap",
+    "message" : {
+      "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+      "challengeID" : "33333333-4444-4555-8666-777777777777",
+      "challengeNonce" : "ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8",
+      "createdAt" : "2026-08-03T10:00:00Z",
+      "deviceID" : "44444444-5555-4666-8777-888888888888",
+      "exchangeRequestDigest" : "ZH1Tzj-Q8vXVO9dH5pjdz5uqVkweQgm-ruh77pfnZsE",
+      "expiresAt" : "2026-08-03T10:05:00Z",
+      "kind" : "account.bootstrap-challenge.v1",
+      "mode" : "pending",
+      "platform" : "macos",
+      "publicBundle" : {
+        "agreementKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ",
+        "signingKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+      },
+      "serverKeyID" : "bootstrap-2026-01",
+      "serverSignature" : "Lbf5AEmtrFt6o4SEfLcQuef4bDSNJ6ZIBrTOVlQtjilOhT9tD6ObeeBordbbMz3q_HAV1kH10AbYplULSNJd9w"
+    }
+  },
+  "bootstrapFinalize" : {
+    "genesis" : {
+      "canonicalTranscriptHex" : "00000025506c61696e706f73742e4163636f756e74426f6f74737472617046696e616c697a652e76310000000200010000002043a3c7dbba873c0bc131ef771020d221e2389cb288e1896662562833463bf28b00000020ba9cdf425607a25dbcf2aa8e4df709a800382df02655f2d92fd4dc650852e19b000000105555555566664777888899999999999900000020606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f0000001000112233445566778899aabbccddeeff00000010111111112222333344445555555555550000000767656e65736973000000056d61636f730000004104b01a172a76a4602c92d3242cb897dde3024c740debb215b4c6b0aae93c2291a9e85c10743237dad56fec0e2dfba703791c00f7701c7e16bdfd7c48538fc77fe200000041048e533b6fa0bf7b4625bb30667c01fb607ef9f8b8a80fef5b300628703187b2a373eb1dbde03318366d069f83a6f5900053c73633cb041b21c55e1a86c1f400b400000020d61900722f3e71ffdd66a5b344f5b2344024ec8f16bf008bd9f0f873b5bcd9e9",
+      "expectedSignerRole" : "deviceSigning",
+      "message" : {
+        "challenge" : {
+          "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+          "challengeID" : "55555555-6666-4777-8888-999999999999",
+          "challengeNonce" : "YGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn8",
+          "createdAt" : "2026-08-03T10:00:00Z",
+          "deviceID" : "11111111-2222-3333-4444-555555555555",
+          "exchangeRequestDigest" : "Q6PH27qHPAvBMe93ECDSIeI4nLKI4YlmYlYoM0Y78os",
+          "expiresAt" : "2026-08-03T10:05:00Z",
+          "kind" : "account.bootstrap-challenge.v1",
+          "mode" : "genesis",
+          "platform" : "macos",
+          "publicBundle" : {
+            "agreementKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ",
+            "signingKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+          },
+          "serverKeyID" : "bootstrap-2026-01",
+          "serverSignature" : "sWtJjLOt0A5W6TOWTx9wfoaT_lpC3DT-unZTbUI2tXIF0W7h-pLvgTnwq8Zxhw1P3PdnxamVpdfgoT2UmYSkhg"
+        },
+        "challengeDigest" : "upzfQlYHol288qqOTfcJqAA4LfAmVfLZL9TcZQhS4Zs",
+        "deviceSignature" : "ICv_FPSr-8wCe3PZ65J2TvBPrY3cXRbV3zj6sPDwHj8ZhA1BwSX7BbJwad_MiJlTmG_WBq25mt4zhWhLGq2-gg",
+        "exchangeRequestDigest" : "Q6PH27qHPAvBMe93ECDSIeI4nLKI4YlmYlYoM0Y78os",
+        "genesisCommit" : {
+          "keyPackages" : [
+            {
+              "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+              "encryptedKeyMaterial" : "bxXYPMezPTtY4-M-zcn28qp19_cKEL42cOERzUnmXUvSJ9pUhIw-XmvGRsaT0HwQrUy_06p_qZHIH3bvyIpYAL0bVU0AFMmxYCQZfzR6N0s",
+              "epoch" : "1",
+              "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+              "keyGeneration" : "1",
+              "kind" : "account.group-key-package.v1",
+              "nonce" : "AAECAwQFBgcICQoL",
+              "recipientDeviceID" : "11111111-2222-3333-4444-555555555555",
+              "senderDeviceID" : "11111111-2222-3333-4444-555555555555",
+              "senderEphemeralPublicKey" : "BGLZd52-6bBTQEJ0LTq1TK3B0jiYD86X27TdncHbb7OTrVrMvZHp2CRP8V13EWfO4KLtUfa752p42lQKag8JlX4",
+              "signature" : "f_H_rZ2dNXfpSWI1t921SJDq_ry0gr4aTbGPU4RRelQTYQtBZR8jS8ud7dYuV1mNvc_oXEKwQylrQHa8bfJivA",
+              "stateDigest" : "CDVcK5Mq2sPy-SEAihnjd_VBnWHYRxohB3-2Rrg-2-w",
+              "stateRevision" : "1"
+            }
+          ],
+          "kind" : "account.trust-state-commit.v1",
+          "state" : {
+            "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+            "epoch" : "1",
+            "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+            "keyGeneration" : "1",
+            "members" : [
+              {
+                "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+                "deviceID" : "11111111-2222-3333-4444-555555555555",
+                "epoch" : "1",
+                "platform" : "macos",
+                "publicBundle" : {
+                  "agreementKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ",
+                  "signingKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+                },
+                "revision" : "1",
+                "signature" : "w5n5J-9jSUwW5G0XRPJ0SveDWvUt5YmDaW4EIf0dTGZkf3zvHbHdl9_9tcLOL0MtcRzhCSpqjRklpKcDmoUGYQ",
+                "signerDeviceID" : "11111111-2222-3333-4444-555555555555"
+              }
+            ],
+            "previousCommitDigest" : null,
+            "revision" : "1",
+            "signature" : "S2ig09sV63i0MNNg4qB-3NMLiUK0jvK9AVvJR0Rfg2lCg2S12LKN_W6HDCQqxZAsVVSlXg1COB1gYBCgN_ZbkA",
+            "signerDeviceID" : "11111111-2222-3333-4444-555555555555",
+            "transition" : {
+              "kind" : "genesis",
+              "priorRecordDigests" : [
+
+              ],
+              "targetDeviceIDs" : [
+                "11111111-2222-3333-4444-555555555555"
+              ]
+            }
+          }
+        },
+        "kind" : "account.bootstrap-finalize.v1"
+      }
+    },
+    "negativeCases" : [
+      {
+        "expected" : "reject",
+        "mutation" : "exchange_request_digest_substitution"
+      },
+      {
+        "expected" : "reject",
+        "mutation" : "challenge_digest_substitution"
+      },
+      {
+        "expected" : "reject",
+        "mutation" : "genesis_null_commit"
+      },
+      {
+        "expected" : "reject",
+        "mutation" : "pending_nonnull_commit"
+      },
+      {
+        "expected" : "reject",
+        "mutation" : "cross_mode_substitution"
+      }
+    ],
+    "pending" : {
+      "canonicalTranscriptHex" : "00000025506c61696e706f73742e4163636f756e74426f6f74737472617046696e616c697a652e763100000002000100000020647d53ce3f90f2f5d53bd747e698ddcf9baa564c1e4209beaee87bee97e766c1000000202997892808f1d8100fc545f2aa5af0fa289da1188828b036136056b2309ce7ef000000103333333344444555866677777777777700000020202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f0000001000112233445566778899aabbccddeeff00000010444444445555466687778888888888880000000770656e64696e67000000056d61636f730000004104e2534a3532d08fbba02dde659ee62bd0031fe2db785596ef509302446b030852e0f1575a4c633cc719dfee5fda862d764efc96c3f30ee0055c42c23f184ed8c6000000410451590b7a515140d2d784c85608668fdfef8c82fd1f5be52421554a0dc3d033ede0c17da8904a727d8ae1bf36bf8a79260d012f00d4d80888d1d0bb44fda16da400000000",
+      "expectedSignerRole" : "exchangeSigning",
+      "message" : {
+        "challenge" : {
+          "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+          "challengeID" : "33333333-4444-4555-8666-777777777777",
+          "challengeNonce" : "ICEiIyQlJicoKSorLC0uLzAxMjM0NTY3ODk6Ozw9Pj8",
+          "createdAt" : "2026-08-03T10:00:00Z",
+          "deviceID" : "44444444-5555-4666-8777-888888888888",
+          "exchangeRequestDigest" : "ZH1Tzj-Q8vXVO9dH5pjdz5uqVkweQgm-ruh77pfnZsE",
+          "expiresAt" : "2026-08-03T10:05:00Z",
+          "kind" : "account.bootstrap-challenge.v1",
+          "mode" : "pending",
+          "platform" : "macos",
+          "publicBundle" : {
+            "agreementKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ",
+            "signingKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+          },
+          "serverKeyID" : "bootstrap-2026-01",
+          "serverSignature" : "Lbf5AEmtrFt6o4SEfLcQuef4bDSNJ6ZIBrTOVlQtjilOhT9tD6ObeeBordbbMz3q_HAV1kH10AbYplULSNJd9w"
+        },
+        "challengeDigest" : "KZeJKAjx2BAPxUXyqlrw-iidoRiIKLA2E2BWsjCc5-8",
+        "deviceSignature" : "sqqkGxW1kvfSqgYo_QsXhqs0MhG4IyV6tullmaPVsWV-G6H5IDQeoKN6_DHPuPmHWRa4xLGuh4C1eAoEa5RMlg",
+        "exchangeRequestDigest" : "ZH1Tzj-Q8vXVO9dH5pjdz5uqVkweQgm-ruh77pfnZsE",
+        "genesisCommit" : null,
+        "kind" : "account.bootstrap-finalize.v1"
+      }
+    }
+  },
+  "crossAuthorizationInputs" : {
+    "pending" : {
+      "canonicalTranscriptHex" : "00000027506c61696e706f73742e50656e64696e67446576696365417574686f72697a6174696f6e2e76310000000200010000001000112233445566778899aabbccddeeff00000010aaaaaaaabbbb4ccc8dddeeeeeeeeeeee00000003696f73000000410454e77a001c3862b97a76647f4336df3cf126acbe7a069c5e5709277324d2920bf599f1bb29f4317542121f8c05a2e7c37171ea77735090081ba7c82f60d0b3750000004104f0454dc6971abae7adfb378999888265ae03af92de3a0ef163668c63e59b9d5fb5b93ee3592e2d1f4e6594e51f9643e62a3b21ce75b5fa3f47e59cde0d034f3600000020bb8dc416be0c696b10a25fb01d842ed8a5b7910fe24f2a2fe10f3f9a606881b000000014323032362d30382d30335431303a30303a30305a00000014323032362d30382d30335431303a30353a30305a",
+      "digest" : "LqBjMYoU7be0Yr6nc0S6hIABpX3tJR_bBTym3SXkH70",
+      "message" : {
+        "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+        "createdAt" : "2026-08-03T10:00:00Z",
+        "deviceID" : "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+        "exchangeRequestDigest" : "u43EFr4MaWsQol-wHYQu2KW3kQ_iTyov4Q8_mmBogbA",
+        "expiresAt" : "2026-08-03T10:05:00Z",
+        "kind" : "account.pending-device.v1",
+        "platform" : "ios",
+        "publicBundle" : {
+          "agreementKey" : "BPBFTcaXGrrnrfs3iZmIgmWuA6-S3joO8WNmjGPlm51ftbk-41kuLR9OZZTlH5ZD5io7Ic51tfo_R-Wc3g0DTzY",
+          "signingKey" : "BFTnegAcOGK5enZkf0M23zzxJqy-egacXlcJJ3Mk0pIL9Znxuyn0MXVCEh-MBaLnw3Fx6ndzUJAIG6fIL2DQs3U"
+        }
+      }
+    },
+    "recovery" : {
+      "canonicalTranscriptHex" : "00000022506c61696e706f73742e5265636f76657279417574686f72697a6174696f6e2e7631000000020001000000108888888899994aaa8bbbcccccccccccc0000001000112233445566778899aabbccddeeff00000008000000000000000200000010aaaaaaaabbbb4ccc8dddeeeeeeeeeeee00000003696f73000000410454e77a001c3862b97a76647f4336df3cf126acbe7a069c5e5709277324d2920bf599f1bb29f4317542121f8c05a2e7c37171ea77735090081ba7c82f60d0b3750000004104f0454dc6971abae7adfb378999888265ae03af92de3a0ef163668c63e59b9d5fb5b93ee3592e2d1f4e6594e51f9643e62a3b21ce75b5fa3f47e59cde0d034f36000000208d65c8e85b7f2130bf2314fb7856d46ac9c0ada45cffb199a0d1c388ef44f4b400000020bb8dc416be0c696b10a25fb01d842ed8a5b7910fe24f2a2fe10f3f9a606881b000000014323032362d30382d30335431303a30363a30305a00000014323032362d30382d30335431303a31313a30305a0000001e7265636f766572792d617574686f72697a6174696f6e2d323032362d3031",
+      "digest" : "-Z0Oz7TaetlB64Vj6KDsLqhXloCcb6-1cbDgMIXSdCs",
+      "expectedSignerRole" : "recoveryAuthorization",
+      "message" : {
+        "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+        "authorizationID" : "88888888-9999-4aaa-8bbb-cccccccccccc",
+        "deviceID" : "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+        "epoch" : "2",
+        "exchangeRequestDigest" : "u43EFr4MaWsQol-wHYQu2KW3kQ_iTyov4Q8_mmBogbA",
+        "expiresAt" : "2026-08-03T10:11:00Z",
+        "issuedAt" : "2026-08-03T10:06:00Z",
+        "kind" : "account.recovery-authorization.v1",
+        "platform" : "ios",
+        "priorCommitDigest" : "jWXI6Ft_ITC_IxT7eFbUasnAraRc_7GZoNHDiO9E9LQ",
+        "publicBundle" : {
+          "agreementKey" : "BPBFTcaXGrrnrfs3iZmIgmWuA6-S3joO8WNmjGPlm51ftbk-41kuLR9OZZTlH5ZD5io7Ic51tfo_R-Wc3g0DTzY",
+          "signingKey" : "BFTnegAcOGK5enZkf0M23zzxJqy-egacXlcJJ3Mk0pIL9Znxuyn0MXVCEh-MBaLnw3Fx6ndzUJAIG6fIL2DQs3U"
+        },
+        "serverKeyID" : "recovery-authorization-2026-01",
+        "serverSignature" : "Q_mrisc0FGssivRSGm-6Iw35kTAWXESBczPMvXKEXiUimssewzvzzfqqCWT9jku0Y3EnQL6hogysP5_it7TrHg"
+      }
+    }
+  },
+  "description" : "Synthetic, non-production Swift/Go conformance vectors. Published private scalars and account-key plaintext exist only to make every public point, deterministic signature, ECDH secret, ciphertext, and negative case independently reproducible.",
+  "encryptedAccountRecord" : {
+    "aadHex" : "00000027506c61696e706f73742e456e637279707465644163636f756e745265636f72642e4141442e76310000000200010000001000112233445566778899aabbccddeeff0000001022222222333344445555666666666666000000080000000000000001000000080000000000000001000000080000000000000001000000080000000000000001",
+    "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+    "envelope" : "wMHCw8TFxsfIycrLEbFVkOEKJ8lABxreWrbhcQct4Cvc-p5Z7Zh5zJTns3o",
+    "envelopeDigest" : "dzjQArwjFyAFiME-NjASUEGUITjkITaIJ6UgLuBfVmM",
+    "epoch" : "1",
+    "keyGeneration" : "1",
+    "plaintextHex" : "7b226c6162656c223a224465736b227d",
+    "recordID" : "22222222-3333-4444-5555-666666666666",
+    "recordRevision" : "1",
+    "signature" : "FrD4Kc2TYF3lNP_rgRHjZ-2ue1TStZNhmZossv0Qw7p3Ps33cqFOzdieUuP-g6epl0ba_iGSlM-dfJEQwsuF0g",
+    "signatureTranscriptHex" : "0000002d506c61696e706f73742e456e637279707465644163636f756e745265636f72642e5369676e61747572652e76310000000200010000001000112233445566778899aabbccddeeff0000001022222222333344445555666666666666000000080000000000000001000000080000000000000001000000080000000000000001000000080000000000000001000000207738d002bc2317200588c13e3630125041942138e421368827a5202ee05f56630000001099999999aaaa4bbb8cccdddddddddddd",
+    "signerDeviceID" : "99999999-aaaa-4bbb-8ccc-dddddddddddd",
+    "signerRole" : "metadataSigning",
+    "trustRevision" : "1"
+  },
+  "exchangeCorrelation" : {
+    "deviceProof" : "o6SX96R93KZwL-ByH_M4ASD6IjOvmvm5iBCn65W0iaUmDOh0sO3yXkLG9bzk41cPmus56HBiYK-pYJ1zUCRGcw",
+    "expectedSignerRole" : "exchangeSigning",
+    "proofTranscriptHex" : "00000021506c61696e706f73742e4163636f756e7445786368616e676550726f6f662e76310000000200010000002077b6b9eb051d158413a34723a50e15844881aec2c2a10bb6690eb258532dceb600000020000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f0000004104e2534a3532d08fbba02dde659ee62bd0031fe2db785596ef509302446b030852e0f1575a4c633cc719dfee5fda862d764efc96c3f30ee0055c42c23f184ed8c6000000410451590b7a515140d2d784c85608668fdfef8c82fd1f5be52421554a0dc3d033ede0c17da8904a727d8ae1bf36bf8a79260d012f00d4d80888d1d0bb44fda16da4",
+    "request" : {
+      "appleIdentityToken" : "eyJhbGciOiJFUzI1NiIsImtpZCI6InN5bnRoZXRpYyJ9.eyJhdWQiOiJjb20ub2xoYXBpLlBsYWlucG9zdC5NYWMifQ.c3ludGhldGljLXNpZ25hdHVyZQ",
+      "deviceBundle" : {
+        "agreementKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ",
+        "signingKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+      },
+      "deviceProof" : "o6SX96R93KZwL-ByH_M4ASD6IjOvmvm5iBCn65W0iaUmDOh0sO3yXkLG9bzk41cPmus56HBiYK-pYJ1zUCRGcw",
+      "kind" : "account.exchange.v1",
+      "nonce" : "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8"
+    },
+    "requestDigest" : "ZH1Tzj-Q8vXVO9dH5pjdz5uqVkweQgm-ruh77pfnZsE",
+    "requestTranscriptHex" : "00000023506c61696e706f73742e4163636f756e7445786368616e6765526571756573742e76310000000200010000002077b6b9eb051d158413a34723a50e15844881aec2c2a10bb6690eb258532dceb600000020000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f0000004104e2534a3532d08fbba02dde659ee62bd0031fe2db785596ef509302446b030852e0f1575a4c633cc719dfee5fda862d764efc96c3f30ee0055c42c23f184ed8c6000000410451590b7a515140d2d784c85608668fdfef8c82fd1f5be52421554a0dc3d033ede0c17da8904a727d8ae1bf36bf8a79260d012f00d4d80888d1d0bb44fda16da400000040a3a497f7a47ddca6702fe0721ff3380120fa2233af9af9b98810a7eb95b489a5260ce874b0edf25e42c6f5bce4e3570f9aeb39e8706260afa9609d7350244673",
+    "tokenDigest" : "d7a56wUdFYQTo0cjpQ4VhEiBrsLCoQu2aQ6yWFMtzrY"
+  },
+  "genesisBootstrapChallenge" : {
+    "canonicalTranscriptHex" : "00000026506c61696e706f73742e4163636f756e74426f6f7473747261704368616c6c656e67652e7631000000020001000000105555555566664777888899999999999900000020606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f0000002043a3c7dbba873c0bc131ef771020d221e2389cb288e1896662562833463bf28b0000001000112233445566778899aabbccddeeff00000010111111112222333344445555555555550000000767656e65736973000000056d61636f730000004104b01a172a76a4602c92d3242cb897dde3024c740debb215b4c6b0aae93c2291a9e85c10743237dad56fec0e2dfba703791c00f7701c7e16bdfd7c48538fc77fe200000041048e533b6fa0bf7b4625bb30667c01fb607ef9f8b8a80fef5b300628703187b2a373eb1dbde03318366d069f83a6f5900053c73633cb041b21c55e1a86c1f400b400000014323032362d30382d30335431303a30303a30305a00000014323032362d30382d30335431303a30353a30305a00000011626f6f7473747261702d323032362d3031",
+    "challengeDigest" : "upzfQlYHol288qqOTfcJqAA4LfAmVfLZL9TcZQhS4Zs",
+    "expectedSignerRole" : "bootstrap",
+    "message" : {
+      "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+      "challengeID" : "55555555-6666-4777-8888-999999999999",
+      "challengeNonce" : "YGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn8",
+      "createdAt" : "2026-08-03T10:00:00Z",
+      "deviceID" : "11111111-2222-3333-4444-555555555555",
+      "exchangeRequestDigest" : "Q6PH27qHPAvBMe93ECDSIeI4nLKI4YlmYlYoM0Y78os",
+      "expiresAt" : "2026-08-03T10:05:00Z",
+      "kind" : "account.bootstrap-challenge.v1",
+      "mode" : "genesis",
+      "platform" : "macos",
+      "publicBundle" : {
+        "agreementKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ",
+        "signingKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+      },
+      "serverKeyID" : "bootstrap-2026-01",
+      "serverSignature" : "sWtJjLOt0A5W6TOWTx9wfoaT_lpC3DT-unZTbUI2tXIF0W7h-pLvgTnwq8Zxhw1P3PdnxamVpdfgoT2UmYSkhg"
+    }
+  },
+  "genesisExchangeCorrelation" : {
+    "deviceProof" : "TZlLhg8hIbpctYqeSTcKZszrPN3Y7yNWV7iX9-TnCrEQUj0p0UV5b8wU5FWwDw2rbgng6e8mm9jU2ZELSZNXdg",
+    "expectedSignerRole" : "deviceSigning",
+    "proofTranscriptHex" : "00000021506c61696e706f73742e4163636f756e7445786368616e676550726f6f662e76310000000200010000002077b6b9eb051d158413a34723a50e15844881aec2c2a10bb6690eb258532dceb600000020404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f0000004104b01a172a76a4602c92d3242cb897dde3024c740debb215b4c6b0aae93c2291a9e85c10743237dad56fec0e2dfba703791c00f7701c7e16bdfd7c48538fc77fe200000041048e533b6fa0bf7b4625bb30667c01fb607ef9f8b8a80fef5b300628703187b2a373eb1dbde03318366d069f83a6f5900053c73633cb041b21c55e1a86c1f400b4",
+    "request" : {
+      "appleIdentityToken" : "eyJhbGciOiJFUzI1NiIsImtpZCI6InN5bnRoZXRpYyJ9.eyJhdWQiOiJjb20ub2xoYXBpLlBsYWlucG9zdC5NYWMifQ.c3ludGhldGljLXNpZ25hdHVyZQ",
+      "deviceBundle" : {
+        "agreementKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ",
+        "signingKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+      },
+      "deviceProof" : "TZlLhg8hIbpctYqeSTcKZszrPN3Y7yNWV7iX9-TnCrEQUj0p0UV5b8wU5FWwDw2rbgng6e8mm9jU2ZELSZNXdg",
+      "kind" : "account.exchange.v1",
+      "nonce" : "QEFCQ0RFRkdISUpLTE1OT1BRUlNUVVZXWFlaW1xdXl8"
+    },
+    "requestDigest" : "Q6PH27qHPAvBMe93ECDSIeI4nLKI4YlmYlYoM0Y78os",
+    "requestTranscriptHex" : "00000023506c61696e706f73742e4163636f756e7445786368616e6765526571756573742e76310000000200010000002077b6b9eb051d158413a34723a50e15844881aec2c2a10bb6690eb258532dceb600000020404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f0000004104b01a172a76a4602c92d3242cb897dde3024c740debb215b4c6b0aae93c2291a9e85c10743237dad56fec0e2dfba703791c00f7701c7e16bdfd7c48538fc77fe200000041048e533b6fa0bf7b4625bb30667c01fb607ef9f8b8a80fef5b300628703187b2a373eb1dbde03318366d069f83a6f5900053c73633cb041b21c55e1a86c1f400b4000000404d994b860f2121ba5cb58a9e49370a66cceb3cddd8ef235657b897f7e4e70ab110523d29d145796fcc14e455b00f0dab6e09e0e9ef269bd8d4d9910b49935776",
+    "tokenDigest" : "d7a56wUdFYQTo0cjpQ4VhEiBrsLCoQu2aQ6yWFMtzrY"
+  },
+  "genesisTrustCommit" : {
+    "commit" : {
+      "keyPackages" : [
+        {
+          "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+          "encryptedKeyMaterial" : "bxXYPMezPTtY4-M-zcn28qp19_cKEL42cOERzUnmXUvSJ9pUhIw-XmvGRsaT0HwQrUy_06p_qZHIH3bvyIpYAL0bVU0AFMmxYCQZfzR6N0s",
+          "epoch" : "1",
+          "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+          "keyGeneration" : "1",
+          "kind" : "account.group-key-package.v1",
+          "nonce" : "AAECAwQFBgcICQoL",
+          "recipientDeviceID" : "11111111-2222-3333-4444-555555555555",
+          "senderDeviceID" : "11111111-2222-3333-4444-555555555555",
+          "senderEphemeralPublicKey" : "BGLZd52-6bBTQEJ0LTq1TK3B0jiYD86X27TdncHbb7OTrVrMvZHp2CRP8V13EWfO4KLtUfa752p42lQKag8JlX4",
+          "signature" : "f_H_rZ2dNXfpSWI1t921SJDq_ry0gr4aTbGPU4RRelQTYQtBZR8jS8ud7dYuV1mNvc_oXEKwQylrQHa8bfJivA",
+          "stateDigest" : "CDVcK5Mq2sPy-SEAihnjd_VBnWHYRxohB3-2Rrg-2-w",
+          "stateRevision" : "1"
+        }
+      ],
+      "kind" : "account.trust-state-commit.v1",
+      "state" : {
+        "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+        "epoch" : "1",
+        "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+        "keyGeneration" : "1",
+        "members" : [
+          {
+            "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+            "deviceID" : "11111111-2222-3333-4444-555555555555",
+            "epoch" : "1",
+            "platform" : "macos",
+            "publicBundle" : {
+              "agreementKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ",
+              "signingKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+            },
+            "revision" : "1",
+            "signature" : "w5n5J-9jSUwW5G0XRPJ0SveDWvUt5YmDaW4EIf0dTGZkf3zvHbHdl9_9tcLOL0MtcRzhCSpqjRklpKcDmoUGYQ",
+            "signerDeviceID" : "11111111-2222-3333-4444-555555555555"
+          }
+        ],
+        "previousCommitDigest" : null,
+        "revision" : "1",
+        "signature" : "S2ig09sV63i0MNNg4qB-3NMLiUK0jvK9AVvJR0Rfg2lCg2S12LKN_W6HDCQqxZAsVVSlXg1COB1gYBCgN_ZbkA",
+        "signerDeviceID" : "11111111-2222-3333-4444-555555555555",
+        "transition" : {
+          "kind" : "genesis",
+          "priorRecordDigests" : [
+
+          ],
+          "targetDeviceIDs" : [
+            "11111111-2222-3333-4444-555555555555"
+          ]
+        }
+      }
+    },
+    "commitDigest" : "1hkAci8-cf_dZqWzRPWyNEAk7I8WvwCL2fD4c7W82ek",
+    "commitTranscriptHex" : "0000001d506c61696e706f73742e54727573745374617465436f6d6d69742e76310000000200010000027100000017506c61696e706f73742e547275737453746174652e76310000000200010000001000112233445566778899aabbccddeeff00000008000000000000000100000008000000000000000100000000000000370000000767656e65736973000000020001000000101111111122223333444455555555555500000002000000000000000000000000000000000008000000000000000100000020fdeab9acf3710362bd2658cdc9a29e8f9c757fcf9811603a8c447cd1d9151108000000020001000001530000001e506c61696e706f73742e44657669636554727573745265636f72642e76310000000200010000001000112233445566778899aabbccddeeff0000000800000000000000010000000800000000000000010000001011111111222233334444555555555555000000056d61636f730000004104b01a172a76a4602c92d3242cb897dde3024c740debb215b4c6b0aae93c2291a9e85c10743237dad56fec0e2dfba703791c00f7701c7e16bdfd7c48538fc77fe200000041048e533b6fa0bf7b4625bb30667c01fb607ef9f8b8a80fef5b300628703187b2a373eb1dbde03318366d069f83a6f5900053c73633cb041b21c55e1a86c1f400b4000000101111111122223333444455555555555500000040c399f927ef63494c16e46d1744f2744af7835af52de58983696e0421fd1d4c66647f7cef1db1dd97dffdb5c2ce2f432d711ce1092a6a8d1925a4a7039a8506610000001011111111222233334444555555555555000000404b68a0d3db15eb78b430d360e2a07edcd30b8942b48ef2bd015bc947445f8369428364b5d8b28dfd6e870c242ac5902c5554a55e0d42381d606010a037f65b900000000200010000018c0000002d506c61696e706f73742e4163636f756e7447726f75704b65795061636b6167652e5369676e61747572652e76310000000200010000001000112233445566778899aabbccddeeff0000000800000000000000010000000800000000000000010000000800000000000000010000002008355c2b932adac3f2f921008a19e377f5419d61d8471a21077fb646b83edbec00000020fdeab9acf3710362bd2658cdc9a29e8f9c757fcf9811603a8c447cd1d915110800000010111111112222333344445555555555550000001011111111222233334444555555555555000000410462d9779dbee9b0534042742d3ab54cadc1d238980fce97dbb4dd9dc1db6fb393ad5accbd91e9d8244ff15d771167cee0a2ed51f6bbe76a78da540a6a0f09957e00000020a178b3020078bcc086299a6b445ae0b74ce70a884ee3fed57c00a5e705e89bcc000000407ff1ffad9d9d3577e9496235b7ddb54890eafebcb482be1a4db18f5384517a5413610b41651f234bcb9dedd62e57598dbdcfe85c42b043296b4076bc6df262bc",
+    "package" : {
+      "aadHex" : "00000027506c61696e706f73742e4163636f756e7447726f75704b65795061636b6167652e4141442e76310000000200010000001000112233445566778899aabbccddeeff0000000800000000000000010000000800000000000000010000000800000000000000010000002008355c2b932adac3f2f921008a19e377f5419d61d8471a21077fb646b83edbec00000020fdeab9acf3710362bd2658cdc9a29e8f9c757fcf9811603a8c447cd1d915110800000010111111112222333344445555555555550000001011111111222233334444555555555555000000410462d9779dbee9b0534042742d3ab54cadc1d238980fce97dbb4dd9dc1db6fb393ad5accbd91e9d8244ff15d771167cee0a2ed51f6bbe76a78da540a6a0f09957e",
+      "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+      "derivedPackageKeyHex" : "1e3d1bc75c57a2ee65e74ea3ad0886473b8284d529eda4c8e7f786d52440b108",
+      "encryptedKeyMaterial" : "bxXYPMezPTtY4-M-zcn28qp19_cKEL42cOERzUnmXUvSJ9pUhIw-XmvGRsaT0HwQrUy_06p_qZHIH3bvyIpYAL0bVU0AFMmxYCQZfzR6N0s",
+      "ephemeralRole" : "packageEphemeral",
+      "epoch" : "1",
+      "kdfInfoHex" : "00000027506c61696e706f73742e4163636f756e7447726f75704b65795061636b6167652e4b44462e76310000001000112233445566778899aabbccddeeff0000000800000000000000010000000800000000000000010000000800000000000000010000002008355c2b932adac3f2f921008a19e377f5419d61d8471a21077fb646b83edbec00000010111111112222333344445555555555550000001011111111222233334444555555555555",
+      "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+      "keyGeneration" : "1",
+      "kind" : "account.group-key-package.v1",
+      "nonce" : "AAECAwQFBgcICQoL",
+      "recipientAgreementRole" : "deviceAgreement",
+      "recipientDeviceID" : "11111111-2222-3333-4444-555555555555",
+      "senderDeviceID" : "11111111-2222-3333-4444-555555555555",
+      "senderEphemeralPublicKey" : "BGLZd52-6bBTQEJ0LTq1TK3B0jiYD86X27TdncHbb7OTrVrMvZHp2CRP8V13EWfO4KLtUfa752p42lQKag8JlX4",
+      "senderSigningRole" : "deviceSigning",
+      "sharedSecretHex" : "6f9a14fbbcf2815a42e8b595d0d5a0eb956463496f67dc0d60a7520a83fb632e",
+      "signature" : "f_H_rZ2dNXfpSWI1t921SJDq_ry0gr4aTbGPU4RRelQTYQtBZR8jS8ud7dYuV1mNvc_oXEKwQylrQHa8bfJivA",
+      "signatureTranscriptHex" : "0000002d506c61696e706f73742e4163636f756e7447726f75704b65795061636b6167652e5369676e61747572652e76310000000200010000001000112233445566778899aabbccddeeff0000000800000000000000010000000800000000000000010000000800000000000000010000002008355c2b932adac3f2f921008a19e377f5419d61d8471a21077fb646b83edbec00000020fdeab9acf3710362bd2658cdc9a29e8f9c757fcf9811603a8c447cd1d915110800000010111111112222333344445555555555550000001011111111222233334444555555555555000000410462d9779dbee9b0534042742d3ab54cadc1d238980fce97dbb4dd9dc1db6fb393ad5accbd91e9d8244ff15d771167cee0a2ed51f6bbe76a78da540a6a0f09957e00000020a178b3020078bcc086299a6b445ae0b74ce70a884ee3fed57c00a5e705e89bcc",
+      "stateDigest" : "CDVcK5Mq2sPy-SEAihnjd_VBnWHYRxohB3-2Rrg-2-w",
+      "stateRevision" : "1"
+    },
+    "recordTranscriptHex" : "0000001e506c61696e706f73742e44657669636554727573745265636f72642e76310000000200010000001000112233445566778899aabbccddeeff0000000800000000000000010000000800000000000000010000001011111111222233334444555555555555000000056d61636f730000004104b01a172a76a4602c92d3242cb897dde3024c740debb215b4c6b0aae93c2291a9e85c10743237dad56fec0e2dfba703791c00f7701c7e16bdfd7c48538fc77fe200000041048e533b6fa0bf7b4625bb30667c01fb607ef9f8b8a80fef5b300628703187b2a373eb1dbde03318366d069f83a6f5900053c73633cb041b21c55e1a86c1f400b40000001011111111222233334444555555555555",
+    "stateDigest" : "CDVcK5Mq2sPy-SEAihnjd_VBnWHYRxohB3-2Rrg-2-w",
+    "stateTranscriptHex" : "00000017506c61696e706f73742e547275737453746174652e76310000000200010000001000112233445566778899aabbccddeeff00000008000000000000000100000008000000000000000100000000000000370000000767656e65736973000000020001000000101111111122223333444455555555555500000002000000000000000000000000000000000008000000000000000100000020fdeab9acf3710362bd2658cdc9a29e8f9c757fcf9811603a8c447cd1d9151108000000020001000001530000001e506c61696e706f73742e44657669636554727573745265636f72642e76310000000200010000001000112233445566778899aabbccddeeff0000000800000000000000010000000800000000000000010000001011111111222233334444555555555555000000056d61636f730000004104b01a172a76a4602c92d3242cb897dde3024c740debb215b4c6b0aae93c2291a9e85c10743237dad56fec0e2dfba703791c00f7701c7e16bdfd7c48538fc77fe200000041048e533b6fa0bf7b4625bb30667c01fb607ef9f8b8a80fef5b300628703187b2a373eb1dbde03318366d069f83a6f5900053c73633cb041b21c55e1a86c1f400b4000000101111111122223333444455555555555500000040c399f927ef63494c16e46d1744f2744af7835af52de58983696e0421fd1d4c66647f7cef1db1dd97dffdb5c2ce2f432d711ce1092a6a8d1925a4a7039a8506610000001011111111222233334444555555555555"
+  },
+  "pendingDeviceAuthorization" : {
+    "admittedRecord" : {
+      "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+      "deviceID" : "44444444-5555-4666-8777-888888888888",
+      "epoch" : "1",
+      "platform" : "macos",
+      "publicBundle" : {
+        "agreementKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ",
+        "signingKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+      },
+      "revision" : "2",
+      "signature" : "ilGq1nj-I0oZM-BngyUj45ChUhBD9kPsBPrYvh9HXEFyB-oK2lIfrsw2ARkFhcvNoEclqzyzd1LhOTpwOIhBGQ",
+      "signerDeviceID" : "11111111-2222-3333-4444-555555555555"
+    },
+    "admittedRecordTranscriptHex" : "0000001e506c61696e706f73742e44657669636554727573745265636f72642e76310000000200010000001000112233445566778899aabbccddeeff0000000800000000000000010000000800000000000000020000001044444444555546668777888888888888000000056d61636f730000004104e2534a3532d08fbba02dde659ee62bd0031fe2db785596ef509302446b030852e0f1575a4c633cc719dfee5fda862d764efc96c3f30ee0055c42c23f184ed8c6000000410451590b7a515140d2d784c85608668fdfef8c82fd1f5be52421554a0dc3d033ede0c17da8904a727d8ae1bf36bf8a79260d012f00d4d80888d1d0bb44fda16da40000001011111111222233334444555555555555",
+    "canonicalTranscriptHex" : "00000027506c61696e706f73742e50656e64696e67446576696365417574686f72697a6174696f6e2e76310000000200010000001000112233445566778899aabbccddeeff0000001044444444555546668777888888888888000000056d61636f730000004104e2534a3532d08fbba02dde659ee62bd0031fe2db785596ef509302446b030852e0f1575a4c633cc719dfee5fda862d764efc96c3f30ee0055c42c23f184ed8c6000000410451590b7a515140d2d784c85608668fdfef8c82fd1f5be52421554a0dc3d033ede0c17da8904a727d8ae1bf36bf8a79260d012f00d4d80888d1d0bb44fda16da400000020647d53ce3f90f2f5d53bd747e698ddcf9baa564c1e4209beaee87bee97e766c100000014323032362d30382d30335431303a30303a30305a00000014323032362d30382d30335431303a30353a30305a",
+    "digest" : "u2hS9nQ1cqxtpM4it_fiyb_qMNT6KY10-G5fD6ue0dc",
+    "expectedApproverRole" : "deviceSigning",
+    "message" : {
+      "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+      "createdAt" : "2026-08-03T10:00:00Z",
+      "deviceID" : "44444444-5555-4666-8777-888888888888",
+      "exchangeRequestDigest" : "ZH1Tzj-Q8vXVO9dH5pjdz5uqVkweQgm-ruh77pfnZsE",
+      "expiresAt" : "2026-08-03T10:05:00Z",
+      "kind" : "account.pending-device.v1",
+      "platform" : "macos",
+      "publicBundle" : {
+        "agreementKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ",
+        "signingKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+      }
+    }
+  },
+  "platformAuthorizationNegativeCases" : [
+    {
+      "authorizationDigest" : "u2hS9nQ1cqxtpM4it_fiyb_qMNT6KY10-G5fD6ue0dc",
+      "candidatePlatform" : "ios",
+      "expected" : "reject",
+      "mutation" : "wrong_platform_class",
+      "operation" : "admission.authorize"
+    },
+    {
+      "authorizationDigest" : "u2hS9nQ1cqxtpM4it_fiyb_qMNT6KY10-G5fD6ue0dc",
+      "candidatePlatform" : "sync_node",
+      "expected" : "reject",
+      "mutation" : "apple_sync_node",
+      "operation" : "admission.authorize"
+    },
+    {
+      "authorizationDigest" : "LqBjMYoU7be0Yr6nc0S6hIABpX3tJR_bBTym3SXkH70",
+      "candidatePlatform" : "macos",
+      "expected" : "reject",
+      "mutation" : "cross_authorization",
+      "operation" : "admission.authorize"
+    },
+    {
+      "authorizationDigest" : "Ao2nxkqSyAGwWKoKw9p2j0FN56W7UwygP_eVfF9Syd0",
+      "candidatePlatform" : "ios",
+      "expected" : "reject",
+      "mutation" : "wrong_platform_class",
+      "operation" : "recovery.authorize"
+    },
+    {
+      "authorizationDigest" : "Ao2nxkqSyAGwWKoKw9p2j0FN56W7UwygP_eVfF9Syd0",
+      "candidatePlatform" : "sync_node",
+      "expected" : "reject",
+      "mutation" : "apple_sync_node",
+      "operation" : "recovery.authorize"
+    },
+    {
+      "authorizationDigest" : "skd-f6GxWWBh8NDWJ6XpyoX9MkhK9x_ww7a2-anX0AQ",
+      "candidatePlatform" : "macos",
+      "expected" : "reject",
+      "mutation" : "cross_authorization",
+      "operation" : "recovery.authorize"
+    }
+  ],
+  "predecessorCommitForkVector" : {
+    "checkpoint" : {
+      "commitDigest" : "zDfjs58lOvyWuqRb6ZVvh70y8nV6v-9Yke6sZgpoJy4",
+      "epoch" : "1",
+      "revision" : "1"
+    },
+    "expected" : "reject_successor_previousCommitDigest_mismatch",
+    "forkA" : {
+      "commit" : {
+        "keyPackages" : [
+          {
+            "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+            "encryptedKeyMaterial" : "bxXYPMezPTtY4-M-zcn28qp19_cKEL42cOERzUnmXUvSJ9pUhIw-XmvGRsaT0HwQrUy_06p_qZHIH3bvyIpYAL0bVU0AFMmxYCQZfzR6N0s",
+            "epoch" : "1",
+            "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+            "keyGeneration" : "1",
+            "kind" : "account.group-key-package.v1",
+            "nonce" : "AAECAwQFBgcICQoL",
+            "recipientDeviceID" : "11111111-2222-3333-4444-555555555555",
+            "senderDeviceID" : "11111111-2222-3333-4444-555555555555",
+            "senderEphemeralPublicKey" : "BGLZd52-6bBTQEJ0LTq1TK3B0jiYD86X27TdncHbb7OTrVrMvZHp2CRP8V13EWfO4KLtUfa752p42lQKag8JlX4",
+            "signature" : "f_H_rZ2dNXfpSWI1t921SJDq_ry0gr4aTbGPU4RRelQTYQtBZR8jS8ud7dYuV1mNvc_oXEKwQylrQHa8bfJivA",
+            "stateDigest" : "CDVcK5Mq2sPy-SEAihnjd_VBnWHYRxohB3-2Rrg-2-w",
+            "stateRevision" : "1"
+          }
+        ],
+        "kind" : "account.trust-state-commit.v1",
+        "state" : {
+          "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+          "epoch" : "1",
+          "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+          "keyGeneration" : "1",
+          "members" : [
+            {
+              "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+              "deviceID" : "11111111-2222-3333-4444-555555555555",
+              "epoch" : "1",
+              "platform" : "macos",
+              "publicBundle" : {
+                "agreementKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ",
+                "signingKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+              },
+              "revision" : "1",
+              "signature" : "w5n5J-9jSUwW5G0XRPJ0SveDWvUt5YmDaW4EIf0dTGZkf3zvHbHdl9_9tcLOL0MtcRzhCSpqjRklpKcDmoUGYQ",
+              "signerDeviceID" : "11111111-2222-3333-4444-555555555555"
+            }
+          ],
+          "previousCommitDigest" : null,
+          "revision" : "1",
+          "signature" : "S2ig09sV63i0MNNg4qB-3NMLiUK0jvK9AVvJR0Rfg2lCg2S12LKN_W6HDCQqxZAsVVSlXg1COB1gYBCgN_ZbkA",
+          "signerDeviceID" : "11111111-2222-3333-4444-555555555555",
+          "transition" : {
+            "kind" : "genesis",
+            "priorRecordDigests" : [
+
+            ],
+            "targetDeviceIDs" : [
+              "11111111-2222-3333-4444-555555555555"
+            ]
+          }
+        }
+      },
+      "commitDigest" : "1hkAci8-cf_dZqWzRPWyNEAk7I8WvwCL2fD4c7W82ek"
+    },
+    "forkB" : {
+      "commit" : {
+        "keyPackages" : [
+          {
+            "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+            "encryptedKeyMaterial" : "sv0rcdeSR6-guWd8JeyROQzB3wgpdncrevU_uUlkNooctjK8L38YPprmBgGKg0gaFefzFnpd_skH_w3Z8rbola9rnoRML9EtYBdZK77EGZk",
+            "epoch" : "1",
+            "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+            "keyGeneration" : "1",
+            "kind" : "account.group-key-package.v1",
+            "nonce" : "AQIDBAUGBwgJCgsM",
+            "recipientDeviceID" : "11111111-2222-3333-4444-555555555555",
+            "senderDeviceID" : "11111111-2222-3333-4444-555555555555",
+            "senderEphemeralPublicKey" : "BGLZd52-6bBTQEJ0LTq1TK3B0jiYD86X27TdncHbb7OTrVrMvZHp2CRP8V13EWfO4KLtUfa752p42lQKag8JlX4",
+            "signature" : "dn40AE3CBiSzVyuP3D5CCGK3PmehqXGyARpAjj5bofdXN2CeZTdJBuZAw6NHUOjGvlF5BDR7hqstGcJrY2nLiA",
+            "stateDigest" : "CDVcK5Mq2sPy-SEAihnjd_VBnWHYRxohB3-2Rrg-2-w",
+            "stateRevision" : "1"
+          }
+        ],
+        "kind" : "account.trust-state-commit.v1",
+        "state" : {
+          "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+          "epoch" : "1",
+          "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+          "keyGeneration" : "1",
+          "members" : [
+            {
+              "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+              "deviceID" : "11111111-2222-3333-4444-555555555555",
+              "epoch" : "1",
+              "platform" : "macos",
+              "publicBundle" : {
+                "agreementKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ",
+                "signingKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+              },
+              "revision" : "1",
+              "signature" : "w5n5J-9jSUwW5G0XRPJ0SveDWvUt5YmDaW4EIf0dTGZkf3zvHbHdl9_9tcLOL0MtcRzhCSpqjRklpKcDmoUGYQ",
+              "signerDeviceID" : "11111111-2222-3333-4444-555555555555"
+            }
+          ],
+          "previousCommitDigest" : null,
+          "revision" : "1",
+          "signature" : "S2ig09sV63i0MNNg4qB-3NMLiUK0jvK9AVvJR0Rfg2lCg2S12LKN_W6HDCQqxZAsVVSlXg1COB1gYBCgN_ZbkA",
+          "signerDeviceID" : "11111111-2222-3333-4444-555555555555",
+          "transition" : {
+            "kind" : "genesis",
+            "priorRecordDigests" : [
+
+            ],
+            "targetDeviceIDs" : [
+              "11111111-2222-3333-4444-555555555555"
+            ]
+          }
+        }
+      },
+      "commitDigest" : "zDfjs58lOvyWuqRb6ZVvh70y8nV6v-9Yke6sZgpoJy4"
+    },
+    "sharedStateDigest" : "CDVcK5Mq2sPy-SEAihnjd_VBnWHYRxohB3-2Rrg-2-w",
+    "successorC" : {
+      "commit" : {
+        "keyPackages" : [
+          {
+            "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+            "encryptedKeyMaterial" : "vsjACg5kNAQwYP2Iu0NbJyR8s-MBs7a78SeJogeOI1ks6l3Mcs088cv1vijVdTRpZLdkT0_1AsSgMULg4qKsJS0q8u6KF-BUtm9K7UGAYTM",
+            "epoch" : "2",
+            "keyCommitment" : "mvru8AXihpV-6aGKJIGnXH_HunS66N5Q_6YSexKmLK4",
+            "keyGeneration" : "1",
+            "kind" : "account.group-key-package.v1",
+            "nonce" : "EBESExQVFhcYGRob",
+            "recipientDeviceID" : "44444444-5555-4666-8777-888888888888",
+            "senderDeviceID" : "44444444-5555-4666-8777-888888888888",
+            "senderEphemeralPublicKey" : "BGLZd52-6bBTQEJ0LTq1TK3B0jiYD86X27TdncHbb7OTrVrMvZHp2CRP8V13EWfO4KLtUfa752p42lQKag8JlX4",
+            "signature" : "apbTD3oVRUpm2iYkpnU9dno966P9JOS0NegoGRSa35QRRc44HYnBJAQuoS1E8D5YGG9GCGkFzi4OR8iDUh00ug",
+            "stateDigest" : "GpGZrXsMPO4MjmxC8rsTBJdYt05Q9MbWEn4aZ7HuZOQ",
+            "stateRevision" : "1"
+          }
+        ],
+        "kind" : "account.trust-state-commit.v1",
+        "state" : {
+          "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+          "epoch" : "2",
+          "keyCommitment" : "mvru8AXihpV-6aGKJIGnXH_HunS66N5Q_6YSexKmLK4",
+          "keyGeneration" : "1",
+          "members" : [
+            {
+              "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+              "deviceID" : "44444444-5555-4666-8777-888888888888",
+              "epoch" : "2",
+              "platform" : "macos",
+              "publicBundle" : {
+                "agreementKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ",
+                "signingKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+              },
+              "revision" : "1",
+              "signature" : "5MlX1Bx86l7icl_vmF0HFXSWWu8fZGezsev9DmeIF34tTkyGodbwkwjLjzXbB1vxo-oMVyMxn7ATgAcs_nijAw",
+              "signerDeviceID" : "44444444-5555-4666-8777-888888888888"
+            }
+          ],
+          "previousCommitDigest" : "1hkAci8-cf_dZqWzRPWyNEAk7I8WvwCL2fD4c7W82ek",
+          "revision" : "1",
+          "signature" : "JCrSLUXh72LASiLQhncxWX6aAKWIJc4RJYBeeqY4k6Edc1CM71B8n9gmML5podx5E9ToBDVLVU_pdk5NeWxN5A",
+          "signerDeviceID" : "44444444-5555-4666-8777-888888888888",
+          "transition" : {
+            "kind" : "recovery",
+            "priorRecordDigests" : [
+              {
+                "deviceID" : "11111111-2222-3333-4444-555555555555",
+                "recordDigest" : "2ktrZvADqDya0WA_QcOjD23Gz1Ke2TsA5yOuazEJqWo"
+              }
+            ],
+            "recoveryAuthorizationDigest" : "PBnXkhHGnn6-f2pZhUhz_NM4RxYRNv6Xzmx6FUVNsT8",
+            "targetDeviceIDs" : [
+              "11111111-2222-3333-4444-555555555555"
+            ]
+          }
+        }
+      },
+      "commitDigest" : "fp132tAVcaA7GOTVkyb_k65g2qpjoufBv8KMuw8aoMc",
+      "commitTranscriptHex" : "0000001d506c61696e706f73742e54727573745374617465436f6d6d69742e7631000000020001000002ea00000017506c61696e706f73742e547275737453746174652e76310000000200010000001000112233445566778899aabbccddeeff00000008000000000000000200000008000000000000000100000020d61900722f3e71ffdd66a5b344f5b2344024ec8f16bf008bd9f0f873b5bcd9e900000090000000087265636f766572790000000200010000001011111111222233334444555555555555000000020001000000101111111122223333444455555555555500000020da4b6b66f003a83c9ad1603f41c3a30f6dc6cf529ed93b00e723ae6b3109a96a000000000000000000000020028da7c64a92c801b058aa0ac3da768f414de7a5bb530ca03ff7957c5f52c9dd000000080000000000000001000000209afaeef005e286957ee9a18a2481a75c7fc7ba74bae8de50ffa6127b12a62cae000000020001000001530000001e506c61696e706f73742e44657669636554727573745265636f72642e76310000000200010000001000112233445566778899aabbccddeeff0000000800000000000000020000000800000000000000010000001044444444555546668777888888888888000000056d61636f730000004104e2534a3532d08fbba02dde659ee62bd0031fe2db785596ef509302446b030852e0f1575a4c633cc719dfee5fda862d764efc96c3f30ee0055c42c23f184ed8c6000000410451590b7a515140d2d784c85608668fdfef8c82fd1f5be52421554a0dc3d033ede0c17da8904a727d8ae1bf36bf8a79260d012f00d4d80888d1d0bb44fda16da4000000104444444455554666877788888888888800000040e4c957d41c7cea5ee2725fef985d071574965aef1f6467b3b1ebfd0e6788177e2d4e4c86a1d6f09308cb8f35db075bf1a3ea0c5723319fb01380072cfe78a303000000104444444455554666877788888888888800000040851c5c614f0dd3ac445cdb8a5c1f7c8f5799c0c8cb6fd635d30b0a875c211f6d0a45964e2a54729d04840bc238975c35cc608f369fdac5d8a387887a98f5b4d80000000200010000018c0000002d506c61696e706f73742e4163636f756e7447726f75704b65795061636b6167652e5369676e61747572652e76310000000200010000001000112233445566778899aabbccddeeff00000008000000000000000200000008000000000000000100000008000000000000000100000020fb5eb907de62d88e3d623fd20963df2baa4dbf8e85cb9501d38515da2b710695000000209afaeef005e286957ee9a18a2481a75c7fc7ba74bae8de50ffa6127b12a62cae00000010444444445555466687778888888888880000001044444444555546668777888888888888000000410462d9779dbee9b0534042742d3ab54cadc1d238980fce97dbb4dd9dc1db6fb393ad5accbd91e9d8244ff15d771167cee0a2ed51f6bbe76a78da540a6a0f09957e000000205752f45791b5ff47cc53587d98b72d3f0e663f8361b09a8205c83c3fc58462a50000004089614e13e6330d3a91e3e2d30f8984c367a954b57bdbec6e31523564805eb0490a697fe10ecd098a263108dc996f3ba478c550ae9120e62303d6c325b2c6cf27",
+      "package" : {
+        "aadHex" : "00000027506c61696e706f73742e4163636f756e7447726f75704b65795061636b6167652e4141442e76310000000200010000001000112233445566778899aabbccddeeff00000008000000000000000200000008000000000000000100000008000000000000000100000020fb5eb907de62d88e3d623fd20963df2baa4dbf8e85cb9501d38515da2b710695000000209afaeef005e286957ee9a18a2481a75c7fc7ba74bae8de50ffa6127b12a62cae00000010444444445555466687778888888888880000001044444444555546668777888888888888000000410462d9779dbee9b0534042742d3ab54cadc1d238980fce97dbb4dd9dc1db6fb393ad5accbd91e9d8244ff15d771167cee0a2ed51f6bbe76a78da540a6a0f09957e",
+        "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+        "derivedPackageKeyHex" : "d9b85f250f8f0cf69bd183a62910efb1bf273f5d6da97d01fc28d58c24fe90fe",
+        "encryptedKeyMaterial" : "nc1YKh6_XncQBwROxmrFtPGGZ7ZHvJkzBXB9DkqG9_cf4ngvQhiWcDJ_lHwXN-FvuM6bZKiu4nk4Uk3YMUs516eFl3CNalMCviZDLXapB4M",
+        "ephemeralRole" : "packageEphemeral",
+        "epoch" : "2",
+        "kdfInfoHex" : "00000027506c61696e706f73742e4163636f756e7447726f75704b65795061636b6167652e4b44462e76310000001000112233445566778899aabbccddeeff00000008000000000000000200000008000000000000000100000008000000000000000100000020fb5eb907de62d88e3d623fd20963df2baa4dbf8e85cb9501d38515da2b71069500000010444444445555466687778888888888880000001044444444555546668777888888888888",
+        "keyCommitment" : "mvru8AXihpV-6aGKJIGnXH_HunS66N5Q_6YSexKmLK4",
+        "keyGeneration" : "1",
+        "kind" : "account.group-key-package.v1",
+        "nonce" : "EBESExQVFhcYGRob",
+        "recipientAgreementRole" : "exchangeAgreement",
+        "recipientDeviceID" : "44444444-5555-4666-8777-888888888888",
+        "senderDeviceID" : "44444444-5555-4666-8777-888888888888",
+        "senderEphemeralPublicKey" : "BGLZd52-6bBTQEJ0LTq1TK3B0jiYD86X27TdncHbb7OTrVrMvZHp2CRP8V13EWfO4KLtUfa752p42lQKag8JlX4",
+        "senderSigningRole" : "exchangeSigning",
+        "sharedSecretHex" : "bea01e7daad46131bd5b18584d0ee0c457b44d35ae412c0faa74b4da1aac91e6",
+        "signature" : "iWFOE-YzDTqR4-LTD4mEw2epVLV72-xuMVI1ZIBesEkKaX_hDs0JiiYxCNyZbzukeMVQrpEg5iMD1sMlssbPJw",
+        "signatureTranscriptHex" : "0000002d506c61696e706f73742e4163636f756e7447726f75704b65795061636b6167652e5369676e61747572652e76310000000200010000001000112233445566778899aabbccddeeff00000008000000000000000200000008000000000000000100000008000000000000000100000020fb5eb907de62d88e3d623fd20963df2baa4dbf8e85cb9501d38515da2b710695000000209afaeef005e286957ee9a18a2481a75c7fc7ba74bae8de50ffa6127b12a62cae00000010444444445555466687778888888888880000001044444444555546668777888888888888000000410462d9779dbee9b0534042742d3ab54cadc1d238980fce97dbb4dd9dc1db6fb393ad5accbd91e9d8244ff15d771167cee0a2ed51f6bbe76a78da540a6a0f09957e000000205752f45791b5ff47cc53587d98b72d3f0e663f8361b09a8205c83c3fc58462a5",
+        "stateDigest" : "-165B95i2I49Yj_SCWPfK6pNv46Fy5UB04UV2itxBpU",
+        "stateRevision" : "1"
+      },
+      "stateTranscriptHex" : "00000017506c61696e706f73742e547275737453746174652e76310000000200010000001000112233445566778899aabbccddeeff00000008000000000000000200000008000000000000000100000020d61900722f3e71ffdd66a5b344f5b2344024ec8f16bf008bd9f0f873b5bcd9e900000090000000087265636f766572790000000200010000001011111111222233334444555555555555000000020001000000101111111122223333444455555555555500000020da4b6b66f003a83c9ad1603f41c3a30f6dc6cf529ed93b00e723ae6b3109a96a000000000000000000000020028da7c64a92c801b058aa0ac3da768f414de7a5bb530ca03ff7957c5f52c9dd000000080000000000000001000000209afaeef005e286957ee9a18a2481a75c7fc7ba74bae8de50ffa6127b12a62cae000000020001000001530000001e506c61696e706f73742e44657669636554727573745265636f72642e76310000000200010000001000112233445566778899aabbccddeeff0000000800000000000000020000000800000000000000010000001044444444555546668777888888888888000000056d61636f730000004104e2534a3532d08fbba02dde659ee62bd0031fe2db785596ef509302446b030852e0f1575a4c633cc719dfee5fda862d764efc96c3f30ee0055c42c23f184ed8c6000000410451590b7a515140d2d784c85608668fdfef8c82fd1f5be52421554a0dc3d033ede0c17da8904a727d8ae1bf36bf8a79260d012f00d4d80888d1d0bb44fda16da4000000104444444455554666877788888888888800000040e4c957d41c7cea5ee2725fef985d071574965aef1f6467b3b1ebfd0e6788177e2d4e4c86a1d6f09308cb8f35db075bf1a3ea0c5723319fb01380072cfe78a3030000001044444444555546668777888888888888"
+    }
+  },
+  "recoveryAuthorization" : {
+    "canonicalTranscriptHex" : "00000022506c61696e706f73742e5265636f76657279417574686f72697a6174696f6e2e76310000000200010000001077777777888849998aaabbbbbbbbbbbb0000001000112233445566778899aabbccddeeff0000000800000000000000020000001044444444555546668777888888888888000000056d61636f730000004104e2534a3532d08fbba02dde659ee62bd0031fe2db785596ef509302446b030852e0f1575a4c633cc719dfee5fda862d764efc96c3f30ee0055c42c23f184ed8c6000000410451590b7a515140d2d784c85608668fdfef8c82fd1f5be52421554a0dc3d033ede0c17da8904a727d8ae1bf36bf8a79260d012f00d4d80888d1d0bb44fda16da4000000208d65c8e85b7f2130bf2314fb7856d46ac9c0ada45cffb199a0d1c388ef44f4b400000020647d53ce3f90f2f5d53bd747e698ddcf9baa564c1e4209beaee87bee97e766c100000014323032362d30382d30335431303a30363a30305a00000014323032362d30382d30335431303a31313a30305a0000001e7265636f766572792d617574686f72697a6174696f6e2d323032362d3031",
+    "digest" : "PBnXkhHGnn6-f2pZhUhz_NM4RxYRNv6Xzmx6FUVNsT8",
+    "expectedSignerRole" : "recoveryAuthorization",
+    "message" : {
+      "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+      "authorizationID" : "77777777-8888-4999-8aaa-bbbbbbbbbbbb",
+      "deviceID" : "44444444-5555-4666-8777-888888888888",
+      "epoch" : "2",
+      "exchangeRequestDigest" : "ZH1Tzj-Q8vXVO9dH5pjdz5uqVkweQgm-ruh77pfnZsE",
+      "expiresAt" : "2026-08-03T10:11:00Z",
+      "issuedAt" : "2026-08-03T10:06:00Z",
+      "kind" : "account.recovery-authorization.v1",
+      "platform" : "macos",
+      "priorCommitDigest" : "jWXI6Ft_ITC_IxT7eFbUasnAraRc_7GZoNHDiO9E9LQ",
+      "publicBundle" : {
+        "agreementKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ",
+        "signingKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+      },
+      "serverKeyID" : "recovery-authorization-2026-01",
+      "serverSignature" : "wmmPZpVElzR2KzZBvoT6SnGFVZt1hpO5hyqEvyCyKQwlWwGWpcFMRFPkiW4alIKVC3cSKr--PyNG1G-7SZMELA"
+    },
+    "replacementRecord" : {
+      "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+      "deviceID" : "44444444-5555-4666-8777-888888888888",
+      "epoch" : "2",
+      "platform" : "macos",
+      "publicBundle" : {
+        "agreementKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ",
+        "signingKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+      },
+      "revision" : "1",
+      "signature" : "5MlX1Bx86l7icl_vmF0HFXSWWu8fZGezsev9DmeIF34tTkyGodbwkwjLjzXbB1vxo-oMVyMxn7ATgAcs_nijAw",
+      "signerDeviceID" : "44444444-5555-4666-8777-888888888888"
+    },
+    "replacementRecordTranscriptHex" : "0000001e506c61696e706f73742e44657669636554727573745265636f72642e76310000000200010000001000112233445566778899aabbccddeeff0000000800000000000000020000000800000000000000010000001044444444555546668777888888888888000000056d61636f730000004104e2534a3532d08fbba02dde659ee62bd0031fe2db785596ef509302446b030852e0f1575a4c633cc719dfee5fda862d764efc96c3f30ee0055c42c23f184ed8c6000000410451590b7a515140d2d784c85608668fdfef8c82fd1f5be52421554a0dc3d033ede0c17da8904a727d8ae1bf36bf8a79260d012f00d4d80888d1d0bb44fda16da40000001044444444555546668777888888888888"
+  },
+  "rootManifest" : {
+    "canonicalTranscriptHex" : "00000028506c61696e706f73742e43656e7472616c426f6f7473747261704b65794d616e69666573742e763100000002000100000016706c61696e706f73742d726f6f742d323032362d303100000008000000000000000100000014323032362d30312d30315430303a30303a30305a00000014323032372d31322d33315432333a35393a35395a0000000000000002000300000011626f6f7473747261702d323032362d303100000013626f6f7473747261705f6368616c6c656e676500000041047cf27b188d034f7e8a52380304b51ac3c08969e277f21b35a60b48fc4766997807775510db8ed040293d9ac69f7430dbba7dade63ce982299e04b79d227873d100000014323032362d30312d30315430303a30303a30305a00000014323032372d31322d33315432333a35393a35395a0000000661637469766500000012706167696e6174696f6e2d323032362d30310000001074727573745f706167696e6174696f6e00000041045ecbe4d1a6330a44c8f7ef951d4bf165e6c6b721efada985fb41661bc6e7fd6c8734640c4998ff7e374b06ce1a64a2ecd82ab036384fb83d9a79b127a27d503200000014323032362d30312d30315430303a30303a30305a00000014323032372d31322d33315432333a35393a35395a000000066163746976650000001e7265636f766572792d617574686f72697a6174696f6e2d323032362d3031000000167265636f766572795f617574686f72697a6174696f6e000000410476a94d138a6b41858b821c629836315fcd28392eff6ca038a5eb4787e1277c6ea985fe61341f260e6cb0a1b5e11e87208599a0040fc78baa0e9ddd724b8c511000000014323032362d30312d30315430303a30303a30305a00000014323032372d31322d33315432333a35393a35395a00000006616374697665",
+    "rootPublicKey" : "BGsX0fLhLEJH-Lzm5WOkQPJ3A32BLeszoPShOUXYmMKWT-NC4v4af5uO5-tKfA-eFivOM1drMV7Oy7ZAaDe_UfU",
+    "signature" : "m4lfiSTR4cpt8YFNp_orhRIQZ99YOSElRrhZNuTYHbFapKt7bwBcL3iOyetnzb5ZNZnrTgEJRMvPeM10UNDaeg",
+    "signedManifestDigest" : "HxrAZ37rDdQZHtnxYNUTZ1uWTKbml24ksyXmW8_rZRQ"
+  },
+  "sas" : {
+    "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+    "authenticationString" : "217025",
+    "candidate0" : 1023718,
+    "D0" : "f9ee6d0ee0d3dfaf5c655c15311a5559fc43da6bcc577ed3fa8342dc0d28db77",
+    "D1" : "34fc10faa4355371d5219d1aeb222d044eb7dd959ae3acfc44a1202eb1353903",
+    "existingAgreementRole" : "sasExistingAgreement",
+    "existingDeviceID" : "11111111-2222-3333-4444-555555555555",
+    "existingNonceHex" : "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+    "existingSigningRole" : "sasExistingSigning",
+    "expiresAtUnixMilliseconds" : "1735689600003",
+    "pendingAgreementRole" : "sasPendingAgreement",
+    "pendingDeviceID" : "aaaaaaaa-bbbb-cccc-dddd-00000000000c",
+    "pendingNonceHex" : "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+    "pendingSigningRole" : "sasPendingSigning",
+    "protocolVersion" : 1,
+    "retryInput1Hex" : "00000022506c61696e706f73742e4163636f756e7454727573742e53415352657472792e763100000020f9ee6d0ee0d3dfaf5c655c15311a5559fc43da6bcc577ed3fa8342dc0d28db770000000400000001",
+    "transcriptHex" : "00000019506c61696e706f73742e4163636f756e7454727573742e76310000000200010000001000112233445566778899aabbccddeeff000000101111111122223333444455555555555500000010aaaaaaaabbbbccccdddd00000000000c0000004104cef66d6b2a3a993e591214d1ea223fb545ca6c471c48306e4c36069404c5723f878662a229aaae906e123cdd9d3b4c10590ded29fe751eeeca34bbaa44af077300000041043ed113b7883b4c590638379db0c21cda16742ed0255048bf433391d374bc21d19099209accc4c8a224c843afa4f4c68a090d04da5e9889dae2f8eefce82a37400000004104741dd5bda817d95e4626537320e5d55179983028b2f82c99d500c5ee8624e3c40770b46a9c385fdc567383554887b1548eeb912c35ba5ca71995ff22cd4481d30000004104177c837ae0ac495a61805df2d85ee2fc792e284b65ead58a98e15d9d46072c0163bb58cd4ebea558a24091adb40f4e7226ee14c3a1fb4df39c43bbe2efc7bfd800000020000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f00000020202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f00000008000001941f297c03"
+  },
+  "testOnlyInputs" : {
+    "accountKeyPlaintextHex" : "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+    "mailboxMatchingKeyHex" : "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f",
+    "metadataKeyHex" : "202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f",
+    "recoveryAccountKeyPlaintextHex" : "404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f",
+    "roles" : {
+      "appleNegativeAgreement" : {
+        "privateScalarHex" : "000000000000000000000000000000000000000000000000000000000000000f",
+        "publicKey" : "BPBFTcaXGrrnrfs3iZmIgmWuA6-S3joO8WNmjGPlm51ftbk-41kuLR9OZZTlH5ZD5io7Ic51tfo_R-Wc3g0DTzY"
+      },
+      "appleNegativeSigning" : {
+        "privateScalarHex" : "000000000000000000000000000000000000000000000000000000000000000e",
+        "publicKey" : "BFTnegAcOGK5enZkf0M23zzxJqy-egacXlcJJ3Mk0pIL9Znxuyn0MXVCEh-MBaLnw3Fx6ndzUJAIG6fIL2DQs3U"
+      },
+      "bootstrap" : {
+        "privateScalarHex" : "0000000000000000000000000000000000000000000000000000000000000002",
+        "publicKey" : "BHzyexiNA09-ilI4AwS1GsPAiWnid_IbNaYLSPxHZpl4B3dVENuO0EApPZrGn3Qw27p9reY86YIpngS3nSJ4c9E"
+      },
+      "deviceAgreement" : {
+        "privateScalarHex" : "0000000000000000000000000000000000000000000000000000000000000007",
+        "publicKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ"
+      },
+      "deviceSigning" : {
+        "privateScalarHex" : "0000000000000000000000000000000000000000000000000000000000000006",
+        "publicKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+      },
+      "exchangeAgreement" : {
+        "privateScalarHex" : "0000000000000000000000000000000000000000000000000000000000000005",
+        "publicKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ"
+      },
+      "exchangeSigning" : {
+        "privateScalarHex" : "0000000000000000000000000000000000000000000000000000000000000004",
+        "publicKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+      },
+      "metadataSigning" : {
+        "privateScalarHex" : "0000000000000000000000000000000000000000000000000000000000000009",
+        "publicKey" : "BOpo17b-3wtxh4k41R1x-HKeCsuMLG34s9eeikuQlJ7gKidEyXLJ_OeHAUqWSo6gyE1xT-qk3oI_6FoiSk3QSPo"
+      },
+      "packageEphemeral" : {
+        "privateScalarHex" : "0000000000000000000000000000000000000000000000000000000000000008",
+        "publicKey" : "BGLZd52-6bBTQEJ0LTq1TK3B0jiYD86X27TdncHbb7OTrVrMvZHp2CRP8V13EWfO4KLtUfa752p42lQKag8JlX4"
+      },
+      "pagination" : {
+        "privateScalarHex" : "0000000000000000000000000000000000000000000000000000000000000003",
+        "publicKey" : "BF7L5NGmMwpEyPfvlR1L8WXmxrch762phftBZhvG5_1shzRkDEmY_343SwbOGmSi7NgqsDY4T7g9mnmxJ6J9UDI"
+      },
+      "recoveryAuthorization" : {
+        "privateScalarHex" : "0000000000000000000000000000000000000000000000000000000000000010",
+        "publicKey" : "BHapTROKa0GFi4IcYpg2MV_NKDku_2ygOKXrR4fhJ3xuqYX-YTQfJg5ssKG14R6HIIWZoAQPx4uqDp3dckuMURA"
+      },
+      "root" : {
+        "privateScalarHex" : "0000000000000000000000000000000000000000000000000000000000000001",
+        "publicKey" : "BGsX0fLhLEJH-Lzm5WOkQPJ3A32BLeszoPShOUXYmMKWT-NC4v4af5uO5-tKfA-eFivOM1drMV7Oy7ZAaDe_UfU"
+      },
+      "sasExistingAgreement" : {
+        "privateScalarHex" : "000000000000000000000000000000000000000000000000000000000000000b",
+        "publicKey" : "BD7RE7eIO0xZBjg3nbDCHNoWdC7QJVBIv0MzkdN0vCHRkJkgmszEyKIkyEOvpPTGigkNBNpemIna4vju_OgqN0A"
+      },
+      "sasExistingSigning" : {
+        "privateScalarHex" : "000000000000000000000000000000000000000000000000000000000000000a",
+        "publicKey" : "BM72bWsqOpk-WRIU0eoiP7VFymxHHEgwbkw2BpQExXI_h4ZioimqrpBuEjzdnTtMEFkN7Sn-dR7uyjS7qkSvB3M"
+      },
+      "sasPendingAgreement" : {
+        "privateScalarHex" : "000000000000000000000000000000000000000000000000000000000000000d",
+        "publicKey" : "BBd8g3rgrElaYYBd8the4vx5LihLZerVipjhXZ1GBywBY7tYzU6-pViiQJGttA9OcibuFMOh-03znEO74u_Hv9g"
+      },
+      "sasPendingSigning" : {
+        "privateScalarHex" : "000000000000000000000000000000000000000000000000000000000000000c",
+        "publicKey" : "BHQd1b2oF9leRiZTcyDl1VF5mDAosvgsmdUAxe6GJOPEB3C0apw4X9xWc4NVSIexVI7rkSw1ulynGZX_Is1EgdM"
+      }
+    },
+    "signatureAlgorithm" : "ECDSA P-256 with SHA-256, RFC 6979 deterministic nonce derivation, and low-S normalization",
+    "warning" : "TEST ONLY. These deterministic private scalars and plaintext keys are public conformance material and MUST NOT be used by production code, accounts, manifests, or deployments."
+  },
+  "trustPagination" : {
+    "admissionHistoryEntryDigest" : "FyjjgYNsiFinhyJ3cqjso7mU1lzh6ETNkkC2tlgRoNk",
+    "mutationCases" : [
+      {
+        "entryIndexes" : [
+          1,
+          2
+        ],
+        "expected" : "reject",
+        "name" : "swap-admission-recovery-evidence",
+        "operation" : "swapEvidence"
+      },
+      {
+        "entryIndex" : 1,
+        "expected" : "reject",
+        "jsonPointer" : "/evidence/pendingDevice/publicBundle/signingKey",
+        "name" : "substitute-admission-pending-bundle",
+        "operation" : "replace",
+        "replacement" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+      },
+      {
+        "entryIndex" : 2,
+        "expected" : "reject",
+        "jsonPointer" : "/evidence/historicalManifest/rootSignature",
+        "name" : "substitute-recovery-historical-manifest",
+        "operation" : "replace",
+        "replacement" : "0e9s6q6g35vsWqMmz5MSBQMR4J_Yntgd0WQAAlgjw34eHtlUYutBbOqRiNX0KPxp1ITvJ9xS47y9rCbtq8BD-Q"
+      }
+    ],
+    "page" : {
+      "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+      "entries" : [
+        {
+          "commit" : {
+            "keyPackages" : [
+              {
+                "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+                "encryptedKeyMaterial" : "sv0rcdeSR6-guWd8JeyROQzB3wgpdncrevU_uUlkNooctjK8L38YPprmBgGKg0gaFefzFnpd_skH_w3Z8rbola9rnoRML9EtYBdZK77EGZk",
+                "epoch" : "1",
+                "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+                "keyGeneration" : "1",
+                "kind" : "account.group-key-package.v1",
+                "nonce" : "AQIDBAUGBwgJCgsM",
+                "recipientDeviceID" : "11111111-2222-3333-4444-555555555555",
+                "senderDeviceID" : "11111111-2222-3333-4444-555555555555",
+                "senderEphemeralPublicKey" : "BGLZd52-6bBTQEJ0LTq1TK3B0jiYD86X27TdncHbb7OTrVrMvZHp2CRP8V13EWfO4KLtUfa752p42lQKag8JlX4",
+                "signature" : "dn40AE3CBiSzVyuP3D5CCGK3PmehqXGyARpAjj5bofdXN2CeZTdJBuZAw6NHUOjGvlF5BDR7hqstGcJrY2nLiA",
+                "stateDigest" : "CDVcK5Mq2sPy-SEAihnjd_VBnWHYRxohB3-2Rrg-2-w",
+                "stateRevision" : "1"
+              }
+            ],
+            "kind" : "account.trust-state-commit.v1",
+            "state" : {
+              "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+              "epoch" : "1",
+              "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+              "keyGeneration" : "1",
+              "members" : [
+                {
+                  "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+                  "deviceID" : "11111111-2222-3333-4444-555555555555",
+                  "epoch" : "1",
+                  "platform" : "macos",
+                  "publicBundle" : {
+                    "agreementKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ",
+                    "signingKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+                  },
+                  "revision" : "1",
+                  "signature" : "w5n5J-9jSUwW5G0XRPJ0SveDWvUt5YmDaW4EIf0dTGZkf3zvHbHdl9_9tcLOL0MtcRzhCSpqjRklpKcDmoUGYQ",
+                  "signerDeviceID" : "11111111-2222-3333-4444-555555555555"
+                }
+              ],
+              "previousCommitDigest" : null,
+              "revision" : "1",
+              "signature" : "S2ig09sV63i0MNNg4qB-3NMLiUK0jvK9AVvJR0Rfg2lCg2S12LKN_W6HDCQqxZAsVVSlXg1COB1gYBCgN_ZbkA",
+              "signerDeviceID" : "11111111-2222-3333-4444-555555555555",
+              "transition" : {
+                "kind" : "genesis",
+                "priorRecordDigests" : [
+
+                ],
+                "targetDeviceIDs" : [
+                  "11111111-2222-3333-4444-555555555555"
+                ]
+              }
+            }
+          },
+          "evidence" : null,
+          "kind" : "account.trust-history-entry.v1"
+        },
+        {
+          "commit" : {
+            "keyPackages" : [
+              {
+                "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+                "encryptedKeyMaterial" : "aDndpyEKTGBbdlJVcXs0XAo3hiYbNSrSwpknPmbxBmJeS6fkq99pj7gJbFDJi23oIjiKkl5Bg-ONN9-tgFNlrrs_a2JOCd5LSaZ38HhEuqk",
+                "epoch" : "1",
+                "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+                "keyGeneration" : "1",
+                "kind" : "account.group-key-package.v1",
+                "nonce" : "KioqKioqKioqKioq",
+                "recipientDeviceID" : "11111111-2222-3333-4444-555555555555",
+                "senderDeviceID" : "11111111-2222-3333-4444-555555555555",
+                "senderEphemeralPublicKey" : "BOD7KL3eMhXfaQNlkkpV-srS5TGPj_tvgB2Dj6n50mCd2qp9sUUyo8gFMXTzyBhgR4HT6OSigLZOKn5fjZeY_4Q",
+                "signature" : "4DPA2PAUPbbYYczPDlSgmbE8g_INY4K78T1VYz-jI2UQC7Nrk6GJlOo1M9BwxUrIyndVoh8CvueVasBYs-DQhQ",
+                "stateDigest" : "A1GiwyMsPeTb1KUCdizAHdZOPK7Ep00LSRzJtLbAJSI",
+                "stateRevision" : "2"
+              },
+              {
+                "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+                "encryptedKeyMaterial" : "3ZMhSHZcyE2iJT_Dv3Cyx2wrgrEB5aMN3O5MMjs3rvAq7w72VU5WjgNhVcLWlWaqP1b7vpIuP2s59h3OfmUY32if3hOXAqOb8nkRvYjjar8",
+                "epoch" : "1",
+                "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+                "keyGeneration" : "1",
+                "kind" : "account.group-key-package.v1",
+                "nonce" : "KysrKysrKysrKysr",
+                "recipientDeviceID" : "aaaaaaaa-bbbb-cccc-dddd-00000000000c",
+                "senderDeviceID" : "11111111-2222-3333-4444-555555555555",
+                "senderEphemeralPublicKey" : "BP0sAtJD41zf1CIuj1XUUL05W6tJ7MmFoRKEzazAzoykuqAJOTNSnpjyS4scSBkIWi6izjR8_icTY3063LXtoHY",
+                "signature" : "hrYg3S-2Ntc8iqURjvUO2XW_LGITMjgJuOS91xxESF8M6IRfCCtwa_I69fYpSjVmPKYkYgYjWG7LWwRNU1c8uw",
+                "stateDigest" : "A1GiwyMsPeTb1KUCdizAHdZOPK7Ep00LSRzJtLbAJSI",
+                "stateRevision" : "2"
+              }
+            ],
+            "kind" : "account.trust-state-commit.v1",
+            "state" : {
+              "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+              "epoch" : "1",
+              "keyCommitment" : "_eq5rPNxA2K9JljNyaKej5x1f8-YEWA6jER80dkVEQg",
+              "keyGeneration" : "1",
+              "members" : [
+                {
+                  "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+                  "deviceID" : "11111111-2222-3333-4444-555555555555",
+                  "epoch" : "1",
+                  "platform" : "macos",
+                  "publicBundle" : {
+                    "agreementKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ",
+                    "signingKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+                  },
+                  "revision" : "1",
+                  "signature" : "w5n5J-9jSUwW5G0XRPJ0SveDWvUt5YmDaW4EIf0dTGZkf3zvHbHdl9_9tcLOL0MtcRzhCSpqjRklpKcDmoUGYQ",
+                  "signerDeviceID" : "11111111-2222-3333-4444-555555555555"
+                },
+                {
+                  "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+                  "deviceID" : "aaaaaaaa-bbbb-cccc-dddd-00000000000c",
+                  "epoch" : "1",
+                  "platform" : "ios",
+                  "publicBundle" : {
+                    "agreementKey" : "BBd8g3rgrElaYYBd8the4vx5LihLZerVipjhXZ1GBywBY7tYzU6-pViiQJGttA9OcibuFMOh-03znEO74u_Hv9g",
+                    "signingKey" : "BHQd1b2oF9leRiZTcyDl1VF5mDAosvgsmdUAxe6GJOPEB3C0apw4X9xWc4NVSIexVI7rkSw1ulynGZX_Is1EgdM"
+                  },
+                  "revision" : "2",
+                  "signature" : "62ef07Vx2clyU3nJMRBpCErZLLabnNMv7mGJKx0OVU1Rre2cd9yo26B8HiPfSJdNLaijwSfBKXDUm6fTq6D-Mg",
+                  "signerDeviceID" : "11111111-2222-3333-4444-555555555555"
+                }
+              ],
+              "previousCommitDigest" : "zDfjs58lOvyWuqRb6ZVvh70y8nV6v-9Yke6sZgpoJy4",
+              "revision" : "2",
+              "signature" : "bTNWy2xxdZzmxFS7WEKJ8D0UBpCpFtXTc0ONJAyxyad3GzRwyRjltnribmCtC6Y2w9AgrNu-KGtDOJZ2T-kvqg",
+              "signerDeviceID" : "11111111-2222-3333-4444-555555555555",
+              "transition" : {
+                "handshakeDigest" : "Z_XqvYgE3afIDd43YE0068QSDV_tM9gY-CRhzbaSIag",
+                "kind" : "admission",
+                "pendingDeviceDigest" : "qDp-SiF1gQBhNwQTJbBrzugZPV1JBjvX4HZtZFI8KnY",
+                "priorRecordDigests" : [
+
+                ],
+                "targetDeviceIDs" : [
+                  "aaaaaaaa-bbbb-cccc-dddd-00000000000c"
+                ]
+              }
+            }
+          },
+          "evidence" : {
+            "kind" : "account.trust-admission-evidence.v1",
+            "pendingDevice" : {
+              "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+              "createdAt" : "2025-01-01T00:00:00Z",
+              "deviceID" : "aaaaaaaa-bbbb-cccc-dddd-00000000000c",
+              "exchangeRequestDigest" : "0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dE",
+              "expiresAt" : "2025-01-01T00:05:00Z",
+              "kind" : "account.pending-device.v1",
+              "platform" : "ios",
+              "publicBundle" : {
+                "agreementKey" : "BBd8g3rgrElaYYBd8the4vx5LihLZerVipjhXZ1GBywBY7tYzU6-pViiQJGttA9OcibuFMOh-03znEO74u_Hv9g",
+                "signingKey" : "BHQd1b2oF9leRiZTcyDl1VF5mDAosvgsmdUAxe6GJOPEB3C0apw4X9xWc4NVSIexVI7rkSw1ulynGZX_Is1EgdM"
+              }
+            },
+            "response" : {
+              "offer" : {
+                "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+                "createdAtUnixMilliseconds" : "1735689660003",
+                "existingDeviceID" : "11111111-2222-3333-4444-555555555555",
+                "existingNonce" : "KSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSk",
+                "existingPublicBundle" : {
+                  "agreementKey" : "BI5TO2-gv3tGJbswZnwB-2B--fi4qA_vWzAGKHAxh7Kjc-sdveAzGDZtBp-DpvWQAFPHNjPLBBshxV4ahsH0ALQ",
+                  "signingKey" : "BLAaFyp2pGAsktMkLLiX3eMCTHQN67IVtMawquk8IpGp6FwQdDI32tVv7A4t-6cDeRwA93Acfha9_XxIU4_Hf-I"
+                },
+                "expiresAtUnixMilliseconds" : "1735689900000",
+                "pendingDeviceID" : "aaaaaaaa-bbbb-cccc-dddd-00000000000c",
+                "pendingPublicBundle" : {
+                  "agreementKey" : "BBd8g3rgrElaYYBd8the4vx5LihLZerVipjhXZ1GBywBY7tYzU6-pViiQJGttA9OcibuFMOh-03znEO74u_Hv9g",
+                  "signingKey" : "BHQd1b2oF9leRiZTcyDl1VF5mDAosvgsmdUAxe6GJOPEB3C0apw4X9xWc4NVSIexVI7rkSw1ulynGZX_Is1EgdM"
+                }
+              },
+              "pendingNonce" : "0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tI"
+            }
+          },
+          "kind" : "account.trust-history-entry.v1"
+        },
+        {
+          "commit" : {
+            "keyPackages" : [
+              {
+                "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+                "encryptedKeyMaterial" : "EjdcCkrfdWO0m-Qujo7hbK3RWDVnYEvdG1LVjuXWv4GH6_T5EwnfyX1LdGibqpZ66YsI9AXowM9einN7SNa9aMeK2COu3F-D94EvZ_FNH3E",
+                "epoch" : "2",
+                "keyCommitment" : "1zXtgSNmB4eZRoERdPVag2XeUMGSSvZQhGbE_h_R9ds",
+                "keyGeneration" : "1",
+                "kind" : "account.group-key-package.v1",
+                "nonce" : "09PT09PT09PT09PT",
+                "recipientDeviceID" : "44444444-5555-4666-8777-888888888888",
+                "senderDeviceID" : "44444444-5555-4666-8777-888888888888",
+                "senderEphemeralPublicKey" : "BDLGXI1E12icQnrHTshVUkcIwdOi5HtZSuRGWyCk8wmLO2kxfvQvA35BBrzV_dBoKasFopIFnOT2dvsQUz5zpAk",
+                "signature" : "ol5AZ2V8WFMie5EAIZyed2yx8E5P1Vx0VZkQYrMNJyYDIAs-H9C6qAMuIU8GpD-E1zoM83a8agK49l9guEzBdA",
+                "stateDigest" : "S2XrvUvBoKdD3Bihz54uXjmAfPEFB1Vwfg5WQ5aLV4w",
+                "stateRevision" : "1"
+              }
+            ],
+            "kind" : "account.trust-state-commit.v1",
+            "state" : {
+              "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+              "epoch" : "2",
+              "keyCommitment" : "1zXtgSNmB4eZRoERdPVag2XeUMGSSvZQhGbE_h_R9ds",
+              "keyGeneration" : "1",
+              "members" : [
+                {
+                  "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+                  "deviceID" : "44444444-5555-4666-8777-888888888888",
+                  "epoch" : "2",
+                  "platform" : "macos",
+                  "publicBundle" : {
+                    "agreementKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ",
+                    "signingKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+                  },
+                  "revision" : "1",
+                  "signature" : "RAbaYWFx7zB9-iteSQlpb8OL8ImChZQmylu8yK16lmpYUX-LbixUSBe9HYztnCHqEDR-35SCavJlmno9qBWTRw",
+                  "signerDeviceID" : "44444444-5555-4666-8777-888888888888"
+                }
+              ],
+              "previousCommitDigest" : "jWXI6Ft_ITC_IxT7eFbUasnAraRc_7GZoNHDiO9E9LQ",
+              "revision" : "1",
+              "signature" : "zJlCTCAewp_gCMo_V-o20kNpeiugbVzuxVInog5HiPoiDcM5bK8rsMvyeY1MS7srdf9yQHyJrMocNJNlC4S1SQ",
+              "signerDeviceID" : "44444444-5555-4666-8777-888888888888",
+              "transition" : {
+                "kind" : "recovery",
+                "priorRecordDigests" : [
+                  {
+                    "deviceID" : "11111111-2222-3333-4444-555555555555",
+                    "recordDigest" : "2ktrZvADqDya0WA_QcOjD23Gz1Ke2TsA5yOuazEJqWo"
+                  },
+                  {
+                    "deviceID" : "aaaaaaaa-bbbb-cccc-dddd-00000000000c",
+                    "recordDigest" : "YnPyMHLo-On6fPXvvCLB3RXnYrYoHR4lCADdAEsf3LU"
+                  }
+                ],
+                "recoveryAuthorizationDigest" : "PBnXkhHGnn6-f2pZhUhz_NM4RxYRNv6Xzmx6FUVNsT8",
+                "targetDeviceIDs" : [
+                  "11111111-2222-3333-4444-555555555555",
+                  "aaaaaaaa-bbbb-cccc-dddd-00000000000c"
+                ]
+              }
+            }
+          },
+          "evidence" : {
+            "authorization" : {
+              "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+              "authorizationID" : "77777777-8888-4999-8aaa-bbbbbbbbbbbb",
+              "deviceID" : "44444444-5555-4666-8777-888888888888",
+              "epoch" : "2",
+              "exchangeRequestDigest" : "ZH1Tzj-Q8vXVO9dH5pjdz5uqVkweQgm-ruh77pfnZsE",
+              "expiresAt" : "2026-08-03T10:11:00Z",
+              "issuedAt" : "2026-08-03T10:06:00Z",
+              "kind" : "account.recovery-authorization.v1",
+              "platform" : "macos",
+              "priorCommitDigest" : "jWXI6Ft_ITC_IxT7eFbUasnAraRc_7GZoNHDiO9E9LQ",
+              "publicBundle" : {
+                "agreementKey" : "BFFZC3pRUUDS14TIVghmj9_vjIL9H1vlJCFVSg3D0DPt4MF9qJBKcn2K4b82v4p5Jg0BLwDU2AiI0dC7RP2hbaQ",
+                "signingKey" : "BOJTSjUy0I-7oC3eZZ7mK9ADH-LbeFWW71CTAkRrAwhS4PFXWkxjPMcZ3-5f2oYtdk78lsPzDuAFXELCPxhO2MY"
+              },
+              "serverKeyID" : "recovery-authorization-2026-01",
+              "serverSignature" : "wmmPZpVElzR2KzZBvoT6SnGFVZt1hpO5hyqEvyCyKQwlWwGWpcFMRFPkiW4alIKVC3cSKr--PyNG1G-7SZMELA"
+            },
+            "historicalManifest" : {
+              "expiresAt" : "2027-12-31T23:59:59Z",
+              "keys" : [
+                {
+                  "expiresAt" : "2027-12-31T23:59:59Z",
+                  "keyID" : "bootstrap-2026-01",
+                  "notBefore" : "2026-01-01T00:00:00Z",
+                  "publicKey" : "BHzyexiNA09-ilI4AwS1GsPAiWnid_IbNaYLSPxHZpl4B3dVENuO0EApPZrGn3Qw27p9reY86YIpngS3nSJ4c9E",
+                  "purpose" : "bootstrap_challenge",
+                  "status" : "active"
+                },
+                {
+                  "expiresAt" : "2027-12-31T23:59:59Z",
+                  "keyID" : "pagination-2026-01",
+                  "notBefore" : "2026-01-01T00:00:00Z",
+                  "publicKey" : "BF7L5NGmMwpEyPfvlR1L8WXmxrch762phftBZhvG5_1shzRkDEmY_343SwbOGmSi7NgqsDY4T7g9mnmxJ6J9UDI",
+                  "purpose" : "trust_pagination",
+                  "status" : "active"
+                },
+                {
+                  "expiresAt" : "2027-12-31T23:59:59Z",
+                  "keyID" : "recovery-authorization-2026-01",
+                  "notBefore" : "2026-01-01T00:00:00Z",
+                  "publicKey" : "BHapTROKa0GFi4IcYpg2MV_NKDku_2ygOKXrR4fhJ3xuqYX-YTQfJg5ssKG14R6HIIWZoAQPx4uqDp3dckuMURA",
+                  "purpose" : "recovery_authorization",
+                  "status" : "active"
+                }
+              ],
+              "kind" : "central.bootstrap-key-manifest.v1",
+              "manifestVersion" : "1",
+              "notBefore" : "2026-01-01T00:00:00Z",
+              "previousManifestDigest" : null,
+              "rootKeyID" : "plainpost-root-2026-01",
+              "rootSignature" : "m4lfiSTR4cpt8YFNp_orhRIQZ99YOSElRrhZNuTYHbFapKt7bwBcL3iOyetnzb5ZNZnrTgEJRMvPeM10UNDaeg"
+            },
+            "kind" : "account.trust-recovery-evidence.v1"
+          },
+          "kind" : "account.trust-history-entry.v1"
+        }
+      ],
+      "expiresAt" : "2026-08-03T10:12:00Z",
+      "issuedAt" : "2026-08-03T10:07:00Z",
+      "kind" : "account.trust-state-page.v1",
+      "nextCursor" : null,
+      "requestCursor" : {
+        "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+        "after" : {
+          "kind" : "genesis"
+        },
+        "expiresAt" : "2026-08-03T10:12:00Z",
+        "issuedAt" : "2026-08-03T10:07:00Z",
+        "kind" : "account.trust-cursor.v1",
+        "serverKeyID" : "pagination-2026-01",
+        "signature" : "V5asisqVP8jT-A73ulN4OpCgUBGlP7hBUP9ccfp51KB0dNT0S5SjyTaY_x3W1_oqSgXtfyZIKwEg_N_plv91hg",
+        "snapshotHead" : {
+          "commitDigest" : "8c01oJWhE4bufPUipsgUKFO2r1u0-s0q5myDetFFexA",
+          "epoch" : "2",
+          "revision" : "1"
+        }
+      },
+      "serverKeyID" : "pagination-2026-01",
+      "serverSignature" : "eI9IJvxqWGTDJQ4T4EeAY5_T1GL5EnUuuBXfrCdz4fUmBnYbvc12mmg_7vhvrP0092Gkuv1mhAP8Tla4oo944Q",
+      "snapshotHead" : {
+        "commitDigest" : "8c01oJWhE4bufPUipsgUKFO2r1u0-s0q5myDetFFexA",
+        "epoch" : "2",
+        "revision" : "1"
+      },
+      "terminal" : true
+    },
+    "pageEntryDigests" : [
+      "tQbWm7-AxoVeNH7f45Z8AL9JXQSshGE6Q3_OL7S4V9k",
+      "FyjjgYNsiFinhyJ3cqjso7mU1lzh6ETNkkC2tlgRoNk",
+      "0LPcAl7bCPCHfghEoEhguLuzqx2qSkEM63qKw5bp_3w"
+    ],
+    "pageTranscriptHex" : "0000001b506c61696e706f73742e54727573745374617465506167652e763100000002000100000020fd798b96c682b918e0f223b76caea7299b59e796a38d7800fcf4f1064bc126950000001000112233445566778899aabbccddeeff0000003c00000008000000000000000200000008000000000000000100000020f1cd35a095a11386ee7cf522a6c8142853b6af5bb4facd2ae66c837ad1457b1000000002000300000020b506d69bbf80c6855e347edfe3967c00bf495d04ac84613a437fce2fb4b857d9000000201728e381836c8858a787227772a8eca3b994d65ce1e844cd9240b6b65811a0d900000020d0b3dc025edb08f0877e0844a04860b8bbb3ab1daa4a410ceb7a8ac396e9ff7c0000000000000002000100000014323032362d30382d30335431303a30373a30305a00000014323032362d30382d30335431303a31323a30305a00000012706167696e6174696f6e2d323032362d3031",
+    "recoveryHistoryEntryDigest" : "0LPcAl7bCPCHfghEoEhguLuzqx2qSkEM63qKw5bp_3w",
+    "requestCursor" : {
+      "accountID" : "00112233-4455-6677-8899-aabbccddeeff",
+      "after" : {
+        "kind" : "genesis"
+      },
+      "expiresAt" : "2026-08-03T10:12:00Z",
+      "issuedAt" : "2026-08-03T10:07:00Z",
+      "kind" : "account.trust-cursor.v1",
+      "serverKeyID" : "pagination-2026-01",
+      "signature" : "V5asisqVP8jT-A73ulN4OpCgUBGlP7hBUP9ccfp51KB0dNT0S5SjyTaY_x3W1_oqSgXtfyZIKwEg_N_plv91hg",
+      "snapshotHead" : {
+        "commitDigest" : "8c01oJWhE4bufPUipsgUKFO2r1u0-s0q5myDetFFexA",
+        "epoch" : "2",
+        "revision" : "1"
+      }
+    },
+    "requestCursorDigest" : "_XmLlsaCuRjg8iO3bK6nKZtZ55ajjXgA_PTxBkvBJpU",
+    "requestCursorTranscriptHex" : "00000018506c61696e706f73742e5472757374437572736f722e76310000000200010000001000112233445566778899aabbccddeeff0000000b0000000767656e657369730000003c00000008000000000000000200000008000000000000000100000020f1cd35a095a11386ee7cf522a6c8142853b6af5bb4facd2ae66c837ad1457b1000000014323032362d30382d30335431303a30373a30305a00000014323032362d30382d30335431303a31323a30305a00000012706167696e6174696f6e2d323032362d3031"
+  },
+  "syncNodeEnrollment" : {
+    "claimCanonicalJSON" : "{\"agreementPublicKey\":\"BHzyexiNA09-ilI4AwS1GsPAiWnid_IbNaYLSPxHZpl4B3dVENuO0EApPZrGn3Qw27p9reY86YIpngS3nSJ4c9E\",\"claimID\":\"11111111-1111-4111-8111-111111111111\",\"createdAt\":\"2026-08-14T12:00:00Z\",\"endpointCiphertext\":\"BAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQE\",\"endpointDigest\":\"BgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"expiresAt\":\"2026-08-14T12:05:00Z\",\"kind\":\"account.sync-node-claim.v1\",\"nodeDeviceID\":\"22222222-2222-4222-8222-222222222222\",\"noiseStaticPublicKey\":\"AwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM\",\"setupVerifier\":\"BQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQU\",\"signingPublicKey\":\"BGsX0fLhLEJH-Lzm5WOkQPJ3A32BLeszoPShOUXYmMKWT-NC4v4af5uO5-tKfA-eFivOM1drMV7Oy7ZAaDe_UfU\"}",
+    "evidenceCanonicalJSON" : "{\"accountID\":\"55555555-5555-4555-8555-555555555555\",\"action\":\"replace\",\"agreementPublicKey\":\"BHzyexiNA09-ilI4AwS1GsPAiWnid_IbNaYLSPxHZpl4B3dVENuO0EApPZrGn3Qw27p9reY86YIpngS3nSJ4c9E\",\"approverDeviceID\":\"66666666-6666-4666-8666-666666666666\",\"claimID\":\"11111111-1111-4111-8111-111111111111\",\"endpointDigest\":\"BgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"kind\":\"account.sync-node-admission-evidence.v1\",\"matchingTranscriptDigest\":\"CgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"nodeDeviceID\":\"22222222-2222-4222-8222-222222222222\",\"noiseStaticPublicKey\":\"AwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM\",\"replacedNodeID\":\"33333333-3333-4333-8333-333333333333\",\"signingPublicKey\":\"BGsX0fLhLEJH-Lzm5WOkQPJ3A32BLeszoPShOUXYmMKWT-NC4v4af5uO5-tKfA-eFivOM1drMV7Oy7ZAaDe_UfU\",\"stepUp\":{\"accountID\":\"55555555-5555-4555-8555-555555555555\",\"action\":\"replace_sync_node\",\"actorDeviceID\":\"66666666-6666-4666-8666-666666666666\",\"authorizationID\":\"44444444-4444-4444-8444-444444444444\",\"currentCommitDigest\":\"BwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"expiresAt\":\"2026-08-14T12:05:00Z\",\"issuedAt\":\"2026-08-14T12:00:00Z\",\"kind\":\"account.step-up-authorization.v1\",\"requestDigest\":\"CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"serverKeyID\":\"recovery-authorization-2026-08\",\"serverSignature\":\"CQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQ\",\"targetDeviceID\":\"33333333-3333-4333-8333-333333333333\"},\"trustEpoch\":\"1\"}",
+    "claimProofTranscriptHex" : "0000001f506c61696e706f73742e53796e634e6f6465436c61696d50726f6f662e76310000000200010000001011111111111141118111111111111111000000102222222222224222822222222222222200000041046b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c2964fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f500000041047cf27b188d034f7e8a52380304b51ac3c08969e277f21b35a60b48fc4766997807775510db8ed040293d9ac69f7430dbba7dade63ce982299e04b79d227873d100000020030303030303030303030303030303030303030303030303030303030303030300000020060000000000000000000000000000000000000000000000000000000000000000000014323032362d30382d31345431323a30303a30305a00000014323032362d30382d31345431323a30353a30305a",
+    "matchingTranscriptHex" : "00000029506c61696e706f73742e53796e634e6f64654d61746368696e67436f6e6669726d6174696f6e2e76310000000200010000001055555555555545558555555555555555000001530000001f506c61696e706f73742e53796e634e6f6465436c61696d50726f6f662e76310000000200010000001011111111111141118111111111111111000000102222222222224222822222222222222200000041046b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c2964fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f500000041047cf27b188d034f7e8a52380304b51ac3c08969e277f21b35a60b48fc4766997807775510db8ed040293d9ac69f7430dbba7dade63ce982299e04b79d227873d100000020030303030303030303030303030303030303030303030303030303030303030300000020060000000000000000000000000000000000000000000000000000000000000000000014323032362d30382d31345431323a30303a30305a00000014323032362d30382d31345431323a30353a30305a",
+    "admissionTranscriptHex" : "00000026506c61696e706f73742e53796e634e6f646541646d697373696f6e417070726f76616c2e76310000000200010000001055555555555545558555555555555555000000080000000000000001000000106666666666664666866666666666666600000010111111111111411181111111111111110000001022222222222242228222222222222222000000077265706c616365000000103333333333334333833333333333333300000041046b17d1f2e12c4247f8bce6e563a440f277037d812deb33a0f4a13945d898c2964fe342e2fe1a7f9b8ee7eb4a7c0f9e162bce33576b315ececbb6406837bf51f500000041047cf27b188d034f7e8a52380304b51ac3c08969e277f21b35a60b48fc4766997807775510db8ed040293d9ac69f7430dbba7dade63ce982299e04b79d227873d1000000200303030303030303030303030303030303030303030303030303030303030303000000200600000000000000000000000000000000000000000000000000000000000000000000200a000000000000000000000000000000000000000000000000000000000000000000013000000027506c61696e706f73742e4163636f756e74537465705570417574686f72697a6174696f6e2e76310000000200010000001044444444444444448444444444444444000000105555555555554555855555555555555500000010666666666666466686666666666666660000001033333333333343338333333333333333000000117265706c6163655f73796e635f6e6f646500000020070000000000000000000000000000000000000000000000000000000000000000000020080000000000000000000000000000000000000000000000000000000000000000000014323032362d30382d31345431323a30303a30305a00000014323032362d30382d31345431323a30353a30305a0000001e7265636f766572792d617574686f72697a6174696f6e2d323032362d303800000017726571756573742d6964656d706f74656e63792d6b6579",
+    "replacementTranscriptSHA256" : "e555835a75a50f157ec5d746251097374424824ca7fb0b63894117cfe8bde0b4",
+    "sessionDigest" : "y8ap-QNhhL22pMRscE3w6m8e69JFzN3_Pa3FbUu7BnQ",
+    "sessionDigestTranscriptHex" : "00000022506c61696e706f73742e53796e634e6f646553657373696f6e4469676573742e76310000000200010000002007000000000000000000000000000000000000000000000000000000000000000000001088888888888848888888888888888888",
+    "resultCanonicalJSON" : "{\"accountID\":\"55555555-5555-4555-8555-555555555555\",\"action\":\"replace\",\"admissionEvidenceDigest\":\"FGb4xBUa3sHBXk1I4SsdQ3z-WxP6IL0QWBz0KB1B8ck\",\"centralAudience\":\"central.plainpost.test\",\"claimID\":\"11111111-1111-4111-8111-111111111111\",\"committedAt\":\"2026-08-14T12:06:00Z\",\"issuanceDigest\":\"T69lpqhM5Go_OOOk69OlkqF1ywnNcJxmi1WKr-IJBhs\",\"kind\":\"account.sync-node-enrollment-result.v1\",\"nodeDeviceID\":\"22222222-2222-4222-8222-222222222222\",\"replacedNodeID\":\"33333333-3333-4333-8333-333333333333\",\"replacementRevocationDigest\":\"BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"trustEpoch\":\"2\"}",
+    "leaseCanonicalJSON" : "{\"accountID\":\"55555555-5555-4555-8555-555555555555\",\"action\":\"replace\",\"admissionEvidenceDigest\":\"FGb4xBUa3sHBXk1I4SsdQ3z-WxP6IL0QWBz0KB1B8ck\",\"centralAudience\":\"central.plainpost.test\",\"claimID\":\"11111111-1111-4111-8111-111111111111\",\"expiresAt\":\"2026-08-14T12:11:01Z\",\"issuanceDigest\":\"T69lpqhM5Go_OOOk69OlkqF1ywnNcJxmi1WKr-IJBhs\",\"issuedAt\":\"2026-08-14T12:06:01Z\",\"kind\":\"account.sync-node-offline-lease.v1\",\"leaseID\":\"88888888-8888-4888-8888-888888888888\",\"nodeDeviceID\":\"22222222-2222-4222-8222-222222222222\",\"replacedNodeID\":\"33333333-3333-4333-8333-333333333333\",\"replacementRevocationDigest\":\"BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"serverKeyID\":\"sync-node-issuance-2026-08\",\"signature\":\"CQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQkJCQ\",\"trustEpoch\":\"2\"}",
+    "refreshCanonicalJSON" : "{\"accountID\":\"55555555-5555-4555-8555-555555555555\",\"action\":\"replace\",\"admissionEvidenceDigest\":\"FGb4xBUa3sHBXk1I4SsdQ3z-WxP6IL0QWBz0KB1B8ck\",\"centralAudience\":\"central.plainpost.test\",\"claimID\":\"11111111-1111-4111-8111-111111111111\",\"credential\":\"BwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"credentialID\":\"99999999-9999-4999-8999-999999999999\",\"expiresAt\":\"2026-08-14T12:11:01Z\",\"issuanceDigest\":\"T69lpqhM5Go_OOOk69OlkqF1ywnNcJxmi1WKr-IJBhs\",\"issuedAt\":\"2026-08-14T12:06:01Z\",\"kind\":\"account.sync-node-refresh-credential.v1\",\"nodeDeviceID\":\"22222222-2222-4222-8222-222222222222\",\"replacedNodeID\":\"33333333-3333-4333-8333-333333333333\",\"replacementRevocationDigest\":\"BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"trustEpoch\":\"2\"}",
+    "nonCanonicalHighSSignatureHex" : "0000000000000000000000000000000000000000000000000000000000000001ffffffff00000000ffffffffffffffffbce6faada7179e84f3b9cac2fc632550",
+    "operationBindingTranscriptHex" : "00000025506c61696e706f73742e53796e634e6f64654f7065726174696f6e42696e64696e672e76310000000200010000001055555555555545558555555555555555000000080000000000000002000000101111111111114111811111111111111100000010222222222222422282222222222222220000001663656e7472616c2e706c61696e706f73742e74657374000000077265706c6163650000001033333333333343338333333333333333000000200400000000000000000000000000000000000000000000000000000000000000000000201466f8c4151adec1c15e4d48e12b1d437cfe5b13fa20bd10581cf4281d41f1c9000000204faf65a6a84ce46a3f38e3a4ebd3a592a175cb09cd709c668b558aafe209061b",
+    "resultTranscriptHex" : "00000025506c61696e706f73742e53796e634e6f6465456e726f6c6c6d656e74526573756c742e76310000000200010000011c00000025506c61696e706f73742e53796e634e6f64654f7065726174696f6e42696e64696e672e76310000000200010000001055555555555545558555555555555555000000080000000000000002000000101111111111114111811111111111111100000010222222222222422282222222222222220000001663656e7472616c2e706c61696e706f73742e74657374000000077265706c6163650000001033333333333343338333333333333333000000200400000000000000000000000000000000000000000000000000000000000000000000201466f8c4151adec1c15e4d48e12b1d437cfe5b13fa20bd10581cf4281d41f1c9000000204faf65a6a84ce46a3f38e3a4ebd3a592a175cb09cd709c668b558aafe209061b00000014323032362d30382d31345431323a30363a30305a",
+    "leaseTranscriptHex" : "00000021506c61696e706f73742e53796e634e6f64654f66666c696e654c656173652e76310000000200010000011c00000025506c61696e706f73742e53796e634e6f64654f7065726174696f6e42696e64696e672e76310000000200010000001055555555555545558555555555555555000000080000000000000002000000101111111111114111811111111111111100000010222222222222422282222222222222220000001663656e7472616c2e706c61696e706f73742e74657374000000077265706c6163650000001033333333333343338333333333333333000000200400000000000000000000000000000000000000000000000000000000000000000000201466f8c4151adec1c15e4d48e12b1d437cfe5b13fa20bd10581cf4281d41f1c9000000204faf65a6a84ce46a3f38e3a4ebd3a592a175cb09cd709c668b558aafe209061b000000108888888888884888888888888888888800000014323032362d30382d31345431323a30363a30315a00000014323032362d30382d31345431323a31313a30315a0000001a73796e632d6e6f64652d69737375616e63652d323032362d3038",
+    "refreshTranscriptHex" : "00000026506c61696e706f73742e53796e634e6f64655265667265736843726564656e7469616c2e76310000000200010000011c00000025506c61696e706f73742e53796e634e6f64654f7065726174696f6e42696e64696e672e76310000000200010000001055555555555545558555555555555555000000080000000000000002000000101111111111114111811111111111111100000010222222222222422282222222222222220000001663656e7472616c2e706c61696e706f73742e74657374000000077265706c6163650000001033333333333343338333333333333333000000200400000000000000000000000000000000000000000000000000000000000000000000201466f8c4151adec1c15e4d48e12b1d437cfe5b13fa20bd10581cf4281d41f1c9000000204faf65a6a84ce46a3f38e3a4ebd3a592a175cb09cd709c668b558aafe209061b000000109999999999994999899999999999999900000014323032362d30382d31345431323a30363a30315a00000014323032362d30382d31345431323a31313a30315a000000200700000000000000000000000000000000000000000000000000000000000000"
+  },
+  "syncNodeEnrollmentV2" : {
+    "capabilityCanonicalJSON" : "{\"accountID\":\"55555555-5555-4555-8555-555555555555\",\"claimID\":\"11111111-1111-4111-8111-111111111111\",\"cleanupCredential\":\"AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"deletionGeneration\":\"1\",\"issuedAt\":\"2026-08-15T12:00:00Z\",\"kind\":\"account.sync-node-cleanup-capability.v1\",\"nodeDeviceID\":\"22222222-2222-4222-8222-222222222222\",\"targetHandle\":\"AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"}",
+    "cleanupCheckCanonicalJSON" : "{\"deletionGeneration\":\"1\",\"kind\":\"account.cleanup-check.v2\",\"targetHandle\":\"AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"}",
+    "cleanupCheckResultCanonicalJSON" : "{\"centralBackupExpiresAt\":null,\"deletionGeneration\":\"1\",\"kind\":\"account.cleanup-check-result.v2\",\"status\":\"clean\",\"targetHandle\":\"AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"targetKind\":\"sync_node\"}",
+    "leaseCanonicalJSON" : "{\"accountID\":\"55555555-5555-4555-8555-555555555555\",\"action\":\"replace\",\"admissionEvidenceDigest\":\"FGb4xBUa3sHBXk1I4SsdQ3z-WxP6IL0QWBz0KB1B8ck\",\"centralAudience\":\"central.plainpost.test\",\"claimID\":\"11111111-1111-4111-8111-111111111111\",\"cleanupCapabilityDigest\":\"mK1fbKQuTPMndIXAmgxCeeSkFaiRdbP8_zxY-F8ZVX0\",\"expiresAt\":\"2026-08-14T12:11:01Z\",\"issuanceDigest\":\"oDqHLeejSkRvbwdDePz8fc2wrjvjAUOpdfj8K0NE9u4\",\"issuedAt\":\"2026-08-14T12:06:01Z\",\"kind\":\"account.sync-node-offline-lease.v2\",\"leaseID\":\"88888888-8888-4888-8888-888888888888\",\"nodeDeviceID\":\"22222222-2222-4222-8222-222222222222\",\"replacedNodeID\":\"33333333-3333-4333-8333-333333333333\",\"replacementRevocationDigest\":\"BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"serverKeyID\":\"sync-node-issuance-2026-08\",\"signature\":\"AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ\",\"trustEpoch\":\"2\"}",
+    "leaseTranscriptSHA256" : "1ROCUF6UmTjyIvx2txL0zOEW7mi06bSi4o4nJwisb1k",
+    "operationBindingTranscriptSHA256" : "TTfpcFlXxph0ZoVDxh4swbsDxhQwVOdAuT5VFuHIFkM",
+    "refreshCanonicalJSON" : "{\"accountID\":\"55555555-5555-4555-8555-555555555555\",\"action\":\"replace\",\"admissionEvidenceDigest\":\"FGb4xBUa3sHBXk1I4SsdQ3z-WxP6IL0QWBz0KB1B8ck\",\"centralAudience\":\"central.plainpost.test\",\"claimID\":\"11111111-1111-4111-8111-111111111111\",\"cleanupCapabilityDigest\":\"mK1fbKQuTPMndIXAmgxCeeSkFaiRdbP8_zxY-F8ZVX0\",\"credential\":\"BwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"credentialID\":\"99999999-9999-4999-8999-999999999999\",\"expiresAt\":\"2026-08-14T12:11:01Z\",\"issuanceDigest\":\"oDqHLeejSkRvbwdDePz8fc2wrjvjAUOpdfj8K0NE9u4\",\"issuedAt\":\"2026-08-14T12:06:01Z\",\"kind\":\"account.sync-node-refresh-credential.v2\",\"nodeDeviceID\":\"22222222-2222-4222-8222-222222222222\",\"replacedNodeID\":\"33333333-3333-4333-8333-333333333333\",\"replacementRevocationDigest\":\"BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"trustEpoch\":\"2\"}",
+    "refreshTranscriptSHA256" : "YcOwC-PTXPsRqRZKzjloXws-o7SuWLzQKLUhS5e0ttw",
+    "resultCanonicalJSON" : "{\"accountID\":\"55555555-5555-4555-8555-555555555555\",\"action\":\"replace\",\"admissionEvidenceDigest\":\"FGb4xBUa3sHBXk1I4SsdQ3z-WxP6IL0QWBz0KB1B8ck\",\"centralAudience\":\"central.plainpost.test\",\"claimID\":\"11111111-1111-4111-8111-111111111111\",\"cleanupCapabilityDigest\":\"mK1fbKQuTPMndIXAmgxCeeSkFaiRdbP8_zxY-F8ZVX0\",\"committedAt\":\"2026-08-14T12:06:00Z\",\"issuanceDigest\":\"oDqHLeejSkRvbwdDePz8fc2wrjvjAUOpdfj8K0NE9u4\",\"kind\":\"account.sync-node-enrollment-result.v2\",\"nodeDeviceID\":\"22222222-2222-4222-8222-222222222222\",\"replacedNodeID\":\"33333333-3333-4333-8333-333333333333\",\"replacementRevocationDigest\":\"BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"trustEpoch\":\"2\"}",
+    "resultTranscriptSHA256" : "QLJTcSf12uN1-VcxzVLJ5yEaw9kmg2fPdcJ0PsFJ3pA",
+    "sessionDigestV2" : "BOLDKZVI5WKpjeqJlw9fBJg0MNjlgB6nT4bjGj9OQRY",
+    "sessionDigestV2TranscriptSHA256" : "BOLDKZVI5WKpjeqJlw9fBJg0MNjlgB6nT4bjGj9OQRY"
+  },
+  "wrongRoleCases" : [
+    {
+      "attemptedKeyRole" : "bootstrap",
+      "expected" : "reject",
+      "operation" : "manifest.verify"
+    },
+    {
+      "attemptedKeyRole" : "root",
+      "expected" : "reject",
+      "operation" : "bootstrap.challenge.verify"
+    },
+    {
+      "attemptedKeyRole" : "bootstrap",
+      "expected" : "reject",
+      "operation" : "pagination.cursor.verify"
+    },
+    {
+      "attemptedKeyRole" : "root",
+      "expected" : "reject",
+      "operation" : "pagination.page.verify"
+    },
+    {
+      "attemptedKeyRole" : "exchangeAgreement",
+      "expected" : "reject",
+      "operation" : "exchange.pending.proof.verify"
+    },
+    {
+      "attemptedKeyRole" : "deviceAgreement",
+      "expected" : "reject",
+      "operation" : "exchange.genesis.proof.verify"
+    },
+    {
+      "attemptedKeyRole" : "deviceSigning",
+      "expected" : "reject",
+      "operation" : "exchange.appleNegative.proof.verify"
+    },
+    {
+      "attemptedKeyRole" : "deviceAgreement",
+      "expected" : "reject",
+      "operation" : "trust.record.verify"
+    },
+    {
+      "attemptedKeyRole" : "metadataSigning",
+      "expected" : "reject",
+      "operation" : "trust.state.verify"
+    },
+    {
+      "attemptedKeyRole" : "metadataSigning",
+      "expected" : "reject",
+      "operation" : "package.signature.verify"
+    },
+    {
+      "attemptedKeyRole" : "deviceSigning",
+      "expected" : "reject",
+      "operation" : "metadata.signature.verify"
+    },
+    {
+      "attemptedKeyRole" : "bootstrap",
+      "expected" : "reject",
+      "operation" : "recovery.authorization.verify"
+    },
+    {
+      "attemptedKeyRole" : "deviceSigning",
+      "expected" : "reject",
+      "operation" : "package.ecdh.open"
+    }
+  ]
+}

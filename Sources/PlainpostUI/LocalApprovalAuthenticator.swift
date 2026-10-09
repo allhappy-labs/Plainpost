@@ -1,0 +1,11 @@
+import PlainpostAccountRuntime
+
+// Preserve the PlainpostUI source-compatibility surface while the concrete
+// approval capability lives in AccountRuntime for both macOS and iOS roots.
+public typealias LocalApprovalAuthenticationError = PlainpostAccountRuntime.LocalApprovalAuthenticationError
+public typealias LocalApprovalAuthenticating = PlainpostAccountRuntime.LocalApprovalAuthenticating
+public typealias NoopLocalApprovalAuthenticator = PlainpostAccountRuntime.NoopLocalApprovalAuthenticator
+public typealias LocalApprovalAuthenticatorFactory = PlainpostAccountRuntime.LocalApprovalAuthenticatorFactory
+public typealias AccountDeviceApprovalContext = PlainpostAccountRuntime.AccountDeviceApprovalContext
+public typealias AccountDeviceApprovalCapability = PlainpostAccountRuntime.AccountDeviceApprovalCapability
+public typealias AccountDeviceApprovalCoordinator = PlainpostAccountRuntime.AccountDeviceApprovalCoordinator

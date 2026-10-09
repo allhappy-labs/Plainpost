@@ -1,0 +1,14 @@
+{
+  "kind": "node-session-v3.fixture",
+  "activation": {
+    "kind": "node.activation.v3",
+    "resultWire": "eyJraW5kIjoicmVzdWx0LnYyIn0",
+    "refreshWire": "cmVmcmVzaC52Mg",
+    "leaseWire": "bGVhc2UudjI",
+    "trustCommitWire": "dHJ1c3QudjE",
+    "admissionEvidenceWire": "ZXZpZGVuY2UudjE",
+    "cleanupCapabilityWire": "Y2FwYWJpbGl0eS52MQ",
+    "claimProofSignature": "KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKg"
+  },
+  "activationTranscript": "AAAAG1BsYWlucG9zdC5Ob2RlQWN0aXZhdGlvbi52MwAAAAIAAwAAABR7ImtpbmQiOiJyZXN1bHQudjIifQAAAApyZWZyZXNoLnYyAAAACGxlYXNlLnYyAAAACHRydXN0LnYxAAAAC2V2aWRlbmNlLnYxAAAADWNhcGFiaWxpdHkudjEAAABAKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKg"
+}

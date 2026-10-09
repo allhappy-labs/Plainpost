@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://plainpost.app/protocol/node-session-v1/node-session-v3.schema.json",
+  "title": "Plainpost node activation v3 fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kind", "activation", "activationTranscript"],
+  "properties": {
+    "kind": { "const": "node-session-v3.fixture" },
+    "activation": { "$ref": "#/$defs/activationV3" },
+    "activationTranscript": { "$ref": "#/$defs/base64url" }
+  },
+  "$defs": {
+    "base64url": { "type": "string", "minLength": 2, "pattern": "^(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-][AQgw]|[A-Za-z0-9_-]{2}[AEIMQUYcgkosw048])?$" },
+    "activationWire": { "allOf": [{ "$ref": "#/$defs/base64url" }, { "maxLength": 87382 }] },
+    "signature": { "type": "string", "pattern": "^[A-Za-z0-9_-]{85}[AQgw]$" },
+    "activationV3": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "resultWire", "refreshWire", "leaseWire", "trustCommitWire", "admissionEvidenceWire", "cleanupCapabilityWire", "claimProofSignature"],
+      "properties": {
+        "kind": { "const": "node.activation.v3" },
+        "resultWire": { "$ref": "#/$defs/activationWire" },
+        "refreshWire": { "$ref": "#/$defs/activationWire" },
+        "leaseWire": { "$ref": "#/$defs/activationWire" },
+        "trustCommitWire": { "$ref": "#/$defs/activationWire" },
+        "admissionEvidenceWire": { "$ref": "#/$defs/activationWire" },
+        "cleanupCapabilityWire": { "$ref": "#/$defs/activationWire" },
+        "claimProofSignature": { "$ref": "#/$defs/signature" }
+      }
+    }
+  }
+}
